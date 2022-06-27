@@ -1,0 +1,209 @@
+# Copyright (c) 2022 Robert Bosch GmbH and Microsoft Corporation
+#
+# This program and the accompanying materials are made available under the
+# terms of the Apache License, Version 2.0 which is available at
+# https://www.apache.org/licenses/LICENSE-2.0.
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+# WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+# License for the specific language governing permissions and limitations
+# under the License.
+#
+# SPDX-License-Identifier: Apache-2.0
+
+name: Release workflow
+
+on:
+  release:
+    types: [published, edited]
+
+jobs:
+  initialize-matrix:
+    runs-on: ubuntu-latest
+    name: Setting up build matrix
+    outputs:
+      deployment-matrix: ${{ steps.export-deployment-matrix.outputs.deployment-matrix }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Get matrix data
+        id: export-deployment-matrix
+        run: |
+          SITE_PACKAGES=$(python -m site --user-site)
+          sed -i "s|SITE_PACKAGES|$SITE_PACKAGES|g" ./vehicleApp.json
+          MATRIX=$(cat ./vehicleApp.json | tr '\n' ' ')
+
+          echo "::set-output name=deployment-matrix::$MATRIX"
+  upload-images:
+    name: "Upload image (${{ matrix.component.Name }})"
+    runs-on: ubuntu-latest
+    needs: initialize-matrix
+    strategy:
+      matrix:
+        component: ${{ fromJson(needs.initialize-matrix.outputs.deployment-matrix) }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - id: get_version
+        uses: battila7/get-version-action@v2
+
+      - run: echo "Using VehicleApp version ${{ steps.get_version.outputs.version-without-v }} from tag"
+
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v1
+        with:
+          registry: ghcr.io
+          username: ${{ github.repository_owner }} # ${{ github.actor }} ?
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - id: github-repository-name-case-adjusted
+        name: Prepare repository name in lower case for docker upload. This supports repository names in mixed case
+        uses: ASzc/change-string-case-action@v1
+        with:
+          string: ${{ github.repository }}
+
+  release-documentation:
+    name: Generate release documentation
+    runs-on: ubuntu-latest
+    env:
+      TEST_RESULT_FOLDER_NAME: test-results
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Clone Release Documentation Action repository
+        uses: actions/checkout@v2
+        with:
+          repository: eclipse-velocitas/release-documentation-action
+          path: "./.github/actions"
+
+      - uses: actions/setup-node@v1
+        with:
+          node-version: '14.x'
+
+      - uses: haya14busa/action-cond@v1
+        id: condval
+        with:
+          cond: ${{ !github.event.inputs.name }}
+          if_true: ${{ github.event.inputs.name }}
+          if_false: ${{ github.sha }}
+
+      - name: Wait for CI workflow
+        uses: fountainhead/action-wait-for-check@v1.0.0
+        id: wait-for-CI
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          checkName: "build-images"
+          ref:  ${{ steps.condval.outputs.value }}
+          timeoutSeconds: 600
+
+      - name: Download artifact
+        uses: dawidd6/action-download-artifact@v2
+        with:
+          workflow: ci.yml
+          workflow_conclusion: success
+          commit:  ${{ steps.condval.outputs.value }}
+          path: .vehicleApp/Documentation/Inbox
+
+      - name: Render documentation (test-results)
+        uses: ./.github/actions/render
+        with:
+          inboxPath: .vehicleApp/Documentation/Inbox/test-results
+          outboxPath: .vehicleApp/Documentation/Outbox
+          templatePath: ./.github/actions/templates
+
+      - name: Upload generated documentation as an artifacts
+        uses: actions/upload-artifact@v2
+        if: always()
+        with:
+          name: generated-documentation
+          path: |
+            .vehicleApp/Documentation/Outbox/
+      - name: zip
+        run: |
+          zip -r .vehicleApp/Documentation/release-documentation-md.zip .vehicleApp/Documentation/Outbox
+      - name: Upload assets
+        uses: softprops/action-gh-release@v1
+        if: startsWith(github.ref, 'refs/tags/')
+        with:
+          files: |
+            .vehicleApp/Documentation/release-documentation-md.zip
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Setup Hugo
+        uses: peaceiris/actions-hugo@v2
+        with:
+          hugo-version: '0.89.4'
+          extended: true
+
+      - name: Set tags output
+        id: vars
+        run: echo ::set-output name=tag::${GITHUB_REF#refs/*/}
+      - name: Check output
+        env:
+          RELEASE_VERSION: ${{ steps.vars.outputs.tag }}
+        run: |
+          echo $RELEASE_VERSION
+          echo ${{ steps.vars.outputs.tag }}
+
+      - name: Create and Add reports to hugo static html site
+        run: |
+          hugo new site hugo
+
+          cp ./README.md ./hugo/content/_index.md
+
+          mkdir ./hugo/content/documentation
+          mkdir ./hugo/content/reports
+
+          cp ./README.md ./hugo/content/documentation/_index.md
+          sed -i '1d' hugo/content/documentation/_index.md
+          sed -i '1s/^/---\ntitle: "VehicleApp using Python"\ndraft: false\n---\n/' hugo/content/documentation/_index.md
+
+          cp .vehicleApp/Documentation/Outbox/* ./hugo/content/reports
+
+          sed -i '1,13d' hugo/content/reports/*.md
+          sed -i '1s/^/---\ntitle: "Code Coverage Test"\ndraft: false\n---\n/'  hugo/content/reports/CodeCoverage-*.md
+          sed -i '1s/^/---\ntitle: "Unit Test Results"\ndraft: false\n---\n/'  hugo/content/reports/UnitTest-*.md
+          cat hugo/content/reports/VulnerabilityScan-*.md >  hugo/content/reports/vulnerability-scan-results.md
+          sed -i '1s/^/---\ntitle: "Vulnerability Scan Results"\ndraft: false\n---\n/'  hugo/content/reports/vulnerability-scan-results.md
+          rm hugo/content/reports/VulnerabilityScan-*.md
+
+          mkdir ./hugo/config
+          mkdir ./hugo/config/_default
+          mkdir ./hugo/config/pages
+
+          echo $'languageCode = "en-us"\ntitle = "Release Documentation - @tag"\n\nbaseURL = "http://example.org/"\n\n# Keep uglyURLs for now, as this provides the best out of the box support for rendering markdown images in VSCode preview and Hugo\n# Link: https://gohugo.io/content-management/urls/#ugly-urls\nuglyURLs = "true"\n\nenableGitInfo = true\n\ntheme = "hugo-geekdoc"\n\n# Geekdoc required configuration\npygmentsUseClasses = true\npygmentsCodeFences = true\ndisablePathToLower = true\n\n[markup]\ndefaultMarkdownHandler = "goldmark"\n\n[markup.goldmark.renderer]\nunsafe = true\n\n[markup.tableOfContents]\n    ordered= false\n    startLevel= 1\n    endLevel= 3\n\n[params]\ngeekdocRepo = "https://github.com/eclipse-velocitas/vehicle-app-python-template"\ngeekdocEditPath = "edit/main/hugo/content"\ngeekdocCollapseSection = true\n' > ./hugo/config/_default/config.toml
+          echo $'# Hugo-Geekdoc Theme Config\n\nbaseURL = "https://fantastic-fiesta-da4ab8e5.pages.github.io/"\n\ntheme = "hugo-geekdoc"\n\nenableGitInfo = false\n\npluralizeListTitles = false\npygmentsUseClasses = true\n\n[markup]\n  defaultMarkdownHandler = "goldmark"\n\n[markup.highlight]\n    anchorLineNos = false\n    codeFences = true\n    guessSyntax = false\n    hl_Lines = ""\n    lineAnchors = ""\n    lineNoStart = 1\n    lineNos = true\n    lineNumbersInTable = true\n    noClasses = false\n    style = "paraiso-dark"\n    tabWidth = 4\n\n[markup.tableOfContents]\n    endLevel = 3\n    ordered = false\n    startLevel = 1\n\n[markup.goldmark.extensions]\n    typographer = true\n\n[markup.goldmark.renderer]\n    unsafe = true\n\n# Disable geekdoc default theme settings\n[params]\ngeekdocRepo = ""\ngeekdocEditPath = ""\n# disable non-working search when serving from local file system\ngeekdocSearch = false\n' > ./hugo/config/pages/config.toml
+
+          mkdir hugo/data/menu
+          echo "---" > ./hugo/data/menu/extra.yaml
+          printf "header:\n  - name: GitHub\n    ref: https://github.com/eclipse-velocitas/vehicle-app-python-template\n    icon: gdoc_github\n    external: true\n" >> ./hugo/data/menu/extra.yaml
+
+          echo "---" > ./hugo/data/menu/more.yaml
+          printf 'more:\n  - name: Releases\n    ref: "https://github.com/eclipse-velocitas/vehicle-app-python-template/releases"\n    external: true\n    icon: "gdoc_download"\n  - name: "View Source"\n    ref: "https://github.com/eclipse-velocitas/vehicle-app-python-template/tree/@tag"\n    external: true\n    icon: "gdoc_github"\n' >> ./hugo/data/menu/more.yaml
+
+          sed -i -e 's/@tag/${{ steps.vars.outputs.tag }}/g' ./hugo/config/_default/config.toml
+          sed -i -e 's/@tag/${{ steps.vars.outputs.tag }}/g' ./hugo/data/menu/more.yaml
+
+      - name: Build
+        working-directory: ${{github.workspace}}/hugo
+        env:
+          GEEKDOC_THEME_VERSION: 0.21.1
+        # hugo --minify not fully supported by hugo-geekdoc theme
+        run: |
+          echo "Download theme hugo-geekdoc v${GEEKDOC_THEME_VERSION}"
+          mkdir -p themes/hugo-geekdoc/
+          curl -L https://github.com/thegeeklab/hugo-geekdoc/releases/download/v${GEEKDOC_THEME_VERSION}/hugo-geekdoc.tar.gz | tar -xz -C themes/hugo-geekdoc/ --strip-components=1
+          echo "Build release documentation for GitHub Pages"
+          hugo -d ./public --environment=pages
+      - name: Publish to GH Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ${{github.workspace}}/hugo/public
+          publish_branch: gh_pages

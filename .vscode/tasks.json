@@ -1,0 +1,341 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "dapr-SeatAdjuster-run",
+			"appId": "seatadjuster",
+			"appPort": 50008,
+			"componentsPath": "./.dapr/components",
+			"config": "./.dapr/config.yaml",
+			"appProtocol": "grpc",
+			"grpcPort": 50001,
+			"httpPort": 3500,
+			"type": "dapr",
+			"presentation": {
+				"close": true,
+				"reveal": "never"
+			},
+		},
+		{
+			"label": "dapr-SeatAdjuster-stop",
+			"type": "shell",
+			"command": [
+				"dapr stop --app-id seatadjuster"
+			],
+			"presentation": {
+				"close": true,
+				"reveal": "never"
+			},
+		},
+		{
+			"label": "Local - Ensure Dapr",
+			"detail": "Ensures that the Dapr binaries are installed and Dapr is configured for local execution.",
+			"type": "shell",
+			"command": "./.vscode/scripts/runtime/local/ensure-dapr.sh",
+			"group": "none",
+			"presentation": {
+				"close": true
+			}
+		},
+		{
+			"label": "Local - Mosquitto",
+			"detail": "Runs Mosquitto MQTT Broker in a container (with docker run) with exposed port 1883.",
+			"type": "shell",
+			"command": "./.vscode/scripts/runtime/local/run-mosquitto.sh",
+			"group": "none",
+			"presentation": {
+				"reveal": "always",
+				"panel": "dedicated"
+			},
+			"isBackground": true,
+			"problemMatcher": {
+				"pattern": [
+					{
+						"regexp": ".",
+						"file": 1,
+						"location": 2,
+						"message": 4
+					}
+				],
+				"background": {
+					"activeOnStart": true,
+					"beginsPattern": "^\\d{10}: mosquitto version \\d{1}\\.\\d{1}\\.\\d{1} starting$",
+					"endsPattern": "^\\d{10}: Opening ipv6 listen socket on port \\d{3,5}\\.$"
+				}
+			}
+		},
+		{
+			"label": "Local - VehicleDataBroker",
+			"detail": "Runs the VehicleDataBroker as background task.",
+			"type": "shell",
+			"command": "./.vscode/scripts/runtime/local/run-vehicledatabroker.sh",
+			"group": "none",
+			"presentation": {
+				"reveal": "always",
+				"panel": "dedicated"
+			},
+			"isBackground": true,
+			"problemMatcher": {
+				"pattern": [
+					{
+						"regexp": ".",
+						"file": 1,
+						"location": 2,
+						"message": 3
+					}
+				],
+				"background": {
+					"activeOnStart": true,
+					"beginsPattern": "^You're up and running! Dapr logs will appear here.",
+					"endsPattern": "."
+				}
+			}
+		},
+		{
+			"label": "Local - VehicleDataBroker CLI",
+			"detail": "Starts the VehicleDataBroker CLI",
+			"type":"shell",
+			"command": "./.vscode/scripts/runtime/local/run-vehicledatabroker-cli.sh",
+			"group": "none",
+			"isBackground": false,
+		},
+		{
+			"label": "Local - SeatService",
+			"detail": "Runs the SeatService as background task.",
+			"type": "shell",
+			"command": "./.vscode/scripts/runtime/local/run-seatservice.sh",
+			"group": "none",
+			"presentation": {
+				"reveal": "always",
+				"panel": "dedicated"
+			},
+			"isBackground": true,
+			"problemMatcher": {
+				"pattern": [
+					{
+						"regexp": ".",
+						"file": 1,
+						"location": 2,
+						"message": 3
+					}
+				],
+				"background": {
+					"activeOnStart": true,
+					"beginsPattern": "^You're up and running! Dapr logs will appear here.",
+					"endsPattern": "."
+				}
+			}
+		},
+		{
+			"label": "Local - FeederCan",
+			"detail": "Runs FeederCan as background task.",
+			"type": "shell",
+			"command": "./.vscode/scripts/runtime/local/run-feedercan.sh",
+			"group": "none",
+			"presentation": {
+				"reveal": "always",
+				"panel": "dedicated"
+			},
+			"isBackground": true,
+			"problemMatcher": {
+				"pattern": [
+					{
+						"regexp": ".",
+						"file": 1,
+						"location": 2,
+						"message": 3
+					}
+				],
+				"background": {
+					"activeOnStart": true,
+					"beginsPattern": "^You're up and running! Dapr logs will appear here.",
+					"endsPattern": "."
+				}
+			}
+		},
+		{
+			"label": "Local - Start VehicleApp runtime",
+			"detail": "Runs all components of the VehicleApp runtime.",
+			"dependsOn": [
+				"Local - Ensure Dapr",
+				"Local - Mosquitto",
+				"Local - VehicleDataBroker",
+				"Local - SeatService",
+				"Local - FeederCan"
+			],
+			"dependsOrder": "sequence"
+		},
+		{
+			"label": "Local - SeatAdjuster (Dapr run)",
+			"detail": "Start SeatAdjuster with dapr run (p.e. for running integration tests locally).",
+			"type":"shell",
+			"command": [
+				"dapr run",
+				"--app-id seatadjuster",
+				"--app-protocol grpc",
+				"--app-port 50008",
+				"--config ./.dapr/config.yaml",
+				"--components-path ./.dapr/components",
+				"python3 ./src/SeatAdjusterApp/seatadjuster.py"
+			],
+			"group": "none",
+			"isBackground": true,
+			"problemMatcher": {
+				"pattern": [
+					{
+						"regexp": ".",
+						"file": 1,
+						"location": 2,
+						"message": 3
+					}
+				],
+				"background": {
+					"activeOnStart": true,
+					"beginsPattern": "^You're up and running! Both Dapr and your app logs will appear here.",
+					"endsPattern": "."
+				}
+			}
+		},
+		{
+			"label": "K3D - Install prerequisites",
+			"detail": "Install prerequisite components K3D, Helm, KubeCTL and Dapr without configuring them.",
+			"type": "shell",
+			"command": "./.vscode/scripts/runtime/k3d/install_prerequisites.sh",
+			"group": "none",
+			"presentation": {
+				"reveal": "always",
+				//"panel": "dedicated",
+				"clear": true,
+				"close": false
+			},
+		},
+		{
+			"label": "K3D - Configure control plane",
+			"detail": "Creates a local container registry used by K3D as well as an K3D cluster with Dapr enabled.",
+			"type": "shell",
+			"command": "./.vscode/scripts/runtime/k3d/configure_controlplane.sh",
+			"group": "none",
+			"presentation": {
+				"reveal": "always",
+				//"panel": "dedicated",
+				"clear": true,
+				"close": false
+			},
+			"dependsOn": [
+				"K3D - Install prerequisites"
+			]
+		},
+		{
+			"label": "K3D - Deploy runtime",
+			"detail": "Deploys the runtime components (like Vehicle Data Broker, Seat Service, ...) within the K3D cluster.",
+			"type": "shell",
+			"command": "./.vscode/scripts/runtime/k3d/deploy_runtime.sh",
+			"group": "none",
+			"presentation": {
+				"reveal": "always",
+				//"panel": "dedicated",
+				"clear": true,
+				"close": false
+			},
+			"dependsOn": [
+				"K3D - Configure control plane"
+			]
+		},
+		{
+			"label": "K3D - Build SeatAdjusterApp",
+			"detail": "Builds the SeatAdjusterApp and pushes it to the local K3D registry.",
+			"type": "shell",
+			"command": "./.vscode/scripts/runtime/k3d/build_seatadjusterapp.sh",
+			"group": "none",
+			"presentation": {
+				"reveal": "always",
+				"panel": "dedicated",
+				"clear": true,
+				"close": false
+			},
+			"dependsOn": [
+				"K3D - Deploy runtime"
+			]
+		},
+		{
+			"label": "K3D - Deploy SeatAdjusterApp",
+			"detail": "Builds and deploys the SeatAdjusterApp via Helm to the K3D cluster.",
+			"type": "shell",
+			"command": "./.vscode/scripts/runtime/k3d/deploy_seatadjusterapp.sh",
+			"group": "none",
+			"presentation": {
+				"reveal": "always",
+				"panel": "dedicated",
+				"clear": true,
+				"close": false
+			},
+			"dependsOn": [
+				"K3D - Build SeatAdjusterApp"
+			]
+		},
+		{
+			"label": "K3D - Deploy SeatAdjusterApp (without rebuild)",
+			"detail": "Deploys the SeatAdjusterApp via Helm to the K3D cluster (without rebuilding it)",
+			"type": "shell",
+			"command": "./.vscode/scripts/runtime/k3d/deploy_seatadjusterapp.sh",
+			"group": "none",
+			"presentation": {
+				"reveal": "always",
+				"panel": "dedicated",
+				"clear": true,
+				"close": false
+			},
+			"dependsOn": [
+				"K3D - Deploy runtime"
+			]
+		},
+		{
+			"label": "K3D - Install tooling",
+			"detail": "Installs tooling for local debugging (K9s, Kubernetes Dashboard)",
+			"type": "shell",
+			"command": "./.vscode/scripts/runtime/k3d/install_tooling.sh",
+			"group": "none",
+			"presentation": {
+				"reveal": "always",
+				"panel": "dedicated",
+				"clear": true,
+				"close": false
+			},
+			"dependsOn": [
+				"K3D - Configure control plane"
+			]
+		},
+		{
+			"label": "K3D - Uninstall runtime",
+			"detail": "Uninstalls the runtime components from the K3D cluster (without deleting the cluster).",
+			"type": "shell",
+			"command": "./.vscode/scripts/runtime/k3d/uninstall_runtime.sh",
+			"group": "none",
+			"presentation": {
+				"reveal": "always",
+				"panel": "dedicated",
+				"clear": true,
+				"close": false
+			},
+			"dependsOn": [
+				"K3D - Configure control plane"
+			]
+		},
+		{
+			"label": "K3D - Reset control plane",
+			"detail": "Deletes the K3D cluster with all deployed pods/services.",
+			"type": "shell",
+			"command": "./.vscode/scripts/runtime/k3d/reset_controlplane.sh",
+			"group": "none",
+			"presentation": {
+				"reveal": "always",
+				"panel": "dedicated",
+				"clear": true,
+				"close": false
+			},
+			"dependsOn": [
+				"K3D - Install prerequisites"
+			]
+		}
+	]
+}

@@ -1,0 +1,158 @@
+# Copyright (c) 2022 Robert Bosch GmbH and Microsoft Corporation
+#
+# This program and the accompanying materials are made available under the
+# terms of the Apache License, Version 2.0 which is available at
+# https://www.apache.org/licenses/LICENSE-2.0.
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+# WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+# License for the specific language governing permissions and limitations
+# under the License.
+#
+# SPDX-License-Identifier: Apache-2.0
+
+name: Build Docker Image for single arch
+
+on:
+  workflow_call:
+    inputs:
+      platform:
+        required: true
+        type: string
+      deployment-matrix-str:
+        required: true
+        type: string
+    outputs:
+      imageid:
+        value: ${{ jobs.build-image.outputs.imageid }}
+      imagedigest:
+        value: ${{ jobs.build-image.outputs.digest }}
+
+jobs:
+  build-image:
+    name: "Building image (${{ matrix.component.Name }})"
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        component: ${{ fromJson(inputs.deployment-matrix-str) }}
+    outputs:
+      imageid: ${{ steps.image_build.outputs.imageid }}
+      imagedigest: ${{ steps.image_build.outputs.imagedigest }}
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Clone Release Documentation Action repository
+      uses: actions/checkout@v2
+      with:
+        repository: eclipse-velocitas/release-documentation-action
+        path: "./.github/actions"
+
+    - name: Check Docker version
+      run: docker --version
+
+    - name: Set up QEMU
+      uses: docker/setup-qemu-action@v1
+
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v1
+
+    - name: Login to GitHub Container Registry
+      uses: docker/login-action@v1
+      with:
+        registry: ghcr.io
+        username: ${{ github.repository_owner }}
+        password: ${{ secrets.GITHUB_TOKEN }}
+
+    - id: github-repository-name-case-adjusted
+      name: Prepare repository name in lower case for docker upload. This supports repository names in mixed case
+      uses: ASzc/change-string-case-action@v1
+      with:
+        string: ${{ github.repository }}
+
+    - uses: fusion-engineering/setup-git-credentials@v2
+      with:
+        credentials: https://user:${{ secrets.GITHUB_TOKEN }}@github.com/
+
+    - name: Setup git config
+      shell: bash
+      run: |
+        git config --global user.email "github-automation@users.noreply.github.com"
+        git config --global user.name "Github Automation"
+
+    - name: "${{ matrix.component.Name }} -- Build image"
+      id: image_build
+      uses: docker/build-push-action@v2
+      with:
+        pull: true
+        push: false
+        outputs: |
+          type=oci,dest=./${{ matrix.component.Name }}.tar
+        context: ${{ matrix.component.ContextFolder }}
+        file: ${{ matrix.component.DockerFolder }}/Dockerfile
+        platforms: linux/${{ inputs.platform }}
+        secrets: |
+          "github_token=user:${{ secrets.GITHUB_TOKEN }}"
+        labels: |
+          org.opencontainers.image.source=https://github.com/${{steps.github-repository-name-case-adjusted.outputs.lowercase}}
+
+    - name: "${{ matrix.component.Name }} -- Inspect tar image with skopeo"
+      run: |
+        skopeo inspect --raw oci-archive:${{ matrix.component.Name }}.tar | jq
+        skopeo inspect oci-archive:${{ matrix.component.Name }}.tar
+        skopeo copy oci-archive:${{ matrix.component.Name }}.tar docker-archive:${{ matrix.component.Name }}-arch.tar
+
+    - name: "${{ matrix.component.Name }} -- Scan docker image for vulnerabilities"
+      uses: aquasecurity/trivy-action@0.3.0
+      with:
+        input: ${{ matrix.component.Name }}-arch.tar
+        exit-code: '0'
+        ignore-unfixed: true
+        severity: 'CRITICAL,HIGH'
+        format: 'template'
+        template: '@.github/scripts/junit.tpl'
+        output: 'junit.xml'
+
+    - name: "${{ matrix.component.Name }} -- Show scan results"
+      if: ${{ always() }}
+      run: cat ./junit.xml
+
+    - name: "${{ matrix.component.Name }} -- Package vulnerability scan files"
+      uses: ./.github/actions/package
+      with:
+        name: "VulnerabilityScan-${{ matrix.component.Name }}"
+        type: "VulnerabilityScan"
+        schema: "JUnit"
+        sourcePath: ./junit.xml
+        packagePath: results/Documentation/renderer
+
+    - name: "${{ matrix.component.Name }} -- Upload trivy report as artifacts"
+      if: ${{ always() && steps.image_build.outcome == 'success' }}
+      uses: actions/upload-artifact@v2
+      with:
+        name: test-results
+        path: |
+          results/Documentation/renderer/*
+
+    - name: "${{ matrix.component.Name }} -- Publish Trivy Scan Results"
+      uses: EnricoMi/publish-unit-test-result-action@v1
+      if: ${{ always() && steps.image_build.outcome == 'success' }}
+      with:
+        check_name: Trivy Scan Results (${{ matrix.component.Name }})
+        comment_title: Trivy Scan Results (${{ matrix.component.Name }})
+        fail_on: "errors"
+        files: ./junit.xml
+
+    - name: "${{ matrix.component.Name }} -- Push image to ghcr"
+      if: ${{ steps.image_build.outcome == 'success' }}
+      env:
+        VAPP_NAME: ${{ matrix.component.Name }}
+        VAPP_VERSION: ${{ github.sha }}-${{ inputs.platform }}
+        GIT_HUB_REPOSITORY_NAME_LOWER_CASE: ${{ steps.github-repository-name-case-adjusted.outputs.lowercase }}
+      shell: bash
+      run: |
+        skopeo copy --all oci-archive:${{ matrix.component.Name }}.tar "docker://ghcr.io/$GIT_HUB_REPOSITORY_NAME_LOWER_CASE/$VAPP_NAME:$VAPP_VERSION"
+        skopeo inspect --raw "docker://ghcr.io/$GIT_HUB_REPOSITORY_NAME_LOWER_CASE/$VAPP_NAME:$VAPP_VERSION" | jq
+        skopeo inspect "docker://ghcr.io/$GIT_HUB_REPOSITORY_NAME_LOWER_CASE/$VAPP_NAME:$VAPP_VERSION"

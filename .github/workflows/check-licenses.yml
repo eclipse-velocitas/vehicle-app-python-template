@@ -1,0 +1,52 @@
+# Copyright (c) 2022 Robert Bosch GmbH and Microsoft Corporation
+#
+# This program and the accompanying materials are made available under the
+# terms of the Apache License, Version 2.0 which is available at
+# https://www.apache.org/licenses/LICENSE-2.0.
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+# WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+# License for the specific language governing permissions and limitations
+# under the License.
+#
+# SPDX-License-Identifier: Apache-2.0
+
+name: Check licenses
+
+on:
+  workflow_dispatch:
+  workflow_call:
+  push:
+    # Run only on branches/commits and not tags
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  check-licenses:
+    runs-on: ubuntu-latest
+    name: Check Software Licenses
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+        with:
+          ref: ${{ github.head_ref }}
+
+      - name: Clone License Check Repo
+        uses: actions/checkout@v2
+        with:
+          repository: eclipse-velocitas/license-check
+          ref: v1
+          path: .github/actions/license-check
+
+      - id: run-license-checker
+        name: Run License Checker
+        uses: ./.github/actions/license-check
+        with:
+          config-file-path: ./.licensechecker.yml
+          fail-on-violation: false
+          notice-file-name: "NOTICE-3RD-PARTY-CONTENT"

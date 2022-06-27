@@ -1,0 +1,78 @@
+# Copyright (c) 2022 Robert Bosch GmbH and Microsoft Corporation
+#
+# This program and the accompanying materials are made available under the
+# terms of the Apache License, Version 2.0 which is available at
+# https://www.apache.org/licenses/LICENSE-2.0.
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+# WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+# License for the specific language governing permissions and limitations
+# under the License.
+#
+# SPDX-License-Identifier: Apache-2.0
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{.Values.imageMosquitto.name}}
+  labels:
+    app: {{.Values.imageMosquitto.name}}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: {{.Values.imageMosquitto.name}}
+  template:
+    metadata:
+      labels:
+        app: {{.Values.imageMosquitto.name}}
+    spec:
+      containers:
+        - name: mqtt
+          image: {{.Values.imageMosquitto.repository}}:{{.Values.imageMosquitto.tag}}
+          imagePullPolicy: {{.Values.imageMosquitto.pullPolicy}}
+          args:
+          {{- range .Values.imageMosquitto.args}}
+            - {{.}}
+          {{- end }}
+          ports:
+            - name: default
+              containerPort: {{.Values.imageMosquitto.port}}
+              protocol: TCP
+            - name: websocket
+              containerPort: {{.Values.imageMosquitto.websocketPort}}
+              protocol: TCP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{.Values.imageMosquitto.name}}
+  labels:
+    app: {{.Values.imageMosquitto.name}}
+spec:
+  type: ClusterIP
+  selector:
+    app: {{.Values.imageMosquitto.name}}
+  ports:
+    - port: {{.Values.imageMosquitto.port}}
+      targetPort: default
+      name: default
+      protocol: TCP
+    - port: {{.Values.imageMosquitto.websocketPort}}
+      targetPort: websocket
+      name: websocket
+      protocol: TCP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{.Values.imageMosquitto.name}}-nodeport
+spec:
+  type: NodePort
+  selector:
+    app: {{.Values.imageMosquitto.name}}
+  ports:
+  - port: {{.Values.imageMosquitto.port}}
+    targetPort: {{.Values.imageMosquitto.port}}
+    nodePort: {{.Values.imageMosquitto.nodePort}}
