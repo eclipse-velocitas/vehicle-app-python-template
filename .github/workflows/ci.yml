@@ -1,0 +1,271 @@
+# Copyright (c) 2022 Robert Bosch GmbH and Microsoft Corporation
+#
+# This program and the accompanying materials are made available under the
+# terms of the Apache License, Version 2.0 which is available at
+# https://www.apache.org/licenses/LICENSE-2.0.
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+# WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+# License for the specific language governing permissions and limitations
+# under the License.
+#
+# SPDX-License-Identifier: Apache-2.0
+
+name: CI workflow
+concurrency:
+  group: ${{ github.ref }}
+  cancel-in-progress: true
+
+on:
+  workflow_dispatch:
+  push:
+    # Run only on branches/commits and not tags
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  unit-tests:
+    runs-on: ubuntu-latest
+    name: Run unit tests and linters
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+        with:
+          ref: ${{ github.head_ref }}
+
+      - name: Clone Release Documentation Action repository
+        uses: actions/checkout@v2
+        with:
+          repository: eclipse-velocitas/release-documentation-action
+          path: "./.github/actions"
+
+      - uses: fusion-engineering/setup-git-credentials@v2
+        with:
+          credentials: https://user:${{ secrets.GITHUB_TOKEN }}@github.com/
+
+      - name: Install required packages
+        shell: bash
+        run: |
+          pip install -r requirements-dev.txt
+          pip install -r src/requirements-links.txt
+          pip install -r src/requirements.txt
+          pip install -r test/requirements.txt
+
+      - name: Run Linters
+        uses: pre-commit/action@v3.0.0
+
+      - name: unit test
+        shell: bash
+        run: |
+          pip install -r test/requirements.txt
+          pytest --rootdir . --override-ini junit_family=xunit1 --junit-xml=./results/UnitTest/junit.xml --cov ./src --cov-report=xml:results/CodeCoverage/cobertura-coverage.xml --cov-branch ./src --cov-config=setup.cfg
+          coverage2clover -i results/CodeCoverage/cobertura-coverage.xml -o results/CodeCoverage/clover.xml
+          coveragepy-lcov --data_file_path ./.coverage --output_file_path results/CodeCoverage/lcov.info
+
+      - name: Publish Unit Test Results
+        uses: EnricoMi/publish-unit-test-result-action@v1
+        if: always()
+        with:
+          files: ./results/UnitTest/junit.xml
+
+      - name: Add code coverage comment to pr
+        uses: romeovs/lcov-reporter-action@v0.3.1
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          lcov-file: results/CodeCoverage/lcov.info
+          delete-old-comments: true
+        if: github.event_name == 'pull_request'
+
+      - name: Package unit test files
+        uses: ./.github/actions/package
+        with:
+          name: "UnitTest"
+          type: "UnitTest"
+          schema: "JUnit"
+          sourcePath: ./results/UnitTest/junit.xml
+          packagePath: ./results/Documentation/renderer
+
+      - name: Package code coverage files
+        uses: ./.github/actions/package
+        with:
+          name: "CodeCoverage"
+          type: "CodeCoverage"
+          schema: "Cobertura"
+          sourcePath: results/CodeCoverage
+          packagePath: results/Documentation/renderer
+
+      - name: Upload test results as artifacts
+        uses: actions/upload-artifact@v2
+        if: always()
+        with:
+          name: 'test-results'
+          path: |
+            results/Documentation/renderer/*
+
+      - name: Checking unit test code coverage
+        id: test-coverage
+        uses: johanvanhelden/gha-clover-test-coverage-check@v1
+        with:
+          percentage: "20"
+          filename: "results/CodeCoverage/clover.xml"
+
+  initialize-matrix:
+      runs-on: ubuntu-latest
+      name: Setting up build matrix
+      outputs:
+        deployment-matrix: ${{ steps.export-deployment-matrix.outputs.deployment-matrix }}
+
+      steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Get matrix data
+        id: export-deployment-matrix
+        run: |
+          SITE_PACKAGES=$(python -m site --user-site)
+          sed -i "s|SITE_PACKAGES|$SITE_PACKAGES|g" ./vehicleApp.json
+          MATRIX=$(cat ./vehicleApp.json | tr '\n' ' ')
+
+          echo "::set-output name=deployment-matrix::$MATRIX"
+
+  build-image-amd64:
+    uses: ./.github/workflows/build-docker-image-singlearch.yml
+    needs: [initialize-matrix]
+    with:
+      platform: amd64
+      deployment-matrix-str: ${{ needs.initialize-matrix.outputs.deployment-matrix }}
+
+  build-image-aarch64:
+    uses: ./.github/workflows/build-docker-image-singlearch.yml
+    needs: [initialize-matrix]
+    with:
+      platform: aarch64
+      deployment-matrix-str: ${{ needs.initialize-matrix.outputs.deployment-matrix }}
+
+  run-integration-tests:
+    name: Run Integration Tests
+    runs-on: ubuntu-latest
+    needs: build-image-amd64
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Clone Release Documentation Action repository
+        uses: actions/checkout@v2
+        with:
+          repository: eclipse-velocitas/release-documentation-action
+          path: "./.github/actions"
+
+      - uses: fusion-engineering/setup-git-credentials@v2
+        with:
+          credentials: https://user:${{ secrets.GITHUB_TOKEN }}@github.com/
+
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v1
+        with:
+          registry: ghcr.io
+          username: ${{ github.repository_owner }} # ${{ github.actor }} ?
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Install required packages
+        shell: pwsh
+        run: |
+          pip install -r ./src/requirements.txt
+          pip install -r ./src/requirements-links.txt
+          pip install -r ./test/requirements.txt
+
+      - name: Install K3D and prerequisites
+        working-directory: ./.vscode/scripts/runtime/k3d
+        run: ./install_prerequisites.sh
+
+      - name: Configure K3D cluster
+        working-directory: ./.vscode/scripts/runtime/k3d
+        run: ./configure_controlplane.sh
+
+      - name: Install runtime containers in K3D cluster
+        working-directory: ./.vscode/scripts/runtime/k3d
+        run: ./deploy_runtime.sh
+
+      - id: github-repository-name-case-adjusted
+        name: Prepare repository name in lower case for docker upload. This supports repository names in mixed case
+        uses: ASzc/change-string-case-action@v1
+        with:
+          string: ${{ github.repository }}
+
+      - name: Deploy images
+        env:
+          REPO_NAME: ${{ steps.github-repository-name-case-adjusted.outputs.lowercase }}
+          SHA: ${{ github.sha }}
+        working-directory: ./.github/scripts
+        run: ./deploy_imagefromghcr.sh
+
+      - name: Run Python integration tests
+        shell: bash
+        env:
+          VDB_PORT: 30555
+          MQTT_PORT: 31883
+        run: |
+          pip install -r test/requirements.txt
+          pytest ./test --override-ini junit_family=xunit1 --junit-xml=./results/IntTest/junit.xml
+
+      - name: Publish Unit Test Results
+        uses: EnricoMi/publish-unit-test-result-action@v1
+        if: always()
+        with:
+          files: ./results/IntTest/junit.xml
+
+      - name: Package integration test result files
+        uses: ./.github/actions/package
+        with:
+          name: "IntegrationTest"
+          type: "UnitTest"
+          schema: "JUnit"
+          sourcePath: ./results/IntTest/junit.xml
+          packagePath: ./results/Documentation/renderer
+
+      - name: Upload integration test results as artifacts
+        uses: actions/upload-artifact@v2
+        if: always()
+        with:
+          name: 'test-results'
+          path: |
+            results/Documentation/renderer/*
+
+  create-multiarch-image:
+    runs-on: ubuntu-latest
+    name: Create multiarch image
+    needs: [initialize-matrix, build-image-amd64, build-image-aarch64]
+    strategy:
+      matrix:
+        component: ${{ fromJson(needs.initialize-matrix.outputs.deployment-matrix) }}
+
+    steps:
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v1
+        with:
+          registry: ghcr.io
+          username: ${{ github.repository_owner }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - id: github-repository-name-case-adjusted
+        name: Prepare repository name in lower case for docker upload. This supports repository names in mixed case
+        uses: ASzc/change-string-case-action@v1
+        with:
+          string: ${{ github.repository }}
+
+      - uses: docker/setup-buildx-action@v1
+        id: buildx
+        with:
+          install: true
+
+      - name: Create merged manifest and push
+        env:
+          VAPP_NAME: ${{ matrix.component.Name }}
+          VAPP_VERSION: ${{ github.sha }}
+          REPO: ghcr.io/${{ steps.github-repository-name-case-adjusted.outputs.lowercase }}
+        run: |
+          docker buildx imagetools create -t $REPO/$VAPP_NAME:$VAPP_VERSION $REPO/$VAPP_NAME:$VAPP_VERSION-amd64 $REPO/$VAPP_NAME:$VAPP_VERSION-aarch64

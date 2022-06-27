@@ -1,0 +1,20 @@
+{
+    "mosquitto": {
+        "version": "2.0.14"
+    },
+    "databroker": {
+        "version": "test"
+    },
+    "seatservice": {
+        "version": "v0.1.0"
+    },
+    "feedercan": {
+        "version": "v0.16.0"
+    },
+    "python": {
+        "version": "3.9"
+    },
+    "databrokerimage": {
+        "version": "v0.17.0"
+    }
+}
