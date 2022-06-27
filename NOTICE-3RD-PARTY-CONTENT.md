@@ -81,7 +81,6 @@
 |docker/setup-buildx-action|v1|Apache License 2.0|
 |docker/setup-qemu-action|v1|Apache License 2.0|
 |EnricoMi/publish-unit-test-result-action|v1|Apache License 2.0|
-|fjogeleit/yaml-update-action|master|MIT License|
 |fountainhead/action-wait-for-check|v1.0.0|MIT License|
 |fusion-engineering/setup-git-credentials|v2|BSD 2-Clause "Simplified" License|
 |github/codeql-action|v1|MIT License|
@@ -89,6 +88,6 @@
 |johanvanhelden/gha-clover-test-coverage-check|v1|MIT License|
 |peaceiris/actions-gh-pages|v3|MIT License|
 |peaceiris/actions-hugo|v2|MIT License|
-|pre-commit/action|v2.0.3|MIT License|
+|pre-commit/action|v3.0.0|MIT License|
 |romeovs/lcov-reporter-action|v0.3.1|MIT License|
 |softprops/action-gh-release|v1|MIT License|
