@@ -35,7 +35,7 @@ RUN pip3 install --no-cache-dir pyinstaller \
     && pip3 install --no-cache-dir patchelf \
     && pip3 install --no-cache-dir staticx \
     && pip3 install --no-cache-dir -r src/requirements.txt \
-    && pip3 install --no-cache-dir https://api.github.com/repos/eclipse-velocitas/vehicle-app-python-sdk/tarball/v0.4.6 \
+    && pip3 install --no-cache-dir https://api.github.com/repos/eclipse-velocitas/vehicle-app-python-sdk/tarball/v0.2.0 \
     && pip3 install --no-cache-dir https://api.github.com/repos/eclipse-velocitas/vehicle-model-python/tarball
 
 WORKDIR /src
