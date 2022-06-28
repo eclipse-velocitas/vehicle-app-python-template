@@ -30,4 +30,4 @@ else
     DATABROKER_EXEC_PATH="$ROOT_DIRECTORY/.vscode/scripts/assets/databroker/$DATABROKER_VERSION/$PROCESSOR/target/release"
 fi
 
-$DATABROKER_EXEC_PATH/vehicle-data-cli
+$DATABROKER_EXEC_PATH/databroker-cli
