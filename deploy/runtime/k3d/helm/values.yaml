@@ -51,6 +51,9 @@ imageFeederCan:
   pullPolicy: Always
   daprAppid: feedercan
   daprLogLevel: debug
+  candumpfile: "/data/candumpDefault.log"
+  dbcfile: "/data/dbcfileDefault.dbc"
+  mappying: "/data/mappingDefault.yml"
   tag: latest
 
 nameOverride: ""
