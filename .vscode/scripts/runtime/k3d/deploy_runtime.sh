@@ -30,8 +30,8 @@ then
         docker tag ghcr.io/eclipse/kuksa.val.services/seat_service:$SEATSERVICE_TAG localhost:12345/seatservice:$SEATSERVICE_TAG
         docker push localhost:12345/seatservice:$SEATSERVICE_TAG
 
-        docker pull ghcr.io/eclipse/kuksa.val.feeders/feeder_can:$FEEDERCAN_TAG
-        docker tag ghcr.io/eclipse/kuksa.val.feeders/feeder_can:$FEEDERCAN_TAG localhost:12345/feedercan:$FEEDERCAN_TAG
+        docker pull ghcr.io/eclipse/kuksa.val.feeders/dbc2val:$FEEDERCAN_TAG
+        docker tag ghcr.io/eclipse/kuksa.val.feeders/dbc2val:$FEEDERCAN_TAG localhost:12345/feedercan:$FEEDERCAN_TAG
         docker push localhost:12345/feedercan:$FEEDERCAN_TAG
 
         # We set the tag to the version from the variables above in the script. This overwrites the default values in the values-file.

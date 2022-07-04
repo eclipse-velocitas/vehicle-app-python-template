@@ -26,6 +26,10 @@ repos:
         exclude: ^deploy/SeatAdjusterApp/helm/templates/|^deploy/runtime/k3d/helm/templates/
       - id: check-toml
       - id: check-added-large-files
+        exclude: >
+          (?x)^(
+          .*.log
+          )$
       - id: check-merge-conflict
 
   - repo: https://github.com/PyCQA/isort
@@ -43,16 +47,15 @@ repos:
     hooks:
       - id: flake8
         exclude: >
-            (?x)^(
-                .*_pb2.py|
-                .*_pb2.pyi|
-                .*_pb2_grpc.py
-            )$
+          (?x)^(
+              .*_pb2.py|
+              .*_pb2.pyi|
+              .*_pb2_grpc.py
+          )$
         additional_dependencies:
           - flake8-bugbear
           - flake8-builtins
           - flake8-unused-arguments
-
 
   - repo: local
     hooks:
@@ -60,20 +63,14 @@ repos:
         name: pylint
         entry: pylint
         language: system
-        args: [
-          "-rn",
-          "-sn",
-          "--rcfile=.pylintrc"
-          ]
+        args: ["-rn", "-sn", "--rcfile=.pylintrc"]
         types_or: [python]
 
   - repo: https://github.com/PyCQA/bandit
     rev: 1.7.1
     hooks:
       - id: bandit
-        args: [
-          "--skip=B101"
-          ]
+        args: ["--skip=B101"]
         types_or: [python]
 
   - repo: https://github.com/pre-commit/mirrors-mypy
@@ -97,24 +94,24 @@ repos:
   - repo: https://github.com/Lucas-C/pre-commit-hooks
     rev: v1.1.13
     hooks:
-    -   id: insert-license
+      - id: insert-license
         files: '.*\.(py|pyi|yaml|yml|sh|helmignore|dockerignore|gitignore)$'
         args:
-        - --license-filepath
-        - license_header.txt
-        - --comment-style
-        - '#'
-    -   id: insert-license
+          - --license-filepath
+          - license_header.txt
+          - --comment-style
+          - "#"
+      - id: insert-license
         files: '.*\.(proto)$'
         args:
-        - --license-filepath
-        - license_header.txt
-        - --comment-style
-        - //
-    -   id: insert-license
-        files: 'Dockerfile.*'
+          - --license-filepath
+          - license_header.txt
+          - --comment-style
+          - //
+      - id: insert-license
+        files: "Dockerfile.*"
         args:
-        - --license-filepath
-        - license_header.txt
-        - --comment-style
-        - '#'
+          - --license-filepath
+          - license_header.txt
+          - --comment-style
+          - "#"

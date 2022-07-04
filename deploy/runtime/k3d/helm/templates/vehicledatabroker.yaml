@@ -43,7 +43,6 @@ spec:
             - name: default
               containerPort: {{.Values.imageVehicleDataBroker.daprAppPort}}
               protocol: TCP
-          args: ["--dummy-metadata"]
 
 ---
 apiVersion: v1

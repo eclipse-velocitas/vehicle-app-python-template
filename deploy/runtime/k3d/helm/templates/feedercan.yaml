@@ -47,8 +47,14 @@ spec:
               value: {{.Values.imageVehicleDataBroker.daprAppid}}
             - name: LOG_LEVEL
               value: "info,databroker=info,dbcfeeder.broker_client=debug,dbcfeeder=debug"
+            - name: USECASE
+              value: "databroker"
             - name: CANDUMP_FILE
-              value: "/data/candump"
+              value: {{.Values.imageFeederCan.candump}}
+            - name: MAPPING_FILE
+              value: {{.Values.imageFeederCan.mapping}}
+            - name: DBC_FILE
+              value: {{.Values.imageFeederCan.dbcfile}}
           volumeMounts:
           - mountPath: "/data"
             name: pv-storage

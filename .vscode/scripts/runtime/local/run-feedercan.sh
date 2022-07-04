@@ -24,26 +24,34 @@ DATABROKER_GRPC_PORT='52001'
 sudo chown $(whoami) $HOME
 
 # Downloading feedercan
-FEEDERCAN_SOURCE="feedercan_source"
+FEEDERCAN_SOURCE="kuksa.val.feeders"
 FEEDERCAN_EXEC_PATH="$ROOT_DIRECTORY/.vscode/scripts/assets/feedercan/$FEEDERCAN_VERSION"
 
-API_URL=https://api.github.com/repos/eclipse/kuksa.val.feeders
+DOWNLOAD_URL=https://github.com/eclipse/kuksa.val.feeders/tarball
 
-if [[ ! -f "$FEEDERCAN_EXEC_PATH/feeder_can/dbcfeeder.py" ]]
+if [[ ! -f "$FEEDERCAN_EXEC_PATH/dbc2val/dbcfeeder.py" ]]
 then
   echo "Downloading FEEDERCAN:$FEEDERCAN_VERSION"
-  curl --create-dirs -o "$ROOT_DIRECTORY/.vscode/scripts/assets/feedercan/$FEEDERCAN_VERSION/$FEEDERCAN_SOURCE" --location --remote-header-name --remote-name "$API_URL/$FEEDERCAN_VERSION"
+  curl --create-dirs -o "$ROOT_DIRECTORY/.vscode/scripts/assets/feedercan/$FEEDERCAN_VERSION/$FEEDERCAN_SOURCE" --location --remote-header-name --remote-name "$DOWNLOAD_URL/$FEEDERCAN_VERSION"
   FEEDERCAN_BASE_DIRECTORY=$(tar -tzf $ROOT_DIRECTORY/.vscode/scripts/assets/feedercan/$FEEDERCAN_VERSION/$FEEDERCAN_SOURCE | head -1 | cut -f1 -d"/")
   tar -xf $ROOT_DIRECTORY/.vscode/scripts/assets/feedercan/$FEEDERCAN_VERSION/$FEEDERCAN_SOURCE -C $ROOT_DIRECTORY/.vscode/scripts/assets/feedercan/$FEEDERCAN_VERSION/
-  cp -r $ROOT_DIRECTORY/.vscode/scripts/assets/feedercan/$FEEDERCAN_VERSION/$FEEDERCAN_BASE_DIRECTORY/feeder_can $ROOT_DIRECTORY/.vscode/scripts/assets/feedercan/$FEEDERCAN_VERSION
+  cp -r $ROOT_DIRECTORY/.vscode/scripts/assets/feedercan/$FEEDERCAN_VERSION/$FEEDERCAN_BASE_DIRECTORY/dbc2val $ROOT_DIRECTORY/.vscode/scripts/assets/feedercan/$FEEDERCAN_VERSION
   rm -rf $ROOT_DIRECTORY/.vscode/scripts/assets/feedercan/$FEEDERCAN_VERSION/$FEEDERCAN_BASE_DIRECTORY
 fi
-cd $ROOT_DIRECTORY/.vscode/scripts/assets/feedercan/$FEEDERCAN_VERSION/feeder_can
+cd $ROOT_DIRECTORY/.vscode/scripts/assets/feedercan/$FEEDERCAN_VERSION/dbc2val
 pip3 install -r requirements.txt
 
 export DAPR_GRPC_PORT=$DATABROKER_GRPC_PORT
 export VEHICLEDATABROKER_DAPR_APP_ID=vehicledatabroker
 export LOG_LEVEL=info,databroker=info,dbcfeeder.broker_client=debug,dbcfeeder=debug
+
+### Override default files for feedercan
+CONFIG_DIR="$ROOT_DIRECTORY/deploy/runtime/k3d/volume"
+export DBC_FILE="$CONFIG_DIR/dbcfileDefault.dbc"
+export MAPPING_FILE="$CONFIG_DIR/mappingDefault.yml"
+export CANDUMP_FILE="$CONFIG_DIR/candumpDefault.log"
+export USECASE="databroker"
+
 dapr run \
   --app-id feedercan \
   --app-protocol grpc \
