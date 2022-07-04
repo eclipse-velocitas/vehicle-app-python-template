@@ -100,7 +100,8 @@ StyleCopReport.xml
 *.tmp_proj
 *_wpftmp.csproj
 *.log
-!candump*.log #Except the CAN dump logs
+#Except the CAN dump logs
+!candump*.log
 *.vspscc
 *.vssscc
 .builds
