@@ -10,7 +10,7 @@ This repository provides you with a complete development environment for your ow
 
 ## Documentation
 * [Velocitas Development Model](https://eclipse-velocitas.github.io/velocitas-docs/docs/concepts/development_model/)
-* [Vehicle App Python SDK Overview](https://eclipse-velocitas.github.io/velocitas-docs/docs/reference/python_vehicle_app_sdk/)
+* [Vehicle App Python SDK Overview](https://eclipse-velocitas.github.io/velocitas-docs/docs/concepts/python_vehicle_app_sdk/)
 
 ## Quickstart Tutorials
 1. [Setup and Explore Development Enviroment](https://eclipse-velocitas.github.io/velocitas-docs/docs/tutorials/quickstart/)
