@@ -21,25 +21,21 @@ then
     SEATSERVICE_TAG=$(cat $ROOT_DIRECTORY/prerequisite_settings.json | jq .seatservice.version | tr -d '"')
     FEEDERCAN_TAG=$(cat $ROOT_DIRECTORY/prerequisite_settings.json | jq .feedercan.version | tr -d '"')
 
-    if grep -q ghcr.io $HOME/.docker/config.json; then
-        docker pull ghcr.io/eclipse/kuksa.val/databroker:$VEHICLEDATABROKER_TAG
-        docker tag ghcr.io/eclipse/kuksa.val/databroker:$VEHICLEDATABROKER_TAG localhost:12345/vehicledatabroker:$VEHICLEDATABROKER_TAG
-        docker push localhost:12345/vehicledatabroker:$VEHICLEDATABROKER_TAG
+    docker pull ghcr.io/eclipse/kuksa.val/databroker:$VEHICLEDATABROKER_TAG
+    docker tag ghcr.io/eclipse/kuksa.val/databroker:$VEHICLEDATABROKER_TAG localhost:12345/vehicledatabroker:$VEHICLEDATABROKER_TAG
+    docker push localhost:12345/vehicledatabroker:$VEHICLEDATABROKER_TAG
 
-        docker pull ghcr.io/eclipse/kuksa.val.services/seat_service:$SEATSERVICE_TAG
-        docker tag ghcr.io/eclipse/kuksa.val.services/seat_service:$SEATSERVICE_TAG localhost:12345/seatservice:$SEATSERVICE_TAG
-        docker push localhost:12345/seatservice:$SEATSERVICE_TAG
+    docker pull ghcr.io/eclipse/kuksa.val.services/seat_service:$SEATSERVICE_TAG
+    docker tag ghcr.io/eclipse/kuksa.val.services/seat_service:$SEATSERVICE_TAG localhost:12345/seatservice:$SEATSERVICE_TAG
+    docker push localhost:12345/seatservice:$SEATSERVICE_TAG
 
-        docker pull ghcr.io/eclipse/kuksa.val.feeders/dbc2val:$FEEDERCAN_TAG
-        docker tag ghcr.io/eclipse/kuksa.val.feeders/dbc2val:$FEEDERCAN_TAG localhost:12345/feedercan:$FEEDERCAN_TAG
-        docker push localhost:12345/feedercan:$FEEDERCAN_TAG
+    docker pull ghcr.io/eclipse/kuksa.val.feeders/dbc2val:$FEEDERCAN_TAG
+    docker tag ghcr.io/eclipse/kuksa.val.feeders/dbc2val:$FEEDERCAN_TAG localhost:12345/feedercan:$FEEDERCAN_TAG
+    docker push localhost:12345/feedercan:$FEEDERCAN_TAG
 
-        # We set the tag to the version from the variables above in the script. This overwrites the default values in the values-file.
-        helm install vehicleappruntime $ROOT_DIRECTORY/deploy/runtime/k3d/helm --values $ROOT_DIRECTORY/deploy/runtime/k3d/helm/values.yaml --set imageSeatService.tag=$SEATSERVICE_TAG --set imageVehicleDataBroker.tag=$VEHICLEDATABROKER_TAG --set imageFeederCan.tag=$FEEDERCAN_TAG --wait --timeout 60s --debug
+    # We set the tag to the version from the variables above in the script. This overwrites the default values in the values-file.
+    helm install vehicleappruntime $ROOT_DIRECTORY/deploy/runtime/k3d/helm --values $ROOT_DIRECTORY/deploy/runtime/k3d/helm/values.yaml --set imageSeatService.tag=$SEATSERVICE_TAG --set imageVehicleDataBroker.tag=$VEHICLEDATABROKER_TAG --set imageFeederCan.tag=$FEEDERCAN_TAG --wait --timeout 60s --debug
 
-    else
-        tput setaf 1; echo "ERROR: Please run 'docker login ghcr.io' and rerun the script"
-    fi
 else
     echo "Runtime already deployed. To redeploy the components, run the task 'K3D - Uninstall runtime' first."
 fi
