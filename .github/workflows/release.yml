@@ -58,7 +58,7 @@ jobs:
         uses: docker/login-action@v1
         with:
           registry: ghcr.io
-          username: ${{ github.repository_owner }} # ${{ github.actor }} ?
+          username: ${{ github.repository_owner }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - id: github-repository-name-case-adjusted
@@ -66,6 +66,17 @@ jobs:
         uses: ASzc/change-string-case-action@v1
         with:
           string: ${{ github.repository }}
+
+      - name: "${{ matrix.component.Name }} -- Publish release image to GHCR"
+        env:
+          VAPP_NAME: ${{ matrix.component.Name }}
+          COMMIT: ${{ github.sha }}
+          VAPP_VERSION: ${{ steps.get_version.outputs.version-without-v }}
+          GIT_HUB_REPOSITORY_NAME_LOWER_CASE: ${{ steps.github-repository-name-case-adjusted.outputs.lowercase }}
+          TARGET_REGISTRY: 'ghcr.io/${{steps.github-repository-name-case-adjusted.outputs.lowercase}}' # Please use your target container registry
+        run: |
+          echo "Copy vApp image 'docker://ghcr.io/$GIT_HUB_REPOSITORY_NAME_LOWER_CASE/$VAPP_NAME:$COMMIT' to 'docker://$TARGET_REGISTRY/$VAPP_NAME:$VAPP_VERSION'"
+          skopeo copy --all  "docker://ghcr.io/$GIT_HUB_REPOSITORY_NAME_LOWER_CASE/$VAPP_NAME:$COMMIT" "docker://$TARGET_REGISTRY/$VAPP_NAME:$VAPP_VERSION"
 
   release-documentation:
     name: Generate release documentation
@@ -85,19 +96,22 @@ jobs:
         with:
           node-version: '14.x'
 
-      - uses: haya14busa/action-cond@v1
+      - name: Conditional input event value
+        uses: haya14busa/action-cond@v1
         id: condval
         with:
           cond: ${{ !github.event.inputs.name }}
           if_true: ${{ github.event.inputs.name }}
           if_false: ${{ github.sha }}
+      - name: Use conditional value
+        run: echo "Event = ${{ steps.condval.outputs.value }}"
 
-      - name: Wait for CI workflow
+      - name: Wait for CI workflow (Multi-Arch image)
         uses: fountainhead/action-wait-for-check@v1.0.0
         id: wait-for-CI
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          checkName: "build-images"
+          checkName: "create-multiarch-image"
           ref:  ${{ steps.condval.outputs.value }}
           timeoutSeconds: 600
 
