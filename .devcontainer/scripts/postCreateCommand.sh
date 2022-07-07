@@ -13,6 +13,10 @@
 #
 # SPDX-License-Identifier: Apache-2.0
 
+export HTTP_PROXY=${HTTP_PROXY}
+export HTTPS_PROXY=${HTTPS_PROXY}
+export NO_PROXY=${NO_PROXY}
+
 sudo chmod +x .devcontainer/scripts/*.sh
 sudo chmod +x .vscode/scripts/runtime/k3d/*.sh
 sudo chmod +x .vscode/scripts/runtime/local/*.sh
