@@ -21,18 +21,6 @@ ARG UPGRADE_PACKAGES="false"
 ARG ENABLE_NONROOT_DOCKER="true"
 # [Option] Use the OSS Moby Engine instead of the licensed Docker Engine
 ARG USE_MOBY="true"
-
-# Port of the local Proxy
-ARG PROXY_PORT
-
-ENV USE_PROXIES="true"
-ENV HTTP_PROXY="http://172.17.0.1:${PROXY_PORT:-3128}"
-ENV HTTPS_PROXY=$HTTP_PROXY
-ENV http_proxy=$HTTP_PROXY
-ENV https_proxy=$HTTP_PROXY
-ENV FTP_PROXY=$HTTP_PROXY
-ENV ALL_PROXY=$HTTP_PROXY
-ENV NO_PROXY="localhost,127.0.0.1,0.0.0.0,10.0.0.0/8,192.168.122.0/24,cattle-system.svc,.svc,.cluster.local"
 # Force dapr to use localhost traffic
 ENV DAPR_HOST_IP="127.0.0.1"
 
@@ -45,7 +33,3 @@ ENV DOCKER_BUILDKIT=1
 
 # Add daprd to the path for the VS Code Dapr extension.
 ENV PATH=$PATH:/home/vscode/.dapr/bin
-
-COPY scripts/*.sh /tmp/scripts/
-RUN find /tmp/scripts/ -type f -iname "*.sh" -exec chmod +x {} \;
-RUN /bin/bash /tmp/scripts/configure-proxies.sh
