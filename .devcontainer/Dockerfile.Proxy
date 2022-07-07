@@ -26,7 +26,7 @@ ARG USE_MOBY="true"
 ARG PROXY_PORT
 
 ENV USE_PROXIES="true"
-ENV HTTP_PROXY="http://host.docker.internal:${PROXY_PORT:-3128}"
+ENV HTTP_PROXY="http://172.17.0.1:${PROXY_PORT:-3128}"
 ENV HTTPS_PROXY=$HTTP_PROXY
 ENV http_proxy=$HTTP_PROXY
 ENV https_proxy=$HTTP_PROXY
