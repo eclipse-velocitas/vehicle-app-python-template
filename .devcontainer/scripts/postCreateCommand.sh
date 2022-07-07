@@ -19,11 +19,6 @@ sudo chmod +x .vscode/scripts/runtime/local/*.sh
 sudo chown -R $(whoami) $HOME
 
 echo "#######################################################"
-echo "### Checking proxies                                ###"
-echo "#######################################################"
-sudo .devcontainer/scripts/configure-proxies.sh | tee -a $HOME/configure-proxies.log
-
-echo "#######################################################"
 echo "### Install Jq                                      ###"
 echo "#######################################################"
 sudo apt-get install -y jq
