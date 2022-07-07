@@ -48,6 +48,4 @@ ENV PATH=$PATH:/home/vscode/.dapr/bin
 
 COPY scripts/*.sh /tmp/scripts/
 RUN find /tmp/scripts/ -type f -iname "*.sh" -exec chmod +x {} \;
-RUN apt-get update
-RUN apt-get upgrade -y
 RUN /bin/bash /tmp/scripts/configure-proxies.sh
