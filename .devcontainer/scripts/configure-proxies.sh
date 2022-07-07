@@ -96,12 +96,12 @@ if [ "${USE_PROXIES}" = "true" ]; then
         git config --global https.proxy ${HTTPS_PROXY}
     fi
 
-    echo "# Proxy settings" >> /etc/wgetrc
-    echo "http_proxy=${HTTP_PROXY}" >> /etc/wgetrc
-    echo "https_proxy=${HTTPS_PROXY}" >> /etc/wgetrc
-    echo "ftp_proxy=${FTP_PROXY}" >> /etc/wgetrc
-    echo "no_proxy=${NO_PROXY}" >> /etc/wgetrc
-    echo "use_proxy=on" >> /etc/wgetrc
+    # echo "# Proxy settings" >> /etc/wgetrc
+    # echo "http_proxy=${HTTP_PROXY}" >> /etc/wgetrc
+    # echo "https_proxy=${HTTPS_PROXY}" >> /etc/wgetrc
+    # echo "ftp_proxy=${FTP_PROXY}" >> /etc/wgetrc
+    # echo "no_proxy=${NO_PROXY}" >> /etc/wgetrc
+    # echo "use_proxy=on" >> /etc/wgetrc
 
     # enable root user to "apt-get" via proxy
     echo "Acquire::http::proxy \"${HTTP_PROXY}\";" >> /etc/apt/apt.conf
