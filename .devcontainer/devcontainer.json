@@ -1,7 +1,7 @@
 {
 	"name": "Python VehicleApp",
 	"dockerFile": "Dockerfile${localEnv:DEVCONTAINER_PROXY}",
-	"build": { "args": { "PROXY_PORT" :  "${localEnv:DEVCONTAINER_PROXY_PORT}" } },
+	"build": { "args": { "PROXY_PORT" :  "${localEnv:DEVCONTAINER_PROXY_PORT}", "PROXY_HOST" : "${localEnv:DEVCONTAINER_PROXY_HOST}" } },
 	"runArgs": ["--init", "--privileged"],
 
 	// Set *default* container specific settings.json values on container create.
