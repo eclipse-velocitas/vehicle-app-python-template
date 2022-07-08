@@ -61,8 +61,9 @@ fi
 
 if ! dapr status -k &> /dev/null
 then
-  # Init Dapr in cluster
-  dapr init -k --wait --timeout 600 --runtime-version 1.8.0-rc.3
+  # Init Dapr in cluster. The --runtime-version is used to specify the dapr runtime version (i.e. remove the '#')
+  # Dapr runtime releases: https://github.com/dapr/dapr/releases
+  dapr init -k --wait --timeout 600 # --runtime-version 1.8.0-xyz
 
   # Apply Dapr config
   kubectl apply -f $ROOT_DIRECTORY/deploy/runtime/k3d/.dapr/config.yaml
