@@ -51,6 +51,9 @@ jobs:
 
       - id: get_version
         uses: battila7/get-version-action@v2
+        run: |
+          echo "Current Hhash: ${{ github.sha }}"
+          echo "Inputs name: ${{ github.event.inputs.name }}"
 
       - run: echo "Using VehicleApp version ${{ steps.get_version.outputs.version-without-v }} from tag"
 
@@ -113,7 +116,7 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           checkName: "create-multiarch-image"
           ref:  ${{ steps.condval.outputs.value }}
-          timeoutSeconds: 600
+          timeoutSeconds: 120
 
       - name: Download artifact
         uses: dawidd6/action-download-artifact@v2

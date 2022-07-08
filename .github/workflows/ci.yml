@@ -268,4 +268,5 @@ jobs:
           VAPP_VERSION: ${{ github.sha }}
           REPO: ghcr.io/${{ steps.github-repository-name-case-adjusted.outputs.lowercase }}
         run: |
+          echo "Current hash: ${{ github.sha }}"
           docker buildx imagetools create -t $REPO/$VAPP_NAME:$VAPP_VERSION $REPO/$VAPP_NAME:$VAPP_VERSION-amd64 $REPO/$VAPP_NAME:$VAPP_VERSION-aarch64
