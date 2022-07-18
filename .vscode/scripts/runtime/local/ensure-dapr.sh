@@ -35,7 +35,7 @@ if ! [[ $version =~ ^([0-9]{1,2})\.([0-9]{1,2})\.([0-9]{1,2}) ]]; then
 
       dapr uninstall
       # The --runtime-version is used to specify the dapr runtime version (i.e. remove the '#')
-      dapr init # --runtime-version 1.8.0-xyz
+      dapr init --runtime-version 1.8.0
 else
       echo "Dapr is already installed and initialized, skipping setup."
 fi
