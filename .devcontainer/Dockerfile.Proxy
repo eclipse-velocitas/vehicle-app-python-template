@@ -24,9 +24,10 @@ ARG USE_MOBY="true"
 
 # Port of the local Proxy
 ARG PROXY_PORT
+ARG PROXY_HOST
 
 ENV USE_PROXIES="true"
-ENV HTTP_PROXY="http://host.docker.internal:${PROXY_PORT:-3128}"
+ENV HTTP_PROXY="${PROXY_HOST:-http://host.docker.internal}:${PROXY_PORT:-3128}"
 ENV HTTPS_PROXY=$HTTP_PROXY
 ENV http_proxy=$HTTP_PROXY
 ENV https_proxy=$HTTP_PROXY
@@ -46,5 +47,6 @@ ENV DOCKER_BUILDKIT=1
 # Add daprd to the path for the VS Code Dapr extension.
 ENV PATH=$PATH:/home/vscode/.dapr/bin
 
-RUN echo "Acquire::http::proxy \"${HTTP_PROXY}\";" >> /etc/apt/apt.conf.d/proxy.conf
-RUN echo "Acquire::https::proxy \"${HTTP_PROXY}\";" >> /etc/apt/apt.conf.d/proxy.conf
+COPY scripts/*.sh /tmp/scripts/
+RUN find /tmp/scripts/ -type f -iname "*.sh" -exec chmod +x {} \;
+RUN /bin/bash /tmp/scripts/configure-proxies.sh
