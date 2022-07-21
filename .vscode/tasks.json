@@ -3,7 +3,7 @@
 	"tasks": [
 		{
 			"label": "dapr-SeatAdjuster-run",
-			"appId": "seatadjuster",
+			"appId": "vehicleapp",
 			"appPort": 50008,
 			"componentsPath": "./.dapr/components",
 			"config": "./.dapr/config.yaml",
@@ -20,7 +20,7 @@
 			"label": "dapr-SeatAdjuster-stop",
 			"type": "shell",
 			"command": [
-				"dapr stop --app-id seatadjuster"
+				"dapr stop --app-id vehicleapp"
 			],
 			"presentation": {
 				"close": true,
@@ -171,12 +171,12 @@
 			"type":"shell",
 			"command": [
 				"dapr run",
-				"--app-id seatadjuster",
+				"--app-id vehicleapp",
 				"--app-protocol grpc",
 				"--app-port 50008",
 				"--config ./.dapr/config.yaml",
 				"--components-path ./.dapr/components",
-				"python3 ./src/VehicleApp/seatadjuster.py"
+				"python3 ./src/VehicleApp/main.py"
 			],
 			"group": "none",
 			"isBackground": true,
@@ -261,7 +261,7 @@
 			"label": "K3D - Deploy VehicleApp",
 			"detail": "Builds and deploys the VehicleApp via Helm to the K3D cluster.",
 			"type": "shell",
-			"command": "./.vscode/scripts/runtime/k3d/deploy_VehicleApp.sh",
+			"command": "./.vscode/scripts/runtime/k3d/deploy_vehicleapp.sh",
 			"group": "none",
 			"presentation": {
 				"reveal": "always",
@@ -277,7 +277,7 @@
 			"label": "K3D - Deploy VehicleApp (without rebuild)",
 			"detail": "Deploys the VehicleApp via Helm to the K3D cluster (without rebuilding it)",
 			"type": "shell",
-			"command": "./.vscode/scripts/runtime/k3d/deploy_VehicleApp.sh",
+			"command": "./.vscode/scripts/runtime/k3d/deploy_vehicleapp.sh",
 			"group": "none",
 			"presentation": {
 				"reveal": "always",
