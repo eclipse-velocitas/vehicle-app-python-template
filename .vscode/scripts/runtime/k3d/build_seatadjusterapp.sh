@@ -19,7 +19,7 @@ if [ -n "$HTTP_PROXY" ]; then
 
     cd $ROOT_DIRECTORY
     DOCKER_BUILDKIT=1 docker build \
-    -f src/SeatAdjusterApp/Dockerfile \
+    -f src/VehicleApp/Dockerfile \
     --progress=plain \
     -t localhost:12345/seatadjuster:local \
     --build-arg HTTP_PROXY="$HTTP_PROXY" \
@@ -34,6 +34,6 @@ else
     # Build, push vehicleapi image - NO PROXY
 
     cd $ROOT_DIRECTORY
-    DOCKER_BUILDKIT=1 docker build -f src/SeatAdjusterApp/Dockerfile --progress=plain -t localhost:12345/seatadjuster:local . --no-cache
+    DOCKER_BUILDKIT=1 docker build -f src/VehicleApp/Dockerfile --progress=plain -t localhost:12345/seatadjuster:local . --no-cache
     docker push localhost:12345/seatadjuster:local
 fi

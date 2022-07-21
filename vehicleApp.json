@@ -5,6 +5,6 @@
         "StartProgram": "seatadjuster.py",
         "Port": 50008,
         "IsPublisher": 1,
-        "DockerFolder": "./src/SeatAdjusterApp"
+        "DockerFolder": "./src/VehicleApp"
     }
 ]

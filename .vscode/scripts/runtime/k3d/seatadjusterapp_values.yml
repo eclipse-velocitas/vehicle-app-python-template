@@ -12,7 +12,7 @@
 #
 # SPDX-License-Identifier: Apache-2.0
 
-imageSeatAdjusterApp:
+imageVehicleApp:
   name: seatadjuster
   repository: k3d-registry.localhost:12345/seatadjuster
   pullPolicy: Always
