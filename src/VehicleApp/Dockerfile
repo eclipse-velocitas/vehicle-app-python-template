@@ -40,11 +40,11 @@ RUN pip3 install --no-cache-dir pyinstaller \
 
 WORKDIR /src
 
-RUN pyinstaller --clean -F -s SeatAdjusterApp/seatadjuster.py
+RUN pyinstaller --clean -F -s VehicleApp/main.py
 
 WORKDIR /src/dist
 
-RUN staticx seatadjuster run-exe
+RUN staticx main run-exe
 
 # Runner stage, to copy the executable
 FROM scratch

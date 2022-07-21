@@ -36,11 +36,11 @@ logging.getLogger().setLevel("INFO")
 logger = logging.getLogger(__name__)
 
 
-class SeatAdjusterApp(VehicleApp):
+class VehicleApp(VehicleApp):
     """
     Sample Velocitas Vehicle App.
 
-    The SeatAdjusterApp subscribes to a MQTT topic to listen for incoming
+    The VehicleApp subscribes to a MQTT topic to listen for incoming
     requests to change the seat position and calls the SeatService to move the seat
     upon such a request, but only if Vehicle.Speed equals 0.
 
@@ -111,8 +111,8 @@ class SeatAdjusterApp(VehicleApp):
 async def main():
 
     """Main function"""
-    logger.info("Starting seat adjuster app...")
-    seat_adjuster_app = SeatAdjusterApp(vehicle)
+    logger.info("Starting vehicle app...")
+    seat_adjuster_app = VehicleApp(vehicle)
     await seat_adjuster_app.run()
 
 
