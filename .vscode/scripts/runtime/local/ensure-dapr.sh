@@ -18,26 +18,28 @@ echo "### Ensure dapr                                     ###"
 echo "#######################################################"
 
 ROOT_DIRECTORY=$( realpath "$( cd -- "$(dirname "$0")" >/dev/null 2>&1 ; pwd -P )/../../../.." )
+DEFAULT_DAPR_VERSION=$(cat $ROOT_DIRECTORY/prerequisite_settings.json | jq .dapr.version | tr -d '"')
+DAPR_RUNTIME=$(cat $ROOT_DIRECTORY/prerequisite_settings.json | jq .dapr.runtime | tr -d '"')
+INSTALLED_DAPR_VERSION=$(dapr --version | grep "CLI version: " | sed 's/^.*: //')
 
-version=$(dapr --version | grep "Runtime version: " | sed 's/^.*: //')
-
-if ! [[ $version =~ ^([0-9]{1,2})\.([0-9]{1,2})\.([0-9]{1,2}) ]]; then
-      daprReleaseUrl="https://api.github.com/repos/dapr/cli/releases"
-      latest_release=$(curl -s $daprReleaseUrl | grep \"tag_name\" | grep -v rc | awk 'NR==1{print $2}' |  sed -n 's/\"\(.*\)\",/\1/p')
-      if [ -z "$latest_release" ]
-      then
-            echo "Installing dapr pre-defined version: 1.6.0"
-            wget -q https://raw.githubusercontent.com/dapr/cli/master/install/install.sh -O - | /bin/bash -s 1.6.0
-      else
-            echo "Installing dapr latest version: $latest_release"
-            wget -q https://raw.githubusercontent.com/dapr/cli/master/install/install.sh -O - | /bin/bash
-      fi
-
-      dapr uninstall
-      # The --runtime-version is used to specify the dapr runtime version (i.e. remove the '#')
-      dapr init --runtime-version 1.8.0
+# If dapr is not installed, the runtime version will empty (i.e lenght = 0)
+# If the runtime version is not empty, the version will be either:
+# - Uninitialize: "n/a"
+# - Initialize: "x.y.z"
+if [ -z "$INSTALLED_DAPR_VERSION" ] || [ $INSTALLED_DAPR_VERSION != $DEFAULT_DAPR_VERSION ]; then
+      echo "Install dapr $DEFAULT_DAPR_VERSION"
+      wget -q https://raw.githubusercontent.com/dapr/cli/master/install/install.sh -O - | /bin/bash -s $DEFAULT_DAPR_VERSION
 else
-      echo "Dapr is already installed and initialized, skipping setup."
+      echo "Dapr is already installed."
+      echo "=========================="
+      dapr --version
+      echo "=========================="
 fi
 
+echo ">> Initialize/reinitialize dapr runtime $DAPR_RUNTIME ..."
+dapr uninstall
+dapr init  --runtime-version $DAPR_RUNTIME
+
+echo "=========================="
 dapr --version
+echo "=========================="
