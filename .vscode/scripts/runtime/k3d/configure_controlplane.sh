@@ -14,6 +14,7 @@
 # SPDX-License-Identifier: Apache-2.0
 
 ROOT_DIRECTORY=$( realpath "$( cd -- "$(dirname "$0")" >/dev/null 2>&1 ; pwd -P )/../../../.." )
+DAPR_RUNTIME=$(cat $ROOT_DIRECTORY/prerequisite_settings.json | jq .dapr.runtime | tr -d '"')
 
 if ! k3d registry get k3d-registry.localhost &> /dev/null
 then
@@ -63,7 +64,7 @@ if ! dapr status -k &> /dev/null
 then
   # Init Dapr in cluster. The --runtime-version is used to specify the dapr runtime version (i.e. remove the '#')
   # Dapr runtime releases: https://github.com/dapr/dapr/releases
-  dapr init -k --wait --timeout 600 --runtime-version 1.8.0
+  dapr init -k --wait --timeout 600 --runtime-version $DAPR_RUNTIME
 
   # Apply Dapr config
   kubectl apply -f $ROOT_DIRECTORY/deploy/runtime/k3d/.dapr/config.yaml
