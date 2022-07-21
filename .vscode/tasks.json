@@ -245,7 +245,7 @@
 			"label": "K3D - Build VehicleApp",
 			"detail": "Builds the VehicleApp and pushes it to the local K3D registry.",
 			"type": "shell",
-			"command": "./.vscode/scripts/runtime/k3d/build_VehicleApp.sh",
+			"command": "./.vscode/scripts/runtime/k3d/build_vehicleapp.sh",
 			"group": "none",
 			"presentation": {
 				"reveal": "always",
