@@ -38,7 +38,7 @@ fi
 
 echo ">> Initialize/reinitialize dapr runtime $DAPR_RUNTIME ..."
 dapr uninstall
-dapr init  --runtime-version $DAPR_RUNTIME
+dapr init --runtime-version $DAPR_RUNTIME
 
 echo "=========================="
 dapr --version
