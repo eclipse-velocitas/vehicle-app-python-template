@@ -2,7 +2,7 @@
 	"version": "2.0.0",
 	"tasks": [
 		{
-			"label": "dapr-SeatAdjuster-run",
+			"label": "dapr-VehicleApp-run",
 			"appId": "vehicleapp",
 			"appPort": 50008,
 			"componentsPath": "./.dapr/components",
@@ -17,7 +17,7 @@
 			},
 		},
 		{
-			"label": "dapr-SeatAdjuster-stop",
+			"label": "dapr-VehicleApp-stop",
 			"type": "shell",
 			"command": [
 				"dapr stop --app-id vehicleapp"
@@ -166,8 +166,8 @@
 			"dependsOrder": "sequence"
 		},
 		{
-			"label": "Local - SeatAdjuster (Dapr run)",
-			"detail": "Start SeatAdjuster with dapr run (p.e. for running integration tests locally).",
+			"label": "Local - VehicleApp (Dapr run)",
+			"detail": "Start VehicleApp with dapr run (p.e. for running integration tests locally).",
 			"type":"shell",
 			"command": [
 				"dapr run",
