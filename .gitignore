@@ -375,13 +375,6 @@ get_helm.sh
 # Don't commit runtime binaries
 .vscode/**/assets
 
-# vehicleApp virtual environment
-vehicleApp/
-
-# vehicle_model virtual environment
-src/vehicle_model/build/
-src/vehicle_model/vehicle_model.egg*/
-
 venv/
 # Mac files
 .DS_Store
