@@ -29,7 +29,7 @@ jq -c '.[]' $ROOT_DIRECTORY/vehicleApp.json | while read i; do
     docker push $local_tag
 done
 
-helm install vapp-chart $ROOT_DIRECTORY/deploy/SeatAdjusterApp/helm/ --values $ROOT_DIRECTORY/.vscode/scripts/runtime/k3d/seatadjusterapp_values.yml --wait --timeout 60s --debug
+helm install vapp-chart $ROOT_DIRECTORY/deploy/VehicleApp/helm/ --values --values $ROOT_DIRECTORY/deploy/VehicleApp/helm/values.yaml --wait --timeout 60s --debug
 
 kubectl get svc --all-namespaces
 kubectl get pods

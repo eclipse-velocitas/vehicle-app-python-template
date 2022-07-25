@@ -17,4 +17,4 @@ ROOT_DIRECTORY=$( realpath "$( cd -- "$(dirname "$0")" >/dev/null 2>&1 ; pwd -P 
 helm uninstall vapp-chart --wait
 
 # Deploy in K3D
-helm install vapp-chart $ROOT_DIRECTORY/deploy/SeatAdjusterApp/helm --values $ROOT_DIRECTORY/.vscode/scripts/runtime/k3d/seatadjusterapp_values.yml --wait --timeout 60s --debug
+helm install vapp-chart $ROOT_DIRECTORY/deploy/VehicleApp/helm --values $ROOT_DIRECTORY/deploy/VehicleApp/helm/values.yaml --wait --timeout 60s --debug
