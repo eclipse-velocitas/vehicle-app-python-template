@@ -90,8 +90,7 @@ jobs:
         push: false
         outputs: |
           type=oci,dest=./${{ matrix.component.Name }}.tar
-        context: ${{ matrix.component.ContextFolder }}
-        file: ${{ matrix.component.DockerFolder }}/Dockerfile
+        file: ${{ matrix.component.Dockerfile }}
         platforms: linux/${{ inputs.platform }}
         secrets: |
           "github_token=user:${{ secrets.GITHUB_TOKEN }}"
