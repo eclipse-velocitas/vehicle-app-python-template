@@ -16,5 +16,13 @@
     },
     "databrokerimage": {
         "version": "v0.17.0"
+    },
+    "dapr": {
+        "cli": {
+            "version": "1.8.0"
+        },
+        "runtime": {
+            "version": "1.8.1"
+        }
     }
 }

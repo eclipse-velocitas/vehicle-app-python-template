@@ -17,26 +17,37 @@ echo "#######################################################"
 echo "### Ensure dapr                                     ###"
 echo "#######################################################"
 
-ROOT_DIRECTORY=$( realpath "$( cd -- "$(dirname "$0")" >/dev/null 2>&1 ; pwd -P )/../../../.." )
-
-version=$(dapr --version | grep "Runtime version: " | sed 's/^.*: //')
-
-if ! [[ $version =~ ^([0-9]{1,2})\.([0-9]{1,2})\.([0-9]{1,2}) ]]; then
-      daprReleaseUrl="https://api.github.com/repos/dapr/cli/releases"
-      latest_release=$(curl -s $daprReleaseUrl | grep \"tag_name\" | grep -v rc | awk 'NR==1{print $2}' |  sed -n 's/\"\(.*\)\",/\1/p')
-      if [ -z "$latest_release" ]
-      then
-            echo "Installing dapr pre-defined version: 1.6.0"
-            wget -q https://raw.githubusercontent.com/dapr/cli/master/install/install.sh -O - | /bin/bash -s 1.6.0
-      else
-            echo "Installing dapr latest version: $latest_release"
-            wget -q https://raw.githubusercontent.com/dapr/cli/master/install/install.sh -O - | /bin/bash
-      fi
-
+# Function to initialize Dapr
+init_dapr()
+{
+      echo "Initialize dapr runtime $DEFAULT_DAPR_RUNTIME_VERSION ..."
       dapr uninstall
-      dapr init --runtime-version 1.8.0-rc.3
+      dapr init --runtime-version $DEFAULT_DAPR_RUNTIME_VERSION
+      echo "=========================="
+      dapr --version
+      echo "=========================="
+}
+
+ROOT_DIRECTORY=$( realpath "$( cd -- "$(dirname "$0")" >/dev/null 2>&1 ; pwd -P )/../../../.." )
+DEFAULT_DAPR_CLI_VERSION=$(cat $ROOT_DIRECTORY/prerequisite_settings.json | jq .dapr.cli.version | tr -d '"')
+DEFAULT_DAPR_RUNTIME_VERSION=$(cat $ROOT_DIRECTORY/prerequisite_settings.json | jq .dapr.runtime.version | tr -d '"')
+INSTALLED_DAPR_CLI_VERSION=$(dapr --version | grep "CLI version: " | sed 's/^.*: //' | sed 's/\s*//g')
+INSTALLED_DAPR_RUNTIME_VERSION=$(dapr --version | grep "Runtime version: " | sed 's/^.*: //' | sed 's/\s*//g')
+
+# Check dapr CLI
+if [ "${INSTALLED_DAPR_CLI_VERSION}" != "${DEFAULT_DAPR_CLI_VERSION}" ]; then
+      echo "Install dapr CLI $DEFAULT_DAPR_CLI_VERSION"
+      wget -q https://raw.githubusercontent.com/dapr/cli/master/install/install.sh -O - | /bin/bash -s $DEFAULT_DAPR_CLI_VERSION
 else
-      echo "Dapr is already installed and initialized, skipping setup."
+      echo "Dapr CLI $DEFAULT_DAPR_CLI_VERSION is already installed."
 fi
 
-dapr --version
+# check dapr runtime
+if [ "${INSTALLED_DAPR_RUNTIME_VERSION}" != "${DEFAULT_DAPR_RUNTIME_VERSION}" ]; then
+      init_dapr
+else
+      echo "Dapr Runtime already Initialized."
+      echo "=========================="
+      dapr --version
+      echo "=========================="
+fi
