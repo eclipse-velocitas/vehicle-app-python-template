@@ -17,10 +17,22 @@ echo "#######################################################"
 echo "### Ensure dapr                                     ###"
 echo "#######################################################"
 
+# Function to initialize Dapr
+init_dapr()
+{
+      echo ">> Initialize dapr runtime $DEFAULT_DAPR_RUNTIME ..."
+      dapr uninstall
+      dapr init --runtime-version $DEFAULT_DAPR_RUNTIME
+      echo "=========================="
+      dapr --version
+      echo "=========================="
+}
+
 ROOT_DIRECTORY=$( realpath "$( cd -- "$(dirname "$0")" >/dev/null 2>&1 ; pwd -P )/../../../.." )
 DEFAULT_DAPR_VERSION=$(cat $ROOT_DIRECTORY/prerequisite_settings.json | jq .dapr.version | tr -d '"')
-DAPR_RUNTIME=$(cat $ROOT_DIRECTORY/prerequisite_settings.json | jq .dapr.runtime | tr -d '"')
+DEFAULT_DAPR_RUNTIME=$(cat $ROOT_DIRECTORY/prerequisite_settings.json | jq .dapr.runtime | tr -d '"')
 INSTALLED_DAPR_VERSION=$(dapr --version | grep "CLI version: " | sed 's/^.*: //')
+INSTALLED_DAPR_RUNTIME=$(dapr --version | grep "Runtime version: " | sed 's/^.*: //')
 
 # If dapr is not installed, the runtime version will empty (i.e lenght = 0)
 # If the runtime version is not empty, the version will be either:
@@ -29,17 +41,15 @@ INSTALLED_DAPR_VERSION=$(dapr --version | grep "CLI version: " | sed 's/^.*: //'
 if [ -z "$INSTALLED_DAPR_VERSION" ] || [ $INSTALLED_DAPR_VERSION != $DEFAULT_DAPR_VERSION ]; then
       echo "Install dapr $DEFAULT_DAPR_VERSION"
       wget -q https://raw.githubusercontent.com/dapr/cli/master/install/install.sh -O - | /bin/bash -s $DEFAULT_DAPR_VERSION
+      init_dapr
 else
-      echo "Dapr is already installed."
-      echo "=========================="
-      dapr --version
-      echo "=========================="
+      echo "Dapr is already installed, check for runtime and initialize if necessary."
+      if [ $INSTALLED_DAPR_RUNTIME != $DEFAULT_DAPR_RUNTIME ]; then
+            init_dapr
+      else
+            echo "Dapr already Initialized."
+            echo "=========================="
+            dapr --version
+            echo "=========================="
+      fi
 fi
-
-echo ">> Initialize/reinitialize dapr runtime $DAPR_RUNTIME ..."
-dapr uninstall
-dapr init --runtime-version $DAPR_RUNTIME
-
-echo "=========================="
-dapr --version
-echo "=========================="
