@@ -13,8 +13,8 @@
 # SPDX-License-Identifier: Apache-2.0
 
 apiVersion: v2
-name: seatadjuster
-description: A Helm chart for the SeatAdjusterApp
+name: vehicleapp
+description: A Helm chart for the VehicleApp
 
 # A chart can be either an 'application' or a 'library' chart.
 #

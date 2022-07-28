@@ -15,27 +15,27 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{.Values.imageSeatAdjusterApp.name}}
+  name: {{.Values.imageVehicleApp.name}}
   labels:
-    app: {{.Values.imageSeatAdjusterApp.name}}
+    app: {{.Values.imageVehicleApp.name}}
 spec:
   selector:
     matchLabels:
-      app: {{.Values.imageSeatAdjusterApp.name}}
+      app: {{.Values.imageVehicleApp.name}}
   template:
     metadata:
       annotations:
         dapr.io/enabled: "true"
-        dapr.io/app-id: "{{.Values.imageSeatAdjusterApp.daprAppid}}"
-        dapr.io/app-port: "{{.Values.imageSeatAdjusterApp.daprPort}}"
+        dapr.io/app-id: "{{.Values.imageVehicleApp.daprAppid}}"
+        dapr.io/app-port: "{{.Values.imageVehicleApp.daprPort}}"
         dapr.io/log-level: "debug"
         dapr.io/config: "config"
         dapr.io/app-protocol: "grpc"
       labels:
-        app: {{.Values.imageSeatAdjusterApp.name}}
+        app: {{.Values.imageVehicleApp.name}}
         {{- include "helm.selectorLabels" . | nindent 8 }}
     spec:
       containers:
-        - name: {{.Values.imageSeatAdjusterApp.name}}
-          image: "{{ .Values.imageSeatAdjusterApp.repository }}:{{ .Values.imageSeatAdjusterApp.tag | default .Chart.AppVersion }}"
-          imagePullPolicy: {{ .Values.imageSeatAdjusterApp.pullPolicy }}
+        - name: {{.Values.imageVehicleApp.name}}
+          image: "{{ .Values.imageVehicleApp.repository }}:{{ .Values.imageVehicleApp.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.imageVehicleApp.pullPolicy }}

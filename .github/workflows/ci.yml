@@ -128,8 +128,8 @@ jobs:
         id: export-deployment-matrix
         run: |
           SITE_PACKAGES=$(python -m site --user-site)
-          sed -i "s|SITE_PACKAGES|$SITE_PACKAGES|g" ./vehicleApp.json
-          MATRIX=$(cat ./vehicleApp.json | tr '\n' ' ')
+          sed -i "s|SITE_PACKAGES|$SITE_PACKAGES|g" ./AppManifest.json
+          MATRIX=$(cat ./AppManifest.json | tr '\n' ' ')
 
           echo "::set-output name=deployment-matrix::$MATRIX"
 

@@ -12,12 +12,12 @@
 #
 # SPDX-License-Identifier: Apache-2.0
 
-imageSeatAdjusterApp:
-  name: seatadjuster
-  repository: k3d-registry.localhost:12345/seatadjuster
+imageVehicleApp:
+  name: vehicleapp
+  repository: k3d-registry.localhost:12345/vehicleapp
   pullPolicy: Always
   tag: "local"
-  daprAppid: seatadjuster
+  daprAppid: vehicleapp
   daprPort: 50008
 
 nameOverride: ""
