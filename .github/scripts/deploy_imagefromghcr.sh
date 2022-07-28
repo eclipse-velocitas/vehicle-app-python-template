@@ -34,7 +34,7 @@ helm install vapp-chart $ROOT_DIRECTORY/deploy/VehicleApp/helm/ --values $ROOT_D
 kubectl get svc --all-namespaces
 kubectl get pods
 
-jq -c '.[]' $ROOT_DIRECTORY/vehicleApp.json | while read i; do
+jq -c '.[]' $ROOT_DIRECTORY/AppManifest.json | while read i; do
     name=$(jq -r '.Name' <<< "$i")
     podname=$(kubectl get pods -o name | grep $name)
     kubectl describe $podname
