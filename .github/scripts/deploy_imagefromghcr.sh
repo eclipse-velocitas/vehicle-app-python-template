@@ -15,7 +15,7 @@
 
 ROOT_DIRECTORY=$( realpath "$( cd -- "$(dirname "$0")" >/dev/null 2>&1 ; pwd -P )/../.." )
 
-jq -c '.[]' $ROOT_DIRECTORY/vehicleApp.json | while read i; do
+jq -c '.[]' $ROOT_DIRECTORY/AppManifest.json | while read i; do
     name=$(jq -r '.Name' <<< "$i")
 
     pull_url="ghcr.io/$REPO_NAME/$name:$SHA-amd64"
@@ -29,12 +29,12 @@ jq -c '.[]' $ROOT_DIRECTORY/vehicleApp.json | while read i; do
     docker push $local_tag
 done
 
-helm install vapp-chart $ROOT_DIRECTORY/deploy/SeatAdjusterApp/helm/ --values $ROOT_DIRECTORY/.vscode/scripts/runtime/k3d/seatadjusterapp_values.yml --wait --timeout 60s --debug
+helm install vapp-chart $ROOT_DIRECTORY/deploy/VehicleApp/helm/ --values $ROOT_DIRECTORY/deploy/VehicleApp/helm/values.yaml --wait --timeout 60s --debug
 
 kubectl get svc --all-namespaces
 kubectl get pods
 
-jq -c '.[]' $ROOT_DIRECTORY/vehicleApp.json | while read i; do
+jq -c '.[]' $ROOT_DIRECTORY/AppManifest.json | while read i; do
     name=$(jq -r '.Name' <<< "$i")
     podname=$(kubectl get pods -o name | grep $name)
     kubectl describe $podname
