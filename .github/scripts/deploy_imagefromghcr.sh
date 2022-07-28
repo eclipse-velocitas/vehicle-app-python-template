@@ -15,7 +15,7 @@
 
 ROOT_DIRECTORY=$( realpath "$( cd -- "$(dirname "$0")" >/dev/null 2>&1 ; pwd -P )/../.." )
 
-jq -c '.[]' $ROOT_DIRECTORY/vehicleApp.json | while read i; do
+jq -c '.[]' $ROOT_DIRECTORY/AppManifest.json | while read i; do
     name=$(jq -r '.Name' <<< "$i")
 
     pull_url="ghcr.io/$REPO_NAME/$name:$SHA-amd64"
