@@ -1,10 +1,7 @@
 [
     {
-        "Name": "vehicleapp",
-        "ContextFolder": ".",
-        "StartProgram": "main.py",
+        "Name": "seatadjuster",
         "Port": 50008,
-        "IsPublisher": 1,
-        "DockerFolder": "./src/VehicleApp"
+        "Dockerfile": "./src/VehicleApp/Dockerfile"
     }
 ]

@@ -30,13 +30,12 @@ RUN /bin/bash -c 'set -ex && \
         pip3 install --no-cache-dir scons; \
     fi'
 
-
+RUN apt-get install -y git
 RUN pip3 install --no-cache-dir pyinstaller \
     && pip3 install --no-cache-dir patchelf \
     && pip3 install --no-cache-dir staticx \
     && pip3 install --no-cache-dir -r src/requirements.txt \
-    && pip3 install --no-cache-dir https://api.github.com/repos/eclipse-velocitas/vehicle-app-python-sdk/tarball/v0.2.0 \
-    && pip3 install --no-cache-dir https://api.github.com/repos/eclipse-velocitas/vehicle-model-python/tarball
+    && pip3 install --no-cache-dir -r src/requirements-links.txt
 
 WORKDIR /src
 
