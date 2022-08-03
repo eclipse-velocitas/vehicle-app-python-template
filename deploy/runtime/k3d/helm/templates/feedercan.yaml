@@ -46,7 +46,7 @@ spec:
             - name: VEHICLEDATABROKER_DAPR_APP_ID
               value: {{.Values.imageVehicleDataBroker.daprAppid}}
             - name: LOG_LEVEL
-              value: "info,databroker=info,dbcfeeder.broker_client=debug,dbcfeeder=debug"
+              value: "info,databroker=info,dbcfeeder.broker_client=info,dbcfeeder=info"
             - name: USECASE
               value: "databroker"
             - name: CANDUMP_FILE
