@@ -43,7 +43,7 @@ pip3 install -r requirements.txt
 
 export DAPR_GRPC_PORT=$DATABROKER_GRPC_PORT
 export VEHICLEDATABROKER_DAPR_APP_ID=vehicledatabroker
-export LOG_LEVEL=info,databroker=info,dbcfeeder.broker_client=debug,dbcfeeder=debug
+export LOG_LEVEL=info,databroker=info,dbcfeeder.broker_client=info,dbcfeeder=info
 
 ### Override default files for feedercan
 CONFIG_DIR="$ROOT_DIRECTORY/deploy/runtime/k3d/volume"
