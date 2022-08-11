@@ -14,42 +14,72 @@
 # SPDX-License-Identifier: Apache-2.0
 
 echo "#######################################################"
-echo "### Running Seatservice                             ###"
+echo "### Running VehicleServices                         ###"
 echo "#######################################################"
 
 # Get Data from AppManifest.json and save to ENV
 UTILS_DIRECTORY=$(dirname `cd ..; dirname "$0"`)/utils
 source $UTILS_DIRECTORY/get-appmanifest-data.sh
 
+# Configure Service Specific Requirements
+configure_service() {
+    case $1 in
+        seatservice)
+            SEATSERVICE_PORT=50051
+            SEATSERVICE_GRPC_PORT=52002
+            CAN=cansim
+            VEHICLEDATABROKER_DAPR_APP_ID=vehicledatabroker
+            # Configure ports for docker to expose
+            DOCKER_PORTS="-p $SEATSERVICE_PORT:$SEATSERVICE_PORT -p $SEATSERVICE_GRPC_PORT:$SEATSERVICE_GRPC_PORT"
+            # Configure ENVs need to run docker container
+            DOCKER_ENVS="-e VEHICLEDATABROKER_DAPR_APP_ID=$VEHICLEDATABROKER_DAPR_APP_ID -e CAN=$CAN -e DAPR_GRPC_PORT=$SEATSERVICE_GRPC_PORT"
+            # Configure Dapr App Port
+            DAPR_APP_PORT=$SEATSERVICE_PORT
+            # Configure Dapr Grpc Port
+            DAPR_GRPC_PORT=$SEATSERVICE_GRPC_PORT
+            ;;
+        *)
+            echo "Unknown Service to configure."
+            ;;
+    esac
+}
+
+# Run Docker Container with Dapr Sidecar of configured service
+run_service() {
+    configure_service $1
+
+    RUNNING_CONTAINER=$(docker ps | grep "$SERVICE_IMAGE" | awk '{ print $1 }')
+
+    if [ -n "$RUNNING_CONTAINER" ];
+    then
+        docker container stop $RUNNING_CONTAINER
+    fi
+
+    docker run $DOCKER_PORTS $DOCKER_ENVS --network host $SERVICE_IMAGE:$SERVICE_TAG &
+
+    dapr run \
+        --app-id $SERVICE_NAME \
+        --app-protocol grpc \
+        --app-port $DAPR_APP_PORT \
+        --dapr-grpc-port $DAPR_GRPC_PORT \
+        --components-path $ROOT_DIRECTORY/.dapr/components \
+        --config $ROOT_DIRECTORY/.dapr/config.yaml && fg
+}
+
 ROOT_DIRECTORY=$( realpath "$( cd -- "$(dirname "$0")" >/dev/null 2>&1 ; pwd -P )/../../../.." )
 
-SEATSERVICE_PORT='50051'
+DEPENDENCIES=$(cat $ROOT_DIRECTORY/AppManifest.json | jq .[].dependencies)
+SERVICES=$(echo $DEPENDENCIES | jq '.services')
 
-export SEATSERVICE_GRPC_PORT='52002'
-export CAN=cansim
-export VEHICLEDATABROKER_DAPR_APP_ID=vehicledatabroker
+readarray -t SERVICES_ARRAY < <(echo $SERVICES | jq -c '.[]')
 
-RUNNING_CONTAINER=$(docker ps | grep "$SEATSERVICE_IMAGE" | awk '{ print $1 }')
-
-if [ -n "$RUNNING_CONTAINER" ];
-then
-    docker container stop $RUNNING_CONTAINER
-fi
-
-docker run \
-    -p $SEATSERVICE_PORT:$SEATSERVICE_PORT \
-    -p $SEATSERVICE_GRPC_PORT:$SEATSERVICE_GRPC_PORT \
-    -e VEHICLEDATABROKER_DAPR_APP_ID \
-    -e CAN \
-    -e DAPR_GRPC_PORT \
-    --network host \
-    $SEATSERVICE_IMAGE:$SEATSERVICE_TAG &
-
-dapr run \
-    --app-id seatservice \
-    --app-protocol grpc \
-    --app-port $SEATSERVICE_PORT \
-    --dapr-grpc-port $SEATSERVICE_GRPC_PORT \
-    --components-path $ROOT_DIRECTORY/.dapr/components \
-    --config $ROOT_DIRECTORY/.dapr/config.yaml && fg
-
+for service in ${SERVICES_ARRAY[@]}; do
+    SERVICE_NAME=$(echo $service | jq '.name' | tr -d '"' )
+    SERVICE_IMAGE=$(echo $service | jq '.image' | tr -d '"')
+    SERVICE_TAG=$(echo $service | jq '.version' | tr -d '"')
+    if [ $SERVICE_IMAGE = "null" ] || [ $SERVICE_TAG = "null" ];then
+        echo "Missing configuration in AppManifest.json for Service: $SERVICE_NAME"
+    else
+        run_service $SERVICE_NAME
+    fi
+done
