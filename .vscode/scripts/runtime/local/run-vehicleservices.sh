@@ -14,7 +14,7 @@
 # SPDX-License-Identifier: Apache-2.0
 
 echo "#######################################################"
-echo "### Running VehicleDataBroke CLI                    ###"
+echo "### Running Seatservice                             ###"
 echo "#######################################################"
 
 # Get Data from AppManifest.json and save to ENV
@@ -23,14 +23,33 @@ source $UTILS_DIRECTORY/get-appmanifest-data.sh
 
 ROOT_DIRECTORY=$( realpath "$( cd -- "$(dirname "$0")" >/dev/null 2>&1 ; pwd -P )/../../../.." )
 
-if [[ `uname -m` == 'aarch64' ]]; then
-    echo "Detected ARM architecture"
-    PROCESSOR="aarch64"
-    DATABROKER_EXEC_PATH="$ROOT_DIRECTORY/.vscode/scripts/assets/databroker/$DATABROKER_TAG/$PROCESSOR/target/aarch64-unknown-linux-gnu/release"
-else
-    echo "Detected x86_64 architecture"
-    PROCESSOR="x86_64"
-    DATABROKER_EXEC_PATH="$ROOT_DIRECTORY/.vscode/scripts/assets/databroker/$DATABROKER_TAG/$PROCESSOR/target/release"
+SEATSERVICE_PORT='50051'
+
+export SEATSERVICE_GRPC_PORT='52002'
+export CAN=cansim
+export VEHICLEDATABROKER_DAPR_APP_ID=vehicledatabroker
+
+RUNNING_CONTAINER=$(docker ps | grep "$SEATSERVICE_IMAGE" | awk '{ print $1 }')
+
+if [ -n "$RUNNING_CONTAINER" ];
+then
+    docker container stop $RUNNING_CONTAINER
 fi
 
-$DATABROKER_EXEC_PATH/databroker-cli
+docker run \
+    -p $SEATSERVICE_PORT:$SEATSERVICE_PORT \
+    -p $SEATSERVICE_GRPC_PORT:$SEATSERVICE_GRPC_PORT \
+    -e VEHICLEDATABROKER_DAPR_APP_ID \
+    -e CAN \
+    -e DAPR_GRPC_PORT \
+    --network host \
+    $SEATSERVICE_IMAGE:$SEATSERVICE_TAG &
+
+dapr run \
+    --app-id seatservice \
+    --app-protocol grpc \
+    --app-port $SEATSERVICE_PORT \
+    --dapr-grpc-port $SEATSERVICE_GRPC_PORT \
+    --components-path $ROOT_DIRECTORY/.dapr/components \
+    --config $ROOT_DIRECTORY/.dapr/config.yaml && fg
+
