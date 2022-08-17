@@ -63,7 +63,7 @@ run_service() {
         --app-port $DAPR_APP_PORT \
         --dapr-grpc-port $DAPR_GRPC_PORT \
         --components-path $ROOT_DIRECTORY/.dapr/components \
-        --config $ROOT_DIRECTORY/.dapr/config.yaml && fg
+        --config $ROOT_DIRECTORY/.dapr/config.yaml &
 }
 
 ROOT_DIRECTORY=$( realpath "$( cd -- "$(dirname "$0")" >/dev/null 2>&1 ; pwd -P )/../../../.." )
@@ -80,6 +80,9 @@ for service in ${SERVICES_ARRAY[@]}; do
     if [ $SERVICE_IMAGE = "null" ] || [ $SERVICE_TAG = "null" ];then
         echo "Missing configuration in AppManifest.json for Service: $SERVICE_NAME"
     else
+        echo "Starting Service: $SERVICE_NAME"
         run_service $SERVICE_NAME
     fi
 done
+
+wait

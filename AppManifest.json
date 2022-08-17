@@ -9,10 +9,6 @@
                     "name": "seatservice",
                     "image": "ghcr.io/eclipse/kuksa.val.services/seat_service",
                     "version": "v0.1.0"
-                },
-                {
-                    "name": "hvac",
-                    "version": "v0.1.0"
                 }
             ],
             "runtime": [
@@ -23,10 +19,6 @@
                 },
                 {
                     "name": "databroker",
-                    "version": "databroker-v0.17.0"
-                },
-                {
-                    "name": "databrokerimage",
                     "image": "ghcr.io/eclipse/kuksa.val/databroker",
                     "version": "v0.17.0"
                 },

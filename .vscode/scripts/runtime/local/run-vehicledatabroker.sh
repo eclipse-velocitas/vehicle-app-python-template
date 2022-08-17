@@ -27,7 +27,7 @@ DATABROKER_PORT='55555'
 export DATABROKER_GRPC_PORT='52001'
 #export RUST_LOG="info,databroker=debug,vehicle_data_broker=debug"
 
-RUNNING_CONTAINER=$(docker ps | grep "$DATABROKERIMAGE_IMAGE" | awk '{ print $1 }')
+RUNNING_CONTAINER=$(docker ps | grep "$DATABROKER_IMAGE" | awk '{ print $1 }')
 
 if [ -n "$RUNNING_CONTAINER" ];
 then
@@ -39,7 +39,7 @@ docker run \
     -p $DATABROKER_GRPC_PORT:$DATABROKER_GRPC_PORT \
     -e DATABROKER_GRPC_PORT \
     --network host \
-    $DATABROKERIMAGE_IMAGE:$DATABROKERIMAGE_TAG &
+    $DATABROKER_IMAGE:$DATABROKER_TAG &
 
 dapr run \
     --app-id vehicledatabroker \
