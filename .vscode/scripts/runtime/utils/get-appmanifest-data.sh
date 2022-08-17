@@ -46,4 +46,4 @@ for runtime in ${RUNTIME_ARRAY[@]}; do
     image=$(jq '.image' <<< "${runtime}" | tr -d '"')
     export ${name^^}_TAG=$version
     export ${name^^}_IMAGE=$image
-done
+done 
