@@ -17,46 +17,34 @@ echo "#######################################################"
 echo "### Running Databroker                              ###"
 echo "#######################################################"
 
+# Get Data from AppManifest.json and save to ENV
+UTILS_DIRECTORY=$(dirname `cd ..; dirname "$0"`)/utils
+source $UTILS_DIRECTORY/get-appmanifest-data.sh
+
 ROOT_DIRECTORY=$( realpath "$( cd -- "$(dirname "$0")" >/dev/null 2>&1 ; pwd -P )/../../../.." )
 
-DATABROKER_VERSION=$(cat $ROOT_DIRECTORY/prerequisite_settings.json | jq .databroker.version | tr -d '"')
 DATABROKER_PORT='55555'
-DATABROKER_GRPC_PORT='52001'
-sudo chown $(whoami) $HOME
-
-#Detect host environment (distinguish for Mac M1 processor)
-if [[ `uname -m` == 'aarch64' || `uname -m` == 'arm64' ]]; then
-  echo "Detected ARM architecture"
-  PROCESSOR="aarch64"
-  DATABROKER_BINARY_NAME="databroker_aarch64.tar.gz"
-  DATABROKER_EXEC_PATH="$ROOT_DIRECTORY/.vscode/scripts/assets/databroker/$DATABROKER_VERSION/$PROCESSOR/target/aarch64-unknown-linux-gnu/release"
-else
-  echo "Detected x86_64 architecture"
-  PROCESSOR="x86_64"
-  DATABROKER_BINARY_NAME='databroker_x86_64.tar.gz'
-  DATABROKER_EXEC_PATH="$ROOT_DIRECTORY/.vscode/scripts/assets/databroker/$DATABROKER_VERSION/$PROCESSOR/target/release"
-fi
-
-
-API_URL=https://api.github.com/repos/eclipse/kuksa.val
-
-
-if [[ ! -f "$DATABROKER_EXEC_PATH/databroker" ]]
-then
-  echo "Downloading databroker:$DATABROKER_VERSION"
-  DATABROKER_ASSET_ID=$(curl $API_URL/releases/tags/$DATABROKER_VERSION | jq -r ".assets[] | select(.name == \"$DATABROKER_BINARY_NAME\") | .id")
-  curl -o $ROOT_DIRECTORY/.vscode/scripts/assets/databroker/$DATABROKER_VERSION/$PROCESSOR/$DATABROKER_BINARY_NAME --create-dirs -L -H "Accept: application/octet-stream" "$API_URL/releases/assets/$DATABROKER_ASSET_ID"
-  tar -xf $ROOT_DIRECTORY/.vscode/scripts/assets/databroker/$DATABROKER_VERSION/$PROCESSOR/$DATABROKER_BINARY_NAME -C $ROOT_DIRECTORY/.vscode/scripts/assets/databroker/$DATABROKER_VERSION/$PROCESSOR
-
-fi
-
-export DAPR_GRPC_PORT=$DATABROKER_GRPC_PORT
+export DATABROKER_GRPC_PORT='52001'
 #export RUST_LOG="info,databroker=debug,vehicle_data_broker=debug"
+
+RUNNING_CONTAINER=$(docker ps | grep "$DATABROKER_IMAGE" | awk '{ print $1 }')
+
+if [ -n "$RUNNING_CONTAINER" ];
+then
+    docker container stop $RUNNING_CONTAINER
+fi
+
+docker run \
+    -p $DATABROKER_PORT:$DATABROKER_PORT \
+    -p $DATABROKER_GRPC_PORT:$DATABROKER_GRPC_PORT \
+    -e DATABROKER_GRPC_PORT \
+    --network host \
+    $DATABROKER_IMAGE:$DATABROKER_TAG &
+
 dapr run \
-  --app-id vehicledatabroker \
-  --app-protocol grpc \
-  --app-port $DATABROKER_PORT \
-  --dapr-grpc-port $DATABROKER_GRPC_PORT \
-  --components-path $ROOT_DIRECTORY/.dapr/components \
-  --config $ROOT_DIRECTORY/.dapr/config.yaml & \
-  $DATABROKER_EXEC_PATH/databroker --address 0.0.0.0 --metadata $ROOT_DIRECTORY/.vscode/scripts/vss.json
+    --app-id vehicledatabroker \
+    --app-protocol grpc \
+    --app-port $DATABROKER_PORT \
+    --dapr-grpc-port $DATABROKER_GRPC_PORT \
+    --components-path $ROOT_DIRECTORY/.dapr/components \
+    --config $ROOT_DIRECTORY/.dapr/config.yaml && fg

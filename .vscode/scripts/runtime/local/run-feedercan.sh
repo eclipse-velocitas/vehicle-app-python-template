@@ -17,44 +17,45 @@ echo "#######################################################"
 echo "### Running FeederCan                               ###"
 echo "#######################################################"
 
+# Get Data from AppManifest.json and save to ENV
+UTILS_DIRECTORY=$(dirname `cd ..; dirname "$0"`)/utils
+source $UTILS_DIRECTORY/get-appmanifest-data.sh
+
 ROOT_DIRECTORY=$( realpath "$( cd -- "$(dirname "$0")" >/dev/null 2>&1 ; pwd -P )/../../../.." )
-
-FEEDERCAN_VERSION=$(cat $ROOT_DIRECTORY/prerequisite_settings.json | jq .feedercan.version | tr -d '"')
-DATABROKER_GRPC_PORT='52001'
-sudo chown $(whoami) $HOME
-
-# Downloading feedercan
-FEEDERCAN_SOURCE="kuksa.val.feeders"
-FEEDERCAN_EXEC_PATH="$ROOT_DIRECTORY/.vscode/scripts/assets/feedercan/$FEEDERCAN_VERSION"
-
-DOWNLOAD_URL=https://github.com/eclipse/kuksa.val.feeders/tarball
-
-if [[ ! -f "$FEEDERCAN_EXEC_PATH/dbc2val/dbcfeeder.py" ]]
-then
-  echo "Downloading FEEDERCAN:$FEEDERCAN_VERSION"
-  curl --create-dirs -o "$ROOT_DIRECTORY/.vscode/scripts/assets/feedercan/$FEEDERCAN_VERSION/$FEEDERCAN_SOURCE" --location --remote-header-name --remote-name "$DOWNLOAD_URL/$FEEDERCAN_VERSION"
-  FEEDERCAN_BASE_DIRECTORY=$(tar -tzf $ROOT_DIRECTORY/.vscode/scripts/assets/feedercan/$FEEDERCAN_VERSION/$FEEDERCAN_SOURCE | head -1 | cut -f1 -d"/")
-  tar -xf $ROOT_DIRECTORY/.vscode/scripts/assets/feedercan/$FEEDERCAN_VERSION/$FEEDERCAN_SOURCE -C $ROOT_DIRECTORY/.vscode/scripts/assets/feedercan/$FEEDERCAN_VERSION/
-  cp -r $ROOT_DIRECTORY/.vscode/scripts/assets/feedercan/$FEEDERCAN_VERSION/$FEEDERCAN_BASE_DIRECTORY/dbc2val $ROOT_DIRECTORY/.vscode/scripts/assets/feedercan/$FEEDERCAN_VERSION
-  rm -rf $ROOT_DIRECTORY/.vscode/scripts/assets/feedercan/$FEEDERCAN_VERSION/$FEEDERCAN_BASE_DIRECTORY
-fi
-cd $ROOT_DIRECTORY/.vscode/scripts/assets/feedercan/$FEEDERCAN_VERSION/dbc2val
-pip3 install -r requirements.txt
-
-export DAPR_GRPC_PORT=$DATABROKER_GRPC_PORT
-export VEHICLEDATABROKER_DAPR_APP_ID=vehicledatabroker
-export LOG_LEVEL=info,databroker=info,dbcfeeder.broker_client=info,dbcfeeder=info
 
 ### Override default files for feedercan
 CONFIG_DIR="$ROOT_DIRECTORY/deploy/runtime/k3d/volume"
-export DBC_FILE="$CONFIG_DIR/dbcfileDefault.dbc"
-export MAPPING_FILE="$CONFIG_DIR/mappingDefault.yml"
-export CANDUMP_FILE="$CONFIG_DIR/candumpDefault.log"
-export USECASE="databroker"
+
+export VEHICLEDATABROKER_DAPR_APP_ID=vehicledatabroker
+export DAPR_GRPC_PORT=52001
+export LOG_LEVEL=info,databroker=info,dbcfeeder.broker_client=info,dbcfeeder=info
+export USECASE=databroker
+
+export CANDUMP_FILE="/data/candumpDefault.log"
+export DBC_FILE="/data/dbcfileDefault.dbc"
+export MAPPING_FILE="/data/mappingDefault.yml"
+
+RUNNING_CONTAINER=$(docker ps | grep "$FEEDERCAN_IMAGE" | awk '{ print $1 }')
+
+if [ -n "$RUNNING_CONTAINER" ];
+then
+    docker container stop $RUNNING_CONTAINER
+fi
+
+docker run \
+    -v ${CONFIG_DIR}:/data \
+    -e VEHICLEDATABROKER_DAPR_APP_ID \
+    -e DAPR_GRPC_PORT \
+    -e LOG_LEVEL \
+    -e USECASE \
+    -e CANDUMP_FILE \
+    -e DBC_FILE \
+    -e MAPPING_FILE \
+    --network host \
+    $FEEDERCAN_IMAGE:$FEEDERCAN_TAG &
 
 dapr run \
-  --app-id feedercan \
-  --app-protocol grpc \
-  --components-path $ROOT_DIRECTORY/.dapr/components \
-  --config $ROOT_DIRECTORY/.dapr/config.yaml & \
-  ./dbcfeeder.py
+    --app-id feedercan \
+    --app-protocol grpc \
+    --components-path $ROOT_DIRECTORY/.dapr/components \
+    --config $ROOT_DIRECTORY/.dapr/config.yaml && fg

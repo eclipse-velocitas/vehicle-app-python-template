@@ -14,7 +14,7 @@
 # SPDX-License-Identifier: Apache-2.0
 
 ROOT_DIRECTORY=$( realpath "$( cd -- "$(dirname "$0")" >/dev/null 2>&1 ; pwd -P )/../../../.." )
-DAPR_RUNTIME=$(cat $ROOT_DIRECTORY/prerequisite_settings.json | jq .dapr.runtime.version | tr -d '"')
+DAPR_RUNTIME=$(cat $ROOT_DIRECTORY/AppManifest.json | jq .[].dependencies.dapr.runtime.version | tr -d '"')
 
 if ! k3d registry get k3d-registry.localhost &> /dev/null
 then
