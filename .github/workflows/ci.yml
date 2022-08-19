@@ -73,13 +73,13 @@ jobs:
         with:
           files: ./results/UnitTest/junit.xml
 
-      - name: Add code coverage comment to pr
-        uses: romeovs/lcov-reporter-action@v0.3.1
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          lcov-file: results/CodeCoverage/lcov.info
-          delete-old-comments: true
-        if: github.event_name == 'pull_request'
+      #- name: Add code coverage comment to pr
+      #  uses: romeovs/lcov-reporter-action@v0.3.1
+      #  with:
+      #    github-token: ${{ secrets.GITHUB_TOKEN }}
+      #    lcov-file: results/CodeCoverage/lcov.info
+      #    delete-old-comments: true
+      #  if: github.event_name == 'pull_request'
 
       - name: Package unit test files
         uses: ./.github/actions/package
@@ -103,7 +103,7 @@ jobs:
         uses: actions/upload-artifact@v2
         if: always()
         with:
-          name: 'test-results'
+          name: "test-results"
           path: |
             results/Documentation/renderer/*
 
@@ -115,12 +115,12 @@ jobs:
           filename: "results/CodeCoverage/clover.xml"
 
   initialize-matrix:
-      runs-on: ubuntu-latest
-      name: Setting up build matrix
-      outputs:
-        deployment-matrix: ${{ steps.export-deployment-matrix.outputs.deployment-matrix }}
+    runs-on: ubuntu-latest
+    name: Setting up build matrix
+    outputs:
+      deployment-matrix: ${{ steps.export-deployment-matrix.outputs.deployment-matrix }}
 
-      steps:
+    steps:
       - name: Checkout repository
         uses: actions/checkout@v2
 
@@ -150,7 +150,10 @@ jobs:
   run-integration-tests:
     name: Run Integration Tests
     runs-on: ubuntu-latest
-    needs: build-image-amd64
+    needs: [initialize-matrix, build-image-amd64]
+    strategy:
+      matrix:
+        component: ${{ fromJson(needs.initialize-matrix.outputs.deployment-matrix) }}
     steps:
       - uses: actions/checkout@v2
 
@@ -196,12 +199,25 @@ jobs:
         with:
           string: ${{ github.repository }}
 
+      - name: Download stored image from artifacts
+        uses: actions/download-artifact@v3.0.0
+        with:
+          name: ${{ matrix.component.Name }}_${{ github.sha }}-amd64.tar
+          path: ./.github/scripts/
+
+      - name: DUMP info
+        working-directory: ./.github/scripts
+        run: |
+          echo "Image = $VAPP_IMAGE"
+          echo "Test = ${{ matrix.component.Name }}"
+          echo "Test = ${{ matrix.component.Name }}_${{ github.sha }}-amd64.tar"
+          ls -R
+
       - name: Deploy images
         env:
-          REPO_NAME: ${{ steps.github-repository-name-case-adjusted.outputs.lowercase }}
-          SHA: ${{ github.sha }}
+          VAPP_IMAGE_PATH: ${{ matrix.component.Name }}_${{ github.sha }}-amd64
         working-directory: ./.github/scripts
-        run: ./deploy_imagefromghcr.sh
+        run: ./deploy_imagefromartifactory.sh
 
       - name: Run Python integration tests
         shell: bash
@@ -231,41 +247,6 @@ jobs:
         uses: actions/upload-artifact@v2
         if: always()
         with:
-          name: 'test-results'
+          name: "test-results"
           path: |
             results/Documentation/renderer/*
-
-  create-multiarch-image:
-    runs-on: ubuntu-latest
-    name: Create multiarch image
-    needs: [initialize-matrix, build-image-amd64, build-image-aarch64]
-    strategy:
-      matrix:
-        component: ${{ fromJson(needs.initialize-matrix.outputs.deployment-matrix) }}
-
-    steps:
-      - name: Login to GitHub Container Registry
-        uses: docker/login-action@v1
-        with:
-          registry: ghcr.io
-          username: ${{ github.repository_owner }}
-          password: ${{ secrets.GITHUB_TOKEN }}
-
-      - id: github-repository-name-case-adjusted
-        name: Prepare repository name in lower case for docker upload. This supports repository names in mixed case
-        uses: ASzc/change-string-case-action@v1
-        with:
-          string: ${{ github.repository }}
-
-      - uses: docker/setup-buildx-action@v1
-        id: buildx
-        with:
-          install: true
-
-      - name: Create merged manifest and push
-        env:
-          VAPP_NAME: ${{ matrix.component.Name }}
-          VAPP_VERSION: ${{ github.sha }}
-          REPO: ghcr.io/${{ steps.github-repository-name-case-adjusted.outputs.lowercase }}
-        run: |
-          docker buildx imagetools create -t $REPO/$VAPP_NAME:$VAPP_VERSION $REPO/$VAPP_NAME:$VAPP_VERSION-amd64 $REPO/$VAPP_NAME:$VAPP_VERSION-aarch64
