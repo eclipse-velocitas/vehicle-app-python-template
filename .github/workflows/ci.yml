@@ -73,13 +73,13 @@ jobs:
         with:
           files: ./results/UnitTest/junit.xml
 
-      - name: Add code coverage comment to pr
-        uses: romeovs/lcov-reporter-action@v0.3.1
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          lcov-file: results/CodeCoverage/lcov.info
-          delete-old-comments: true
-        if: github.event_name == 'pull_request'
+      #- name: Add code coverage comment to pr
+      #  uses: romeovs/lcov-reporter-action@v0.3.1
+      #  with:
+      #    github-token: ${{ secrets.GITHUB_TOKEN }}
+      #    lcov-file: results/CodeCoverage/lcov.info
+      #    delete-old-comments: true
+      #  if: github.event_name == 'pull_request'
 
       - name: Package unit test files
         uses: ./.github/actions/package
@@ -103,7 +103,7 @@ jobs:
         uses: actions/upload-artifact@v2
         if: always()
         with:
-          name: 'test-results'
+          name: "test-results"
           path: |
             results/Documentation/renderer/*
 
@@ -115,12 +115,12 @@ jobs:
           filename: "results/CodeCoverage/clover.xml"
 
   initialize-matrix:
-      runs-on: ubuntu-latest
-      name: Setting up build matrix
-      outputs:
-        deployment-matrix: ${{ steps.export-deployment-matrix.outputs.deployment-matrix }}
+    runs-on: ubuntu-latest
+    name: Setting up build matrix
+    outputs:
+      deployment-matrix: ${{ steps.export-deployment-matrix.outputs.deployment-matrix }}
 
-      steps:
+    steps:
       - name: Checkout repository
         uses: actions/checkout@v2
 
@@ -231,7 +231,7 @@ jobs:
         uses: actions/upload-artifact@v2
         if: always()
         with:
-          name: 'test-results'
+          name: "test-results"
           path: |
             results/Documentation/renderer/*
 
