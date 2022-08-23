@@ -15,6 +15,7 @@
 
 ROOT_DIRECTORY=$( realpath "$( cd -- "$(dirname "$0")" >/dev/null 2>&1 ; pwd -P )/../../../.." )
 DAPR_RUNTIME=$(cat $ROOT_DIRECTORY/prerequisite_settings.json | jq .dapr.runtime.version | tr -d '"')
+CLUSTER_ARGS=
 
 if ! k3d registry get k3d-registry.localhost &> /dev/null
 then
@@ -27,25 +28,19 @@ if ! k3d cluster get cluster &> /dev/null
 then
 
   if [ -n "$HTTP_PROXY" ]; then
-    echo "Creating cluster with proxy configuration"
-    k3d cluster create cluster \
-      --registry-use k3d-registry.localhost:12345 \
-      -p "31883:31883" \
-      -p "30555:30555" \
-      -p "30051:30051" \
-      -e "HTTP_PROXY=$HTTP_PROXY@server:0" \
+    CLUSTER_ARGS="-e "HTTP_PROXY=$HTTP_PROXY@server:0" \
       -e "HTTPS_PROXY=$HTTPS_PROXY@server:0" \
-      --volume $ROOT_DIRECTORY/deploy/runtime/k3d/volume:/mnt/data@server:0 \
-      -e "NO_PROXY=localhost@server:0"
-  else
-    echo "Creating cluster without proxy configuration"
-    k3d cluster create cluster \
-      -p "30555:30555" \
-      -p "31883:31883" \
-      -p "30051:30051" \
-      --volume $ROOT_DIRECTORY/deploy/runtime/k3d/volume:/mnt/data@server:0 \
-      --registry-use k3d-registry.localhost:12345
+      -e "NO_PROXY=localhost@server:0""
   fi
+
+  echo "Creating cluster"
+  k3d cluster create cluster \
+    -p "30555:30555" \
+    -p "31883:31883" \
+    -p "30051:30051" \
+    $CLUSTER_ARGS
+    --volume $ROOT_DIRECTORY/deploy/runtime/k3d/volume:/mnt/data@server:0 \
+    --registry-use k3d-registry.localhost:12345
 
 else
   echo "Cluster already exists."
