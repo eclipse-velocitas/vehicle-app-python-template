@@ -153,5 +153,5 @@ jobs:
           GIT_HUB_REPOSITORY_NAME_LOWER_CASE: ${{ steps.github-repository-name-case-adjusted.outputs.lowercase }}
         with:
           name: "$VAPP_NAME:$VAPP_VERSION.tar"
-          path: oci-archive:${{ matrix.component.Name }}.tar
+          path: ./${{ matrix.component.Name }}.tar
           if-no-files-found: error
