@@ -38,7 +38,7 @@ then
     -p "30555:30555" \
     -p "31883:31883" \
     -p "30051:30051" \
-    $CLUSTER_ARGS
+    $CLUSTER_ARGS \
     --volume $ROOT_DIRECTORY/deploy/runtime/k3d/volume:/mnt/data@server:0 \
     --registry-use k3d-registry.localhost:12345
 
