@@ -46,7 +46,8 @@
 		"dotjoshjohnson.xml",
 		"ms-kubernetes-tools.vscode-kubernetes-tools",
 		"matangover.mypy",
-		"anweber.vscode-httpyac"
+		"anweber.vscode-httpyac",
+		"augustocdias.tasks-shell-input"
 	],
 
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.

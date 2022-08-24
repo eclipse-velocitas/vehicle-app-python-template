@@ -1,8 +1,9 @@
 [
     {
-        "Name": "seatadjuster",
+        "Name": "myvehicleapp",
         "Port": 50008,
-        "Dockerfile": "./src/VehicleApp/Dockerfile",
+        "DAPR_GRPC_PORT": 50001,
+        "Dockerfile": "./app/Dockerfile",
         "dependencies": {
             "services": [
                 {

@@ -176,7 +176,7 @@
 				"--app-port 50008",
 				"--config ./.dapr/config.yaml",
 				"--components-path ./.dapr/components",
-				"python3 ./src/VehicleApp/main.py"
+				"python3 ./app/src/main.py"
 			],
 			"group": "none",
 			"isBackground": true,
@@ -336,6 +336,27 @@
 			"dependsOn": [
 				"K3D - Install prerequisites"
 			]
+		},
+		{
+			"label": "Get example app from SDK package",
+			"detail": "Get example app from SDK package.",
+			"type": "shell",
+			"command": "rm -rf app/ && cp -a ~/.local/lib/python3.9/site-packages/sdv_examples/${input:exampleApp} app",
+		}
+	],
+	"inputs": [
+		{
+			"description": "Options for example apps from SDK package.",
+			"id": "exampleApp",
+			"type": "pickString",
+			"options": [
+				"seat-adjuster",
+				"dog-mode",
+				"array-datatype",
+				"vdb-queries",
+				"static-rule",
+				"dynamic-rule"
+			],
 		}
 	]
 }

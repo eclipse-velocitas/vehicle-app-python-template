@@ -13,8 +13,8 @@
 # SPDX-License-Identifier: Apache-2.0
 
 ROOT_DIRECTORY=$( realpath "$( cd -- "$(dirname "$0")" >/dev/null 2>&1 ; pwd -P )/../../../.." )
-APP_NAME=$(cat $ROOT_DIRECTORY/AppManifest.json | jq .[].Name | tr -d '"')
-APP_PORT=$(cat $ROOT_DIRECTORY/AppManifest.json | jq .[].Port | tr -d '"')
+APP_NAME=$(cat $ROOT_DIRECTORY/app/AppManifest.json | jq .[].Name | tr -d '"')
+APP_PORT=$(cat $ROOT_DIRECTORY/app/AppManifest.json | jq .[].Port | tr -d '"')
 APP_REGISTRY="k3d-registry.localhost:12345"
 
 helm uninstall vapp-chart --wait

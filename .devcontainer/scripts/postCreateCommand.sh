@@ -44,18 +44,18 @@ REQUIREMENTS="./requirements-dev.txt"
 if [ -f $REQUIREMENTS ]; then
     pip3 install -r $REQUIREMENTS
 fi
-REQUIREMENTS="./src/requirements-links.txt"
+REQUIREMENTS="./app/requirements-links.txt"
 if [ -f $REQUIREMENTS ]; then
     pip3 install -r $REQUIREMENTS
 fi
 # Dependencies for the app
-REQUIREMENTS="./src/requirements.txt"
+REQUIREMENTS="./app/requirements.txt"
 if [ -f $REQUIREMENTS ]; then
     pip3 install -r $REQUIREMENTS
 fi
 
 # Dependencies for unit and integration tests
-REQUIREMENTS="./test/requirements.txt"
+REQUIREMENTS="./app/tests/requirements.txt"
 if [ -f $REQUIREMENTS ]; then
     pip3 install -r $REQUIREMENTS
 fi

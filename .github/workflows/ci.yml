@@ -52,9 +52,9 @@ jobs:
         shell: bash
         run: |
           pip install -r requirements-dev.txt
-          pip install -r src/requirements-links.txt
-          pip install -r src/requirements.txt
-          pip install -r test/requirements.txt
+          pip install -r app/requirements-links.txt
+          pip install -r app/requirements.txt
+          pip install -r app/tests/requirements.txt
 
       - name: Run Linters
         uses: pre-commit/action@v3.0.0
@@ -62,8 +62,8 @@ jobs:
       - name: unit test
         shell: bash
         run: |
-          pip install -r test/requirements.txt
-          pytest --rootdir . --override-ini junit_family=xunit1 --junit-xml=./results/UnitTest/junit.xml --cov ./src --cov-report=xml:results/CodeCoverage/cobertura-coverage.xml --cov-branch ./src --cov-config=setup.cfg
+          pip install -r app/tests/requirements.txt
+          pytest --rootdir . --override-ini junit_family=xunit1 --junit-xml=./results/UnitTest/junit.xml --cov ./app/src --cov-report=xml:results/CodeCoverage/cobertura-coverage.xml --cov-branch ./src --cov-config=setup.cfg
           coverage2clover -i results/CodeCoverage/cobertura-coverage.xml -o results/CodeCoverage/clover.xml
           coveragepy-lcov --data_file_path ./.coverage --output_file_path results/CodeCoverage/lcov.info
 
@@ -103,7 +103,7 @@ jobs:
         uses: actions/upload-artifact@v2
         if: always()
         with:
-          name: 'test-results'
+          name: "test-results"
           path: |
             results/Documentation/renderer/*
 
@@ -115,12 +115,12 @@ jobs:
           filename: "results/CodeCoverage/clover.xml"
 
   initialize-matrix:
-      runs-on: ubuntu-latest
-      name: Setting up build matrix
-      outputs:
-        deployment-matrix: ${{ steps.export-deployment-matrix.outputs.deployment-matrix }}
+    runs-on: ubuntu-latest
+    name: Setting up build matrix
+    outputs:
+      deployment-matrix: ${{ steps.export-deployment-matrix.outputs.deployment-matrix }}
 
-      steps:
+    steps:
       - name: Checkout repository
         uses: actions/checkout@v2
 
@@ -128,8 +128,8 @@ jobs:
         id: export-deployment-matrix
         run: |
           SITE_PACKAGES=$(python -m site --user-site)
-          sed -i "s|SITE_PACKAGES|$SITE_PACKAGES|g" ./AppManifest.json
-          MATRIX=$(cat ./AppManifest.json | tr '\n' ' ')
+          sed -i "s|SITE_PACKAGES|$SITE_PACKAGES|g" ./app/AppManifest.json
+          MATRIX=$(cat ./app/AppManifest.json | tr '\n' ' ')
 
           echo "::set-output name=deployment-matrix::$MATRIX"
 
@@ -174,9 +174,9 @@ jobs:
       - name: Install required packages
         shell: pwsh
         run: |
-          pip install -r ./src/requirements.txt
-          pip install -r ./src/requirements-links.txt
-          pip install -r ./test/requirements.txt
+          pip install -r ./app/requirements.txt
+          pip install -r ./app/requirements-links.txt
+          pip install -r ./app/tests/requirements.txt
 
       - name: Install K3D and prerequisites
         working-directory: ./.vscode/scripts/runtime/k3d
@@ -209,8 +209,8 @@ jobs:
           VDB_PORT: 30555
           MQTT_PORT: 31883
         run: |
-          pip install -r test/requirements.txt
-          pytest ./test --override-ini junit_family=xunit1 --junit-xml=./results/IntTest/junit.xml
+          pip install -r app/tests/requirements.txt
+          pytest ./app/tests/integration --override-ini junit_family=xunit1 --junit-xml=./results/IntTest/junit.xml
 
       - name: Publish Unit Test Results
         uses: EnricoMi/publish-unit-test-result-action@v1
@@ -231,7 +231,7 @@ jobs:
         uses: actions/upload-artifact@v2
         if: always()
         with:
-          name: 'test-results'
+          name: "test-results"
           path: |
             results/Documentation/renderer/*
 

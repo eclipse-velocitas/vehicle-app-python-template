@@ -68,7 +68,7 @@ run_service() {
 
 ROOT_DIRECTORY=$( realpath "$( cd -- "$(dirname "$0")" >/dev/null 2>&1 ; pwd -P )/../../../.." )
 
-DEPENDENCIES=$(cat $ROOT_DIRECTORY/AppManifest.json | jq .[].dependencies)
+DEPENDENCIES=$(cat $ROOT_DIRECTORY/app/AppManifest.json | jq .[].dependencies)
 SERVICES=$(echo $DEPENDENCIES | jq '.services')
 
 readarray -t SERVICES_ARRAY < <(echo $SERVICES | jq -c '.[]')
