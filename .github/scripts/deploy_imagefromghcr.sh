@@ -16,13 +16,13 @@
 ROOT_DIRECTORY=$( realpath "$( cd -- "$(dirname "$0")" >/dev/null 2>&1 ; pwd -P )/../.." )
 APP_NAME=$(cat $ROOT_DIRECTORY/AppManifest.json | jq .[].Name | tr -d '"')
 APP_PORT=$(cat $ROOT_DIRECTORY/AppManifest.json | jq .[].Port | tr -d '"')
-APP_REGISTRY="k3d-registry.localhost:12345"
+source $ROOT_DIRECTORY/.env
 
 jq -c '.[]' $ROOT_DIRECTORY/AppManifest.json | while read i; do
     name=$(jq -r '.Name' <<< "$i")
 
     pull_url="ghcr.io/$REPO_NAME/$name:$SHA-amd64"
-    local_tag="$APP_REGISTRY/$name:local"
+    local_tag="$LOCAL_K3D_REGISTRY/$name:local"
 
     echo "Remote URL: $pull_url"
     echo "Local URL: $local_tag"
@@ -34,7 +34,7 @@ done
 
 helm install vapp-chart $ROOT_DIRECTORY/deploy/VehicleApp/helm \
     --values $ROOT_DIRECTORY/deploy/VehicleApp/helm/values.yaml \
-    --set imageVehicleApp.repository="$APP_REGISTRY/$APP_NAME" \
+    --set imageVehicleApp.repository="$LOCAL_K3D_REGISTRY/$APP_NAME" \
     --set imageVehicleApp.name=$APP_NAME \
     --set imageVehicleApp.daprAppid=$APP_NAME \
     --set imageVehicleApp.daprPort=$APP_PORT \

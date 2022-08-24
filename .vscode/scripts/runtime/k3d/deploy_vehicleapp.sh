@@ -15,7 +15,7 @@
 ROOT_DIRECTORY=$( realpath "$( cd -- "$(dirname "$0")" >/dev/null 2>&1 ; pwd -P )/../../../.." )
 APP_NAME=$(cat $ROOT_DIRECTORY/AppManifest.json | jq .[].Name | tr -d '"')
 APP_PORT=$(cat $ROOT_DIRECTORY/AppManifest.json | jq .[].Port | tr -d '"')
-APP_REGISTRY="k3d-registry.localhost:12345"
+source $ROOT_DIRECTORY/.env
 
 helm uninstall vapp-chart --wait
 
@@ -23,7 +23,7 @@ helm uninstall vapp-chart --wait
 REGISTRY="k3d-registry.localhost:12345/$APP_NAME"
 helm install vapp-chart $ROOT_DIRECTORY/deploy/VehicleApp/helm \
     --values $ROOT_DIRECTORY/deploy/VehicleApp/helm/values.yaml \
-    --set imageVehicleApp.repository="$APP_REGISTRY/$APP_NAME" \
+    --set imageVehicleApp.repository="$LOCAL_K3D_REGISTRY/$APP_NAME" \
     --set imageVehicleApp.name=$APP_NAME \
     --set imageVehicleApp.daprAppid=$APP_NAME \
     --set imageVehicleApp.daprPort=$APP_PORT \

@@ -16,6 +16,8 @@
 ROOT_DIRECTORY=$( realpath "$( cd -- "$(dirname "$0")" >/dev/null 2>&1 ; pwd -P )/../../../.." )
 DAPR_RUNTIME=$(cat $ROOT_DIRECTORY/prerequisite_settings.json | jq .dapr.runtime.version | tr -d '"')
 CLUSTER_ARGS=
+source $ROOT_DIRECTORY/.env
+
 
 if ! k3d registry get k3d-registry.localhost &> /dev/null
 then
@@ -40,7 +42,7 @@ then
     -p "30051:30051" \
     $CLUSTER_ARGS \
     --volume $ROOT_DIRECTORY/deploy/runtime/k3d/volume:/mnt/data@server:0 \
-    --registry-use k3d-registry.localhost:12345
+    --registry-use $LOCAL_K3D_REGISTRY
 
 else
   echo "Cluster already exists."
