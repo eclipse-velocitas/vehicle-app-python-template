@@ -16,14 +16,15 @@ name: Check licenses
 
 on:
   workflow_dispatch:
-  pull_request:
+  push:
+  # Run only on branches/commits and not tags
     branches:
       - main
 
 jobs:
-  check-licenses:
+  push_to_main:
     runs-on: ubuntu-latest
-    name: Check Software Licenses
+    name: Check Software Licenses and Notice file
 
     steps:
       - name: Checkout repository
@@ -39,9 +40,9 @@ jobs:
           ref: v1
           path: .github/actions/license-check
 
-      - name: Run License Checker
+      - name: Run License Checker and Check the Notice file
         uses: ./.github/actions/license-check
         with:
           config-file-path: ./.licensechecker.yml
           fail-on-violation: false
-          generate-notice-file: false
+          notice-file-name: "NOTICE-3RD-PARTY-CONTENT"

@@ -21,14 +21,10 @@ APP_REGISTRY="k3d-registry.localhost:12345"
 jq -c '.[]' $ROOT_DIRECTORY/AppManifest.json | while read i; do
     name=$(jq -r '.Name' <<< "$i")
 
-    pull_url="ghcr.io/$REPO_NAME/$name:$SHA-amd64"
     local_tag="$APP_REGISTRY/$name:local"
-
-    echo "Remote URL: $pull_url"
     echo "Local URL: $local_tag"
 
-    docker pull $pull_url
-    docker tag $pull_url $local_tag
+    docker load -i "$APP_NAME.tar" | sed -n 's/^Loaded image ID: sha256:\([0-9a-f]*\).*/\1/p' | xargs -i docker tag {} $local_tag
     docker push $local_tag
 done
 
