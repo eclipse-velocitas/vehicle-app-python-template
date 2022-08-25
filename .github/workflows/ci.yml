@@ -201,20 +201,23 @@ jobs:
 
       - name: Download stored image from artifacts
         uses: actions/download-artifact@v3.0.0
+        env:
+          VAPP_IMAGE: ${{ matrix.component.Name }}_${{ github.sha }}-amd64
         with:
+          name: ${{ env.VAPP_IMAGE }}
           path: ./.github/scripts/
 
       - name: DUMP info
         working-directory: ./.github/scripts
         run: |
-          echo "Image = $VAPP_IMAGE"
+          echo "Image = "${{ env.VAPP_IMAGE }}
           echo "Test = ${{ matrix.component.Name }}"
           echo "Test = ${{ matrix.component.Name }}_${{ github.sha }}-amd64.tar"
           ls -R
 
       - name: Deploy images
         env:
-          VAPP_IMAGE_PATH: ${{ matrix.component.Name }}_${{ github.sha }}-amd64
+          VAPP_IMAGE: ${{ matrix.component.Name }}_${{ github.sha }}-amd64
         working-directory: ./.github/scripts
         run: ./deploy_imagefromartifactory.sh
 

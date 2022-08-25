@@ -23,12 +23,10 @@ jq -c '.[]' $ROOT_DIRECTORY/AppManifest.json | while read i; do
 
     local_tag="$APP_REGISTRY/$name:local"
 
-    ls -la $VAPP_IMAGE_PATH
-
-    echo "VAPP_IMAGE_PATH: $VAPP_IMAGE_PATH"
+    echo "VAPP_IMAGE: $VAPP_IMAGE"
     echo "Local URL: $local_tag"
 
-    docker load -i "$VAPP_IMAGE_PATH/$APP_NAME.tar" | sed -n 's/^Loaded image ID: sha256:\([0-9a-f]*\).*/\1/p' | xargs -i docker tag {} $local_tag
+    docker load -i "$VAPP_IMAGE.tar" | sed -n 's/^Loaded image ID: sha256:\([0-9a-f]*\).*/\1/p' | xargs -i docker tag {} $local_tag
     docker push $local_tag
     docker images
 done
