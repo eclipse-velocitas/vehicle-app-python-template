@@ -201,10 +201,7 @@ jobs:
 
       - name: Download stored image from artifacts
         uses: actions/download-artifact@v3
-        env:
-          VAPP_IMAGE: ${{ matrix.component.Name }}_${{ github.sha }}-amd64.tar
         with:
-          name: ${{ matrix.component.Name }}_${{ github.sha }}-amd64.tar
           path: ./.github/scripts
 
       - name: DUMP info
