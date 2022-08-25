@@ -216,8 +216,6 @@ jobs:
           ls -R
 
       - name: Deploy images
-        env:
-          VAPP_IMAGE: ${{ matrix.component.Name }}_${{ github.sha }}-amd64
         working-directory: ./.github/scripts
         run: ./deploy_imagefromartifactory.sh
 
