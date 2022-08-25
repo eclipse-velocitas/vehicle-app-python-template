@@ -20,11 +20,11 @@ BUILD_ARGS=
 if [ -n "$HTTP_PROXY" ]; then
     echo "Building image with proxy configuration"
 
-    BUILD_ARGS="--build-arg HTTP_PROXY="$HTTP_PROXY" \
-    --build-arg HTTPS_PROXY="$HTTPS_PROXY" \
-    --build-arg FTP_PROXY="$FTP_PROXY" \
-    --build-arg ALL_PROXY="$ALL_PROXY" \
-    --build-arg NO_PROXY="$NO_PROXY""
+    BUILD_ARGS="--build-arg HTTP_PROXY \
+    --build-arg HTTPS_PROXY \
+    --build-arg FTP_PROXY \
+    --build-arg ALL_PROXY \
+    --build-arg NO_PROXY"
 else
     echo "Building image without proxy configuration"
 fi
