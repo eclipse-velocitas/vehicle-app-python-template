@@ -148,11 +148,8 @@ jobs:
         if: ${{ steps.image_build.outcome == 'success' }}
         uses: actions/upload-artifact@v3.1.0
         env:
-          VAPP_NAME: ${{ matrix.component.Name }}
-          VAPP_VERSION: ${{ github.sha }}-${{ inputs.platform }}
-          VAPP_IMAGE: "$VAPP_NAME_$VAPP_VERSION.tar"
-          GIT_HUB_REPOSITORY_NAME_LOWER_CASE: ${{ steps.github-repository-name-case-adjusted.outputs.lowercase }}
+          VAPP_IMAGE: ${{ matrix.component.Name }}_${{ github.sha }}-${{ inputs.platform }}.tar
         with:
-          name: $VAPP_IMAGE
+          name: ${{ matrix.component.Name }}_${{ github.sha }}-${{ inputs.platform }}.tar
           path: ./${{ matrix.component.Name }}.tar
           if-no-files-found: error
