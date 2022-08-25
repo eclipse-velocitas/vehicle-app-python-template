@@ -214,8 +214,6 @@ jobs:
 
       - name: Deploy images
         env:
-          REPO_NAME: ${{ steps.github-repository-name-case-adjusted.outputs.lowercase }}
-          SHA: ${{ github.sha }}
           VAPP_IMAGE: ${{ matrix.component.Name }}_${{ github.sha }}-amd64.tar
         working-directory: ./.github/scripts
         run: ./deploy_imagefromartifactory.sh
