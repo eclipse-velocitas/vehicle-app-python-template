@@ -196,6 +196,21 @@ jobs:
         with:
           string: ${{ github.repository }}
 
+      - name: Download stored image from artifacts
+        uses: actions/download-artifact@v3
+        env:
+          VAPP_NAME: ${{ matrix.component.Name }}
+          VAPP_VERSION: ${{ github.sha }}-amd64
+          VAPP_IMAGE: "$VAPP_NAME_$VAPP_VERSION.tar"
+        with:
+          name: $VAPP_IMAGE
+          path: ./.github/scripts
+
+      - name: DUMP info
+        working-directory: ./.github/scripts
+        run: |
+          ls -la
+
       - name: Deploy images
         env:
           REPO_NAME: ${{ steps.github-repository-name-case-adjusted.outputs.lowercase }}
