@@ -204,7 +204,7 @@ jobs:
         env:
           VAPP_IMAGE: ${{ matrix.component.Name }}_${{ github.sha }}-amd64.tar
         with:
-          name: $VAPP_IMAGE
+          name: ${{ matrix.component.Name }}_${{ github.sha }}-amd64.tar
           path: ./.github/scripts
 
       - name: DUMP info
@@ -212,6 +212,7 @@ jobs:
         run: |
           echo "Image = $VAPP_IMAGE"
           echo "Test = ${{ matrix.component.Name }}"
+          echo "Test = ${{ matrix.component.Name }}_${{ github.sha }}-amd64.tar"
           ls -la
 
       - name: Deploy images
@@ -253,38 +254,3 @@ jobs:
           name: "test-results"
           path: |
             results/Documentation/renderer/*
-
-  create-multiarch-image:
-    runs-on: ubuntu-latest
-    name: Create multiarch image
-    needs: [initialize-matrix, build-image-amd64, build-image-aarch64]
-    strategy:
-      matrix:
-        component: ${{ fromJson(needs.initialize-matrix.outputs.deployment-matrix) }}
-
-    steps:
-      - name: Login to GitHub Container Registry
-        uses: docker/login-action@v1
-        with:
-          registry: ghcr.io
-          username: ${{ github.repository_owner }}
-          password: ${{ secrets.GITHUB_TOKEN }}
-
-      - id: github-repository-name-case-adjusted
-        name: Prepare repository name in lower case for docker upload. This supports repository names in mixed case
-        uses: ASzc/change-string-case-action@v1
-        with:
-          string: ${{ github.repository }}
-
-      - uses: docker/setup-buildx-action@v1
-        id: buildx
-        with:
-          install: true
-
-      - name: Create merged manifest and push
-        env:
-          VAPP_NAME: ${{ matrix.component.Name }}
-          VAPP_VERSION: ${{ github.sha }}
-          REPO: ghcr.io/${{ steps.github-repository-name-case-adjusted.outputs.lowercase }}
-        run: |
-          docker buildx imagetools create -t $REPO/$VAPP_NAME:$VAPP_VERSION $REPO/$VAPP_NAME:$VAPP_VERSION-amd64 $REPO/$VAPP_NAME:$VAPP_VERSION-aarch64
