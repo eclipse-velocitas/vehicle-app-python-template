@@ -202,9 +202,7 @@ jobs:
       - name: Download stored image from artifacts
         uses: actions/download-artifact@v3
         env:
-          VAPP_NAME: ${{ matrix.component.Name }}
-          VAPP_VERSION: ${{ github.sha }}-amd64
-          VAPP_IMAGE: "$VAPP_NAME_$VAPP_VERSION.tar"
+          VAPP_IMAGE: ${{ matrix.component.Name }}_${{ github.sha }}-amd64.tar
         with:
           name: $VAPP_IMAGE
           path: ./.github/scripts
@@ -212,8 +210,6 @@ jobs:
       - name: DUMP info
         working-directory: ./.github/scripts
         run: |
-          echo "Name = $VAPP_NAME"
-          echo "Version = $VAPP_VERSION"
           echo "Image = $VAPP_IMAGE"
           echo "Test = ${{ matrix.component.Name }}"
           ls -la
@@ -222,9 +218,7 @@ jobs:
         env:
           REPO_NAME: ${{ steps.github-repository-name-case-adjusted.outputs.lowercase }}
           SHA: ${{ github.sha }}
-          VAPP_NAME: ${{ matrix.component.Name }}
-          VAPP_VERSION: ${{ github.sha }}-amd64
-          VAPP_IMAGE: "$VAPP_NAME_$VAPP_VERSION.tar"
+          VAPP_IMAGE: ${{ matrix.component.Name }}_${{ github.sha }}-amd64.tar
         working-directory: ./.github/scripts
         run: ./deploy_imagefromartifactory.sh
 
