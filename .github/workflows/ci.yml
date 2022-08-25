@@ -150,7 +150,7 @@ jobs:
   run-integration-tests:
     name: Run Integration Tests
     runs-on: ubuntu-latest
-    needs: build-image-amd64
+    needs: [initialize-matrix, build-image-amd64]
     strategy:
       matrix:
         component: ${{ fromJson(needs.initialize-matrix.outputs.deployment-matrix) }}
@@ -212,6 +212,10 @@ jobs:
       - name: DUMP info
         working-directory: ./.github/scripts
         run: |
+          echo "Name = $VAPP_NAME"
+          echo "Version = $VAPP_VERSION"
+          echo "Image = $VAPP_IMAGE"
+          echo "Test = ${{ matrix.component.Name }}"
           ls -la
 
       - name: Deploy images
