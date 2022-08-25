@@ -151,6 +151,9 @@ jobs:
     name: Run Integration Tests
     runs-on: ubuntu-latest
     needs: build-image-amd64
+    strategy:
+      matrix:
+        component: ${{ fromJson(needs.initialize-matrix.outputs.deployment-matrix) }}
     steps:
       - uses: actions/checkout@v2
 
@@ -215,8 +218,11 @@ jobs:
         env:
           REPO_NAME: ${{ steps.github-repository-name-case-adjusted.outputs.lowercase }}
           SHA: ${{ github.sha }}
+          VAPP_NAME: ${{ matrix.component.Name }}
+          VAPP_VERSION: ${{ github.sha }}-amd64
+          VAPP_IMAGE: "$VAPP_NAME_$VAPP_VERSION.tar"
         working-directory: ./.github/scripts
-        run: ./deploy_imagefromghcr.sh
+        run: ./deploy_imagefromartifactory.sh
 
       - name: Run Python integration tests
         shell: bash

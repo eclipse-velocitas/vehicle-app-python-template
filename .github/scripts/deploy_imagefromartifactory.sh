@@ -24,11 +24,12 @@ jq -c '.[]' $ROOT_DIRECTORY/AppManifest.json | while read i; do
     pull_url="ghcr.io/$REPO_NAME/$name:$SHA-amd64"
     local_tag="$APP_REGISTRY/$name:local"
 
+    echo "VAPP_IMAGE: $VAPP_IMAGE"
     echo "Remote URL: $pull_url"
     echo "Local URL: $local_tag"
 
-    docker pull $pull_url
-    docker tag $pull_url $local_tag
+    docker load -i $VAPP_IMAGE
+    docker tag $VAPP_IMAGE $local_tag
     docker push $local_tag
 done
 
