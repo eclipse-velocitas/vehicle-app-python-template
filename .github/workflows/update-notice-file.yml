@@ -12,25 +12,25 @@
 #
 # SPDX-License-Identifier: Apache-2.0
 
-name: Check licenses
+name: Update license notice file
 
 on:
   workflow_dispatch:
-  pull_request:
+  push:
+    # Run only on branches/commits and not tags
     branches:
       - main
 
 jobs:
-  check-licenses:
+  update_notice_file:
     runs-on: ubuntu-latest
-    name: Check Software Licenses
+    name: Check and update Licenses Notice file
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
         with:
           ref: ${{ github.head_ref }}
-          repository: ${{github.event.pull_request.head.repo.full_name}}
 
       - name: Clone License Check Repo
         uses: actions/checkout@v2
@@ -39,9 +39,9 @@ jobs:
           ref: v1
           path: .github/actions/license-check
 
-      - name: Run License Checker
+      - name: Run License Checker to update the notice file
         uses: ./.github/actions/license-check
         with:
           config-file-path: ./.licensechecker.yml
           fail-on-violation: false
-          generate-notice-file: false
+          notice-file-name: "NOTICE-3RD-PARTY-CONTENT"
