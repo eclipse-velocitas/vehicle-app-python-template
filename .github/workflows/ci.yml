@@ -209,7 +209,7 @@ jobs:
 
       - name: Deploy images
         working-directory: ./.github/scripts
-        run: ./deploy_imagefromartifactory.sh
+        run: ./deploy_image_from_artifact.sh
 
       - name: Run Python integration tests
         shell: bash
