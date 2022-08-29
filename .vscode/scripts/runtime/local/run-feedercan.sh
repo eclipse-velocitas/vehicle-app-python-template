@@ -17,11 +17,11 @@ echo "#######################################################"
 echo "### Running FeederCan                               ###"
 echo "#######################################################"
 
-# Get Data from AppManifest.json and save to ENV
-UTILS_DIRECTORY=$(dirname `cd ..; dirname "$0"`)/utils
-source $UTILS_DIRECTORY/get-appmanifest-data.sh
-
 ROOT_DIRECTORY=$( realpath "$( cd -- "$(dirname "$0")" >/dev/null 2>&1 ; pwd -P )/../../../.." )
+
+# Get Data from AppManifest.json and save to ENV
+UTILS_DIRECTORY="$ROOT_DIRECTORY/.vscode/scripts/runtime/utils"
+source $UTILS_DIRECTORY/get-appmanifest-data.sh
 
 ### Override default files for feedercan
 CONFIG_DIR="$ROOT_DIRECTORY/deploy/runtime/k3d/volume"
