@@ -67,7 +67,7 @@ class MyVehicleApp(VehicleApp):
 
     # Is executed when receiving VehicleDataBroker signal.
     async def on_speed_change(self, data):
-        logger.info("Data received: %s", data)
+        logger.debug("Data received: %s", data)
         # Getting current speed from VehicleDataBroker.
         vehicle_speed = await self.Vehicle.OBD.Speed.get()
         # Publishes current speed to DATABROKER_SUBSCRIPTION_TOPIC.
@@ -81,7 +81,7 @@ class MyVehicleApp(VehicleApp):
     # when a message is published to GET_SPEED_REQUEST_TOPIC.
     @subscribe_topic(GET_SPEED_REQUEST_TOPIC)
     async def on_get_speed_request_received(self, data_str: str) -> None:
-        logger.info("Data received: %s", data_str)
+        logger.debug("Data received: %s", data_str)
         logger.info(
             "MyVehicleApp received message from topic: %s", GET_SPEED_REQUEST_TOPIC
         )
