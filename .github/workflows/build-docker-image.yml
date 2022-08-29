@@ -23,6 +23,10 @@ on:
       deployment-matrix-str:
         required: true
         type: string
+      multiarch:
+        required: false
+        type: boolean
+        default: false
     outputs:
       imageid:
         value: ${{ jobs.build-image.outputs.imageid }}
@@ -42,10 +46,10 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Clone Release Documentation Action repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           repository: eclipse-velocitas/release-documentation-action
           path: "./.github/actions"
@@ -58,13 +62,6 @@ jobs:
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
-
-      - name: Login to GitHub Container Registry
-        uses: docker/login-action@v1
-        with:
-          registry: ghcr.io
-          username: ${{ github.repository_owner }}
-          password: ${{ secrets.GITHUB_TOKEN }}
 
       - id: github-repository-name-case-adjusted
         name: Prepare repository name in lower case for docker upload. This supports repository names in mixed case
@@ -82,6 +79,18 @@ jobs:
           git config --global user.email "github-automation@users.noreply.github.com"
           git config --global user.name "Github Automation"
 
+      - name: Check Platform String
+        id: check
+        run: |
+          if [ ${{ inputs.multiarch }} == true ]; then
+            echo "Build Multiarch"
+            echo "::set-output name=platform::linux/amd64, linux/arm64"
+          else
+            echo "Build ${{inputs.platform}}"
+            echo "::set-output name=platform::linux/${{ inputs.platform }}"
+          fi
+        shell: bash
+
       - name: "${{ matrix.component.Name }} -- Build image"
         id: image_build
         uses: docker/build-push-action@v2
@@ -92,9 +101,10 @@ jobs:
             type=oci,dest=./${{ matrix.component.Name }}.tar
           file: ${{ matrix.component.Dockerfile }}
           context: .
-          platforms: linux/${{ inputs.platform }}
+          platforms: ${{ steps.check.outputs.platform }}
           secrets: |
             "github_token=user:${{ secrets.GITHUB_TOKEN }}"
+          tags: ${{ github.sha }}
           labels: |
             org.opencontainers.image.source=https://github.com/${{steps.github-repository-name-case-adjusted.outputs.lowercase}}
 
@@ -149,7 +159,7 @@ jobs:
         if: ${{ steps.image_build.outcome == 'success' }}
         uses: actions/upload-artifact@v3.1.0
         env:
-          VAPP_IMAGE: ${{ matrix.component.Name }}_${{ github.sha }}-${{ inputs.platform }}.tar
+          VAPP_IMAGE: ${{ matrix.component.Name }}-${{ inputs.platform }}
         with:
           name: ${{ env.VAPP_IMAGE }}
           path: ./${{ matrix.component.Name }}.tar
