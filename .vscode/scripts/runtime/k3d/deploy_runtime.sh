@@ -20,7 +20,7 @@ then
     SERVICES=$(echo $DEPENDENCIES | jq '.services')
 
     # Get Data from AppManifest.json and save to ENV
-    UTILS_DIRECTORY=$(dirname `cd ..; dirname "$0"`)/utils
+    UTILS_DIRECTORY="$ROOT_DIRECTORY/.vscode/scripts/runtime/utils"
     source $UTILS_DIRECTORY/get-appmanifest-data.sh
 
     docker pull $DATABROKER_IMAGE:$DATABROKER_TAG

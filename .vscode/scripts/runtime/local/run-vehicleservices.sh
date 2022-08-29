@@ -17,8 +17,10 @@ echo "#######################################################"
 echo "### Running VehicleServices                         ###"
 echo "#######################################################"
 
+ROOT_DIRECTORY=$( realpath "$( cd -- "$(dirname "$0")" >/dev/null 2>&1 ; pwd -P )/../../../.." )
+
 # Get Data from AppManifest.json and save to ENV
-UTILS_DIRECTORY=$(dirname `cd ..; dirname "$0"`)/utils
+UTILS_DIRECTORY="$ROOT_DIRECTORY/.vscode/scripts/runtime/utils"
 source $UTILS_DIRECTORY/get-appmanifest-data.sh
 
 # Configure Service Specific Requirements
@@ -65,8 +67,6 @@ run_service() {
         --components-path $ROOT_DIRECTORY/.dapr/components \
         --config $ROOT_DIRECTORY/.dapr/config.yaml &
 }
-
-ROOT_DIRECTORY=$( realpath "$( cd -- "$(dirname "$0")" >/dev/null 2>&1 ; pwd -P )/../../../.." )
 
 DEPENDENCIES=$(cat $ROOT_DIRECTORY/app/AppManifest.json | jq .[].dependencies)
 SERVICES=$(echo $DEPENDENCIES | jq '.services')
