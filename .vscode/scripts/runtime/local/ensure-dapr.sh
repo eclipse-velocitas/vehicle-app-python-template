@@ -29,8 +29,9 @@ init_dapr()
 }
 
 ROOT_DIRECTORY=$( realpath "$( cd -- "$(dirname "$0")" >/dev/null 2>&1 ; pwd -P )/../../../.." )
-DEFAULT_DAPR_CLI_VERSION=$(cat $ROOT_DIRECTORY/prerequisite_settings.json | jq .dapr.cli.version | tr -d '"')
-DEFAULT_DAPR_RUNTIME_VERSION=$(cat $ROOT_DIRECTORY/prerequisite_settings.json | jq .dapr.runtime.version | tr -d '"')
+DEFAULT_DAPR_CLI_VERSION=$(cat $ROOT_DIRECTORY/AppManifest.json | jq .[].dependencies.dapr.cli.version | tr -d '"')
+DEFAULT_DAPR_RUNTIME_VERSION=$(cat $ROOT_DIRECTORY/AppManifest.json | jq .[].dependencies.dapr.runtime.version | tr -d '"')
+
 INSTALLED_DAPR_CLI_VERSION=$(dapr --version | grep "CLI version: " | sed 's/^.*: //' | sed 's/\s*//g')
 INSTALLED_DAPR_RUNTIME_VERSION=$(dapr --version | grep "Runtime version: " | sed 's/^.*: //' | sed 's/\s*//g')
 
