@@ -29,7 +29,7 @@ echo "#######################################################"
 echo "### Installing python version 3                     ###"
 echo "#######################################################"
 ROOT_DIRECTORY=$( realpath "$( cd -- "$(dirname "$0")" >/dev/null 2>&1 ; pwd -P )/../.." )
-PYTHON_VERSION=$(cat $ROOT_DIRECTORY/prerequisite_settings.json | jq .python.version | tr -d '"')
+PYTHON_VERSION=$(cat $ROOT_DIRECTORY/AppManifest.json | jq .[].dependencies.python.version | tr -d '"')
 
 sudo apt-get install -y python3-distutils
 sudo apt-get install -y python$PYTHON_VERSION

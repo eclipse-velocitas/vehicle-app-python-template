@@ -94,16 +94,16 @@
 		{
 			"label": "Local - VehicleDataBroker CLI",
 			"detail": "Starts the VehicleDataBroker CLI",
-			"type":"shell",
+			"type": "shell",
 			"command": "./.vscode/scripts/runtime/local/run-vehicledatabroker-cli.sh",
 			"group": "none",
 			"isBackground": false,
 		},
 		{
-			"label": "Local - SeatService",
-			"detail": "Runs the SeatService as background task.",
+			"label": "Local - VehicleServices",
+			"detail": "Runs all configured VehicleServices as background task.",
 			"type": "shell",
-			"command": "./.vscode/scripts/runtime/local/run-seatservice.sh",
+			"command": "./.vscode/scripts/runtime/local/run-vehicleservices.sh",
 			"group": "none",
 			"presentation": {
 				"reveal": "always",
@@ -160,7 +160,7 @@
 				"Local - Ensure Dapr",
 				"Local - Mosquitto",
 				"Local - VehicleDataBroker",
-				"Local - SeatService",
+				"Local - VehicleServices",
 				"Local - FeederCan"
 			],
 			"dependsOrder": "sequence"
@@ -168,7 +168,7 @@
 		{
 			"label": "Local - VehicleApp (Dapr run)",
 			"detail": "Start VehicleApp with dapr run (p.e. for running integration tests locally).",
-			"type":"shell",
+			"type": "shell",
 			"command": [
 				"dapr run",
 				"--app-id vehicleapp",

@@ -19,12 +19,15 @@ echo "#######################################################"
 
 ROOT_DIRECTORY=$( realpath "$( cd -- "$(dirname "$0")" >/dev/null 2>&1 ; pwd -P )/../../../.." )
 
+# Get Data from AppManifest.json and save to ENV
+UTILS_DIRECTORY="$ROOT_DIRECTORY/.vscode/scripts/runtime/utils"
+source $UTILS_DIRECTORY/get-appmanifest-data.sh
+
 #Terminate existing running services
-RUNNING_CONTAINER=$(docker ps | grep "eclipse-mosquitto" | awk '{ print $1 }')
-MOSQUITTO_VERSION=$(cat $ROOT_DIRECTORY/prerequisite_settings.json | jq .mosquitto.version | tr -d '"')
+RUNNING_CONTAINER=$(docker ps | grep "$MOSQUITTO_IMAGE" | awk '{ print $1 }')
 
 if [ -n "$RUNNING_CONTAINER" ];
 then
     docker container stop $RUNNING_CONTAINER
 fi
-docker run -p 1883:1883 -p 9001:9001 eclipse-mosquitto:$MOSQUITTO_VERSION mosquitto -c /mosquitto-no-auth.conf
+docker run -p 1883:1883 -p 9001:9001 $MOSQUITTO_IMAGE:$MOSQUITTO_TAG mosquitto -c /mosquitto-no-auth.conf
