@@ -1,0 +1,44 @@
+[
+    {
+        "Name": "seatadjuster",
+        "Port": 50008,
+        "Dockerfile": "./src/VehicleApp/Dockerfile",
+        "dependencies": {
+            "services": [
+                {
+                    "name": "seatservice",
+                    "image": "ghcr.io/eclipse/kuksa.val.services/seat_service",
+                    "version": "v0.1.0"
+                }
+            ],
+            "runtime": [
+                {
+                    "name": "mosquitto",
+                    "image": "eclipse-mosquitto",
+                    "version": "2.0.14"
+                },
+                {
+                    "name": "databroker",
+                    "image": "ghcr.io/eclipse/kuksa.val/databroker",
+                    "version": "v0.17.0"
+                },
+                {
+                    "name": "feedercan",
+                    "image": "ghcr.io/eclipse/kuksa.val.feeders/dbc2val",
+                    "version": "v0.1.0"
+                }
+            ],
+            "python": {
+                "version": "3.9"
+            },
+            "dapr": {
+                "cli": {
+                    "version": "1.7.1"
+                },
+                "runtime": {
+                    "version": "1.8.1"
+                }
+            }
+        }
+    }
+]
