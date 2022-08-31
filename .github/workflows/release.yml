@@ -15,6 +15,16 @@
 name: Release workflow
 
 on:
+  workflow_dispatch:
+    inputs:
+      architecture:
+        type: choice
+        description: Select the target Architecture image.
+        required: false
+        options:
+          - arm64
+          - aarch64
+          - multiarch
   release:
     types: [published, edited]
 
@@ -77,15 +87,22 @@ jobs:
           commit: ${{ github.sha }}
           path: ${{github.workspace}}
 
-      - name: Dump INFO
-        working-directory: ${{github.workspace}}
+      - name: Check Build Type
+        id: check
         run: |
-          ls -R
+          if [ ${{ github.event.inputs.architecture }} ]; then
+            echo "Manual Release"
+            echo "::set-output name=architecture::${{ inputs.architecture }}"
+          else
+            echo "Automatic Release"
+            echo "::set-output name=architecture::multiarch"
+          fi
+        shell: bash
 
       - name: "${{ matrix.component.Name }} -- Publish release image to GHCR"
         working-directory: ${{github.workspace}}
         env:
-          VAPP_IMAGE: ${{ matrix.component.Name }}-multiarch/${{ matrix.component.Name }}.tar
+          VAPP_IMAGE: ${{ matrix.component.Name }}-${{ steps.check.outputs.architecture }}/${{ matrix.component.Name }}.tar
           VAPP_NAME: ${{ matrix.component.Name }}
           VAPP_VERSION: ${{ steps.get_version.outputs.version-without-v }}
           REGISTRY: "ghcr.io/${{steps.github-repository-name-case-adjusted.outputs.lowercase}}"

@@ -23,7 +23,7 @@ on:
       deployment-matrix-str:
         required: true
         type: string
-      multiarc:
+      multiarch:
         required: false
         type: boolean
         default: false
@@ -82,7 +82,7 @@ jobs:
       - name: Check Platform String
         id: check
         run: |
-          if [ ${{ inputs.multiarc }} == true ]; then
+          if [ ${{ inputs.multiarch }} == true ]; then
             echo "Build Multiarch"
             echo "::set-output name=platform::linux/amd64, linux/arm64"
           else

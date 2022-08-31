@@ -73,7 +73,7 @@ jobs:
 
       #########################################################
       # This step was disabled temprorly due the required write
-      # access rights of the PR's for the external contriputers.
+      # access rights of the PR's for the external contributors.
       #########################################################
       #- name: Add code coverage comment to pr
       #  uses: romeovs/lcov-reporter-action@v0.3.1
@@ -154,7 +154,7 @@ jobs:
     needs: [initialize-matrix]
     with:
       platform: multiarch
-      multiarc: true
+      multiarch: true
       deployment-matrix-str: ${{ needs.initialize-matrix.outputs.deployment-matrix }}
 
   run-integration-tests:
