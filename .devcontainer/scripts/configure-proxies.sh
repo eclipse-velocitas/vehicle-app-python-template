@@ -17,7 +17,6 @@ echo "#######################################################"
 echo "### Configure-proxies                               ###"
 echo "#######################################################"
 
-# Setting this again, since it was overwritten by the local docker.config
 # this is needed for K3D to work properly
 NO_PROXY="localhost,127.0.0.1,0.0.0.0,10.0.0.0/8,192.168.122.0/24,cattle-system.svc,.svc,.cluster.local"
 
