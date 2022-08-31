@@ -87,7 +87,7 @@ jobs:
             echo "::set-output name=platform::linux/amd64, linux/arm64"
           else
             echo "Build ${{inputs.platform}}"
-            echo "::set-output name=platform::linux/amd64"
+            echo "::set-output name=platform::linux/${{ inputs.platform }}"
           fi
         shell: bash
 

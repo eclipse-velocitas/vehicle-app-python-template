@@ -72,6 +72,18 @@ jobs:
           username: ${{ github.repository_owner }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Check Build Type
+        id: check
+        run: |
+          if [ ${{ github.event.inputs.architecture }} ]; then
+            echo "Manual Release"
+            echo "::set-output name=architecture::${{ inputs.architecture }}"
+          else
+            echo "Automatic Release"
+            echo "::set-output name=architecture::multiarch"
+          fi
+        shell: bash
+
       - id: github-repository-name-case-adjusted
         name: Prepare repository name in lower case for docker upload.
         uses: ASzc/change-string-case-action@v1
@@ -86,18 +98,6 @@ jobs:
           workflow_conclusion: success
           commit: ${{ github.sha }}
           path: ${{github.workspace}}
-
-      - name: Check Build Type
-        id: check
-        run: |
-          if [ ${{ github.event.inputs.architecture }} ]; then
-            echo "Manual Release"
-            echo "::set-output name=architecture::${{ inputs.architecture }}"
-          else
-            echo "Automatic Release"
-            echo "::set-output name=architecture::multiarch"
-          fi
-        shell: bash
 
       - name: "${{ matrix.component.Name }} -- Publish release image to GHCR"
         working-directory: ${{github.workspace}}
