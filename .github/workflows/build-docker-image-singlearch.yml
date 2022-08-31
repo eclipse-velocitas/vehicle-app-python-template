@@ -91,6 +91,7 @@ jobs:
           outputs: |
             type=oci,dest=./${{ matrix.component.Name }}.tar
           file: ${{ matrix.component.Dockerfile }}
+          context: .
           platforms: linux/${{ inputs.platform }}
           secrets: |
             "github_token=user:${{ secrets.GITHUB_TOKEN }}"
