@@ -79,15 +79,15 @@ jobs:
           git config --global user.email "github-automation@users.noreply.github.com"
           git config --global user.name "Github Automation"
 
-      - name: Check Platform String
-        id: check
+      - name: Set Platform(s) String
+        id: set_platforms
         run: |
           if [ ${{ inputs.multiarch }} == true ]; then
             echo "Build Multiarch"
-            echo "::set-output name=platform::linux/amd64, linux/arm64"
+            echo "::set-output name=platforms::linux/amd64, linux/arm64"
           else
             echo "Build ${{inputs.platform}}"
-            echo "::set-output name=platform::linux/${{ inputs.platform }}"
+            echo "::set-output name=platforms::linux/${{ inputs.platform }}"
           fi
         shell: bash
 
@@ -101,7 +101,7 @@ jobs:
             type=oci,dest=./${{ matrix.component.Name }}.tar
           file: ${{ matrix.component.Dockerfile }}
           context: .
-          platforms: ${{ steps.check.outputs.platform }}
+          platforms: ${{ steps.set_platforms.outputs.platforms }}
           secrets: |
             "github_token=user:${{ secrets.GITHUB_TOKEN }}"
           tags: ${{ github.sha }}

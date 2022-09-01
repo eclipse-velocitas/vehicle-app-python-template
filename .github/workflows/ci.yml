@@ -72,8 +72,8 @@ jobs:
           files: ./results/UnitTest/junit.xml
 
       #########################################################
-      # This step was disabled temprorly due the required write
-      # access rights of the PR's for the external contributors.
+      # This step was disabled temporarily due to the required 
+      # write access rights of the PRs for external contributors.
       #########################################################
       #- name: Add code coverage comment to pr
       #  uses: romeovs/lcov-reporter-action@v0.3.1
