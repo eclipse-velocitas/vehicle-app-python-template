@@ -71,18 +71,22 @@ run_service() {
 DEPENDENCIES=$(cat $ROOT_DIRECTORY/app/AppManifest.json | jq .[].dependencies)
 SERVICES=$(echo $DEPENDENCIES | jq '.services')
 
-readarray -t SERVICES_ARRAY < <(echo $SERVICES | jq -c '.[]')
+if [ "$SERVICES" = "null" ];then
+    echo "No Services defined in AppManifest. Skip running vehicle services.";
+else
+    readarray -t SERVICES_ARRAY < <(echo $SERVICES | jq -c '.[]')
 
-for service in ${SERVICES_ARRAY[@]}; do
-    SERVICE_NAME=$(echo $service | jq '.name' | tr -d '"' )
-    SERVICE_IMAGE=$(echo $service | jq '.image' | tr -d '"')
-    SERVICE_TAG=$(echo $service | jq '.version' | tr -d '"')
-    if [ $SERVICE_IMAGE = "null" ] || [ $SERVICE_TAG = "null" ];then
-        echo "Missing configuration in AppManifest.json for Service: $SERVICE_NAME"
-    else
-        echo "Starting Service: $SERVICE_NAME"
-        run_service $SERVICE_NAME
-    fi
-done
+    for service in ${SERVICES_ARRAY[@]}; do
+        SERVICE_NAME=$(echo $service | jq '.name' | tr -d '"' )
+        SERVICE_IMAGE=$(echo $service | jq '.image' | tr -d '"')
+        SERVICE_TAG=$(echo $service | jq '.version' | tr -d '"')
+        if [ $SERVICE_IMAGE = "null" ] || [ $SERVICE_TAG = "null" ];then
+            echo "Missing configuration in AppManifest.json for Service: $SERVICE_NAME"
+        else
+            echo "Starting Service: $SERVICE_NAME"
+            run_service $SERVICE_NAME
+        fi
+    done
+fi
 
 wait
