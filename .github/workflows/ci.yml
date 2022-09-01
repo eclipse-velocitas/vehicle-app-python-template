@@ -72,7 +72,7 @@ jobs:
           files: ./results/UnitTest/junit.xml
 
       #########################################################
-      # This step was disabled temporarily due to the required 
+      # This step was disabled temporarily due to the required
       # write access rights of the PRs for external contributors.
       #########################################################
       #- name: Add code coverage comment to pr
