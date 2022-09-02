@@ -27,7 +27,7 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Get matrix data
         id: export-deployment-matrix
@@ -37,6 +37,7 @@ jobs:
           MATRIX=$(cat ./AppManifest.json | tr '\n' ' ')
 
           echo "::set-output name=deployment-matrix::$MATRIX"
+
   upload-images:
     name: "Upload image (${{ matrix.component.Name }})"
     runs-on: ubuntu-latest
@@ -47,7 +48,7 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - id: get_version
         uses: battila7/get-version-action@v2
@@ -62,21 +63,30 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - id: github-repository-name-case-adjusted
-        name: Prepare repository name in lower case for docker upload. This supports repository names in mixed case
+        name: Prepare repository name in lower case for docker upload.
         uses: ASzc/change-string-case-action@v1
         with:
           string: ${{ github.repository }}
 
+      - name: Download builds from CI workflow artifacts
+        uses: dawidd6/action-download-artifact@v2.23.0
+        with:
+          github_token: ${{secrets.GITHUB_TOKEN}}
+          workflow: ci.yml
+          workflow_conclusion: success
+          commit: ${{ github.sha }}
+          path: ${{github.workspace}}
+
       - name: "${{ matrix.component.Name }} -- Publish release image to GHCR"
+        working-directory: ${{github.workspace}}
         env:
+          VAPP_IMAGE: ${{ matrix.component.Name }}-multiarch/${{ matrix.component.Name }}.tar
           VAPP_NAME: ${{ matrix.component.Name }}
-          COMMIT: ${{ github.sha }}
           VAPP_VERSION: ${{ steps.get_version.outputs.version-without-v }}
-          GIT_HUB_REPOSITORY_NAME_LOWER_CASE: ${{ steps.github-repository-name-case-adjusted.outputs.lowercase }}
-          TARGET_REGISTRY: 'ghcr.io/${{steps.github-repository-name-case-adjusted.outputs.lowercase}}' # Please use your target container registry
+          REGISTRY: "ghcr.io/${{steps.github-repository-name-case-adjusted.outputs.lowercase}}"
         run: |
-          echo "Copy vApp image 'docker://ghcr.io/$GIT_HUB_REPOSITORY_NAME_LOWER_CASE/$VAPP_NAME:$COMMIT' to 'docker://$TARGET_REGISTRY/$VAPP_NAME:$VAPP_VERSION'"
-          skopeo copy --all  "docker://ghcr.io/$GIT_HUB_REPOSITORY_NAME_LOWER_CASE/$VAPP_NAME:$COMMIT" "docker://$TARGET_REGISTRY/$VAPP_NAME:$VAPP_VERSION"
+          echo "Copy vApp image $VAPP_IMAGE to 'docker://$REGISTRY/$VAPP_NAME:$VAPP_VERSION'"
+          skopeo copy --all  oci-archive:$VAPP_IMAGE "docker://$REGISTRY/$VAPP_NAME:$VAPP_VERSION"
 
   release-documentation:
     name: Generate release documentation
@@ -84,17 +94,17 @@ jobs:
     env:
       TEST_RESULT_FOLDER_NAME: test-results
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
       - name: Clone Release Documentation Action repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           repository: eclipse-velocitas/release-documentation-action
           path: "./.github/actions"
 
       - uses: actions/setup-node@v1
         with:
-          node-version: '14.x'
+          node-version: "14.x"
 
       - name: Conditional input event value
         uses: haya14busa/action-cond@v1
@@ -109,8 +119,8 @@ jobs:
         id: wait-for-CI
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          checkName: "create-multiarch-image"
-          ref:  ${{ steps.condval.outputs.value }}
+          checkName: "build-image-multiarch"
+          ref: ${{ steps.condval.outputs.value }}
           timeoutSeconds: 600
 
       - name: Download artifact
@@ -118,7 +128,7 @@ jobs:
         with:
           workflow: ci.yml
           workflow_conclusion: success
-          commit:  ${{ steps.condval.outputs.value }}
+          commit: ${{ steps.condval.outputs.value }}
           path: .vehicleApp/Documentation/Inbox
 
       - name: Render documentation (test-results)
@@ -150,7 +160,7 @@ jobs:
       - name: Setup Hugo
         uses: peaceiris/actions-hugo@v2
         with:
-          hugo-version: '0.89.4'
+          hugo-version: "0.89.4"
           extended: true
 
       - name: Set tags output
