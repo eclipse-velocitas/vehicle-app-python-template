@@ -34,10 +34,10 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Clone Release Documentation Action repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           repository: eclipse-velocitas/release-documentation-action
           path: "./.github/actions"
@@ -71,6 +71,10 @@ jobs:
         with:
           files: ./results/UnitTest/junit.xml
 
+      #########################################################
+      # This step was disabled temporarily due to the required
+      # write access rights of the PRs for external contributors.
+      #########################################################
       #- name: Add code coverage comment to pr
       #  uses: romeovs/lcov-reporter-action@v0.3.1
       #  with:
@@ -120,7 +124,7 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Get matrix data
         id: export-deployment-matrix
@@ -132,17 +136,25 @@ jobs:
           echo "::set-output name=deployment-matrix::$MATRIX"
 
   build-image-amd64:
-    uses: ./.github/workflows/build-docker-image-singlearch.yml
+    uses: ./.github/workflows/build-docker-image.yml
     needs: [initialize-matrix]
     with:
       platform: amd64
       deployment-matrix-str: ${{ needs.initialize-matrix.outputs.deployment-matrix }}
 
   build-image-aarch64:
-    uses: ./.github/workflows/build-docker-image-singlearch.yml
+    uses: ./.github/workflows/build-docker-image.yml
     needs: [initialize-matrix]
     with:
       platform: aarch64
+      deployment-matrix-str: ${{ needs.initialize-matrix.outputs.deployment-matrix }}
+
+  build-image-multiarch:
+    uses: ./.github/workflows/build-docker-image.yml
+    needs: [initialize-matrix]
+    with:
+      platform: multiarch
+      multiarch: true
       deployment-matrix-str: ${{ needs.initialize-matrix.outputs.deployment-matrix }}
 
   run-integration-tests:
@@ -153,10 +165,10 @@ jobs:
       matrix:
         component: ${{ fromJson(needs.initialize-matrix.outputs.deployment-matrix) }}
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
       - name: Clone Release Documentation Action repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           repository: eclipse-velocitas/release-documentation-action
           path: "./.github/actions"
@@ -200,7 +212,7 @@ jobs:
       - name: Download stored image from artifacts
         uses: actions/download-artifact@v3.0.0
         env:
-          VAPP_IMAGE: ${{ matrix.component.Name }}_${{ github.sha }}-amd64.tar
+          VAPP_IMAGE: ${{ matrix.component.Name }}-amd64
         with:
           name: ${{ env.VAPP_IMAGE }}
           path: ./.github/scripts/
