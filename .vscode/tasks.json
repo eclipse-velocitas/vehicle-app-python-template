@@ -350,12 +350,7 @@
 			"id": "exampleApp",
 			"type": "pickString",
 			"options": [
-				"seat-adjuster",
-				"dog-mode",
-				"array-datatype",
-				"vdb-queries",
-				"static-rule",
-				"dynamic-rule"
+				"seat-adjuster"
 			],
 		}
 	]
