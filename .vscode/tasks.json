@@ -176,7 +176,7 @@
 				"--app-port 50008",
 				"--config ./.dapr/config.yaml",
 				"--components-path ./.dapr/components",
-				"python3 ./src/VehicleApp/main.py"
+				"python3 ./app/src/main.py"
 			],
 			"group": "none",
 			"isBackground": true,
@@ -336,6 +336,22 @@
 			"dependsOn": [
 				"K3D - Install prerequisites"
 			]
+		},
+		{
+			"label": "Import example app from SDK",
+			"detail": "Import example app from SDK",
+			"type": "shell",
+			"command": "./.vscode/scripts/runtime/utils/import-example-app.sh ${input:exampleApp}",
+		}
+	],
+	"inputs": [
+		{
+			"description": "Options for example apps from SDK package.",
+			"id": "exampleApp",
+			"type": "pickString",
+			"options": [
+				"seat-adjuster"
+			],
 		}
 	]
 }

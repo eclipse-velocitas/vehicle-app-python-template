@@ -19,31 +19,39 @@ echo "#######################################################"
 
 ROOT_DIRECTORY=$( realpath "$( cd -- "$(dirname "$0")" >/dev/null 2>&1 ; pwd -P )/../../../.." )
 
-DEPENDENCIES=$(cat $ROOT_DIRECTORY/AppManifest.json | jq .[].dependencies)
+DEPENDENCIES=$(cat $ROOT_DIRECTORY/app/AppManifest.json | jq .[].dependencies)
 SERVICES=$(echo $DEPENDENCIES | jq '.services')
 RUNTIME=$(echo $DEPENDENCIES | jq '.runtime')
 
-readarray -t SERVICES_ARRAY < <(echo $SERVICES | jq -c '.[]')
-readarray -t RUNTIME_ARRAY < <(echo $RUNTIME | jq -c '.[]')
+if [ "$SERVICES" = "null" ];then
+    echo "No Services defined in AppManifest";
+else
+    readarray -t SERVICES_ARRAY < <(echo $SERVICES | jq -c '.[]')
+    # Exports content from service dependency configuration to ENV
+    # $<SERVICENAME>_TAG=version
+    # $<SERVICENAME>_IMAGE=image
+    for service in ${SERVICES_ARRAY[@]}; do
+        name=$(jq '.name' <<< "${service}" | tr -d '"')
+        version=$(jq '.version' <<< "${service}" | tr -d '"')
+        image=$(jq '.image' <<< "${service}" | tr -d '"')
+        export ${name^^}_TAG=$version
+        export ${name^^}_IMAGE=$image
+    done
+fi
 
-# Exports content from service dependency configuration to ENV
-# $<SERVICENAME>_TAG=version
-# $<SERVICENAME>_IMAGE=image
-for service in ${SERVICES_ARRAY[@]}; do
-    name=$(jq '.name' <<< "${service}" | tr -d '"')
-    version=$(jq '.version' <<< "${service}" | tr -d '"')
-    image=$(jq '.image' <<< "${service}" | tr -d '"')
-    export ${name^^}_TAG=$version
-    export ${name^^}_IMAGE=$image
-done
 
-# Exports content from runtime dependency configuration to ENV
-# $<RUNTIMENAME>_TAG=version
-# $<RUNTIMENAME>_IMAGE=image
-for runtime in ${RUNTIME_ARRAY[@]}; do
-    name=$(jq '.name' <<< "${runtime}" | tr -d '"')
-    version=$(jq '.version' <<< "${runtime}" | tr -d '"')
-    image=$(jq '.image' <<< "${runtime}" | tr -d '"')
-    export ${name^^}_TAG=$version
-    export ${name^^}_IMAGE=$image
-done
+if [ "$RUNTIME" = "null" ];then
+    echo "No Runtime defined in AppManifest";
+else
+    readarray -t RUNTIME_ARRAY < <(echo $RUNTIME | jq -c '.[]')
+    # Exports content from runtime dependency configuration to ENV
+    # $<RUNTIMENAME>_TAG=version
+    # $<RUNTIMENAME>_IMAGE=image
+    for runtime in ${RUNTIME_ARRAY[@]}; do
+        name=$(jq '.name' <<< "${runtime}" | tr -d '"')
+        version=$(jq '.version' <<< "${runtime}" | tr -d '"')
+        image=$(jq '.image' <<< "${runtime}" | tr -d '"')
+        export ${name^^}_TAG=$version
+        export ${name^^}_IMAGE=$image
+    done
+fi
