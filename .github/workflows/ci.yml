@@ -61,7 +61,7 @@ jobs:
         shell: bash
         run: |
           pip install -r app/tests/requirements.txt
-          pytest --rootdir . --override-ini junit_family=xunit1 --junit-xml=./results/UnitTest/junit.xml --cov ./app/src --cov-report=xml:results/CodeCoverage/cobertura-coverage.xml --cov-branch ./app/src --cov-config=setup.cfg
+          pytest --rootdir=./app/tests/unit --override-ini junit_family=xunit1 --junit-xml=./results/UnitTest/junit.xml --cov ./app/tests/unit --cov-report=xml:results/CodeCoverage/cobertura-coverage.xml --cov-branch ./app/tests/unit --cov-config=setup.cfg
           coverage2clover -i results/CodeCoverage/cobertura-coverage.xml -o results/CodeCoverage/clover.xml
           coveragepy-lcov --data_file_path ./.coverage --output_file_path results/CodeCoverage/lcov.info
 
