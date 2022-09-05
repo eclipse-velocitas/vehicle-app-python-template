@@ -338,10 +338,10 @@
 			]
 		},
 		{
-			"label": "Get example app from SDK package",
-			"detail": "Get example app from SDK package.",
+			"label": "Import example app from SDK",
+			"detail": "Import example app from SDK",
 			"type": "shell",
-			"command": "rm -rf app/ && cp -a ~/.local/lib/python3.9/site-packages/sdv_examples/${input:exampleApp} app && pip install -r ./app/requirements.txt",
+			"command": "./.vscode/scripts/runtime/utils/import-example-app.sh ${input:exampleApp}",
 		}
 	],
 	"inputs": [

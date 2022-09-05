@@ -1,6 +1,6 @@
 [
     {
-        "Name": "myvehicleapp",
+        "Name": "sampleapp",
         "Port": 50008,
         "DAPR_GRPC_PORT": 50001,
         "Dockerfile": "./app/Dockerfile",

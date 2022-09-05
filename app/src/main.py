@@ -33,12 +33,12 @@ logging.basicConfig(format=get_opentelemetry_log_format())
 logging.getLogger().setLevel("INFO")
 logger = logging.getLogger(__name__)
 
-GET_SPEED_REQUEST_TOPIC = "myvehicleapp/getSpeed"
-GET_SPEED_RESPONSE_TOPIC = "myvehicleapp/getSpeed/response"
-DATABROKER_SUBSCRIPTION_TOPIC = "myvehicleapp/currentSpeed"
+GET_SPEED_REQUEST_TOPIC = "sampleapp/getSpeed"
+GET_SPEED_RESPONSE_TOPIC = "sampleapp/getSpeed/response"
+DATABROKER_SUBSCRIPTION_TOPIC = "sampleapp/currentSpeed"
 
 
-class MyVehicleApp(VehicleApp):
+class SampleApp(VehicleApp):
     """
     Sample skeleton vehicle app.
 
@@ -54,13 +54,13 @@ class MyVehicleApp(VehicleApp):
     """
 
     def __init__(self, vehicle_client: Vehicle):
-        # MyVehicleApp inherits from VehicleApp.
+        # SampleApp inherits from VehicleApp.
         super().__init__()
         self.Vehicle = vehicle_client
 
     async def on_start(self):
         """Run when the vehicle app starts"""
-        logger.info("MyVehicleApp started.")
+        logger.info("SampleApp started.")
         # Example to subscribe to VehicleDataBroker signals
         # on start of the app and defining method to execute on change.
         await self.Vehicle.OBD.Speed.subscribe(self.on_speed_change)
@@ -76,16 +76,16 @@ class MyVehicleApp(VehicleApp):
             json.dumps({"speed": vehicle_speed}),
         )
 
-    # MyVehicleApp subscribes to GET_SPEED_REQUEST_TOPIC
+    # SampleApp subscribes to GET_SPEED_REQUEST_TOPIC
     # and executes the following method
     # when a message is published to GET_SPEED_REQUEST_TOPIC.
     @subscribe_topic(GET_SPEED_REQUEST_TOPIC)
     async def on_get_speed_request_received(self, data_str: str) -> None:
         logger.debug("Data received: %s", data_str)
         logger.info(
-            "MyVehicleApp received message from topic: %s", GET_SPEED_REQUEST_TOPIC
+            "SampleApp received message from topic: %s", GET_SPEED_REQUEST_TOPIC
         )
-        logger.info("MyVehicleApp requests current speed from vehicle")
+        logger.info("SampleApp requests current speed from vehicle")
         # Getting current speed from VehicleDataBroker.
         vehicle_speed = await self.Vehicle.OBD.Speed.get()
 
@@ -109,9 +109,9 @@ class MyVehicleApp(VehicleApp):
 async def main():
 
     """Main function"""
-    logger.info("Starting MyVehicleApp...")
-    # Constructing MyVehicleApp and running it.
-    vehicle_app = MyVehicleApp(vehicle)
+    logger.info("Starting SampleApp...")
+    # Constructing SampleApp and running it.
+    vehicle_app = SampleApp(vehicle)
     await vehicle_app.run()
 
 
