@@ -13,8 +13,8 @@
 # SPDX-License-Identifier: Apache-2.0
 
 ROOT_DIRECTORY=$( realpath "$( cd -- "$(dirname "$0")" >/dev/null 2>&1 ; pwd -P )/../../../.." )
-APP_NAME=$(cat $ROOT_DIRECTORY/AppManifest.json | jq .[].Name | tr -d '"')
-DOCKERFILE_FILE="$(cat $ROOT_DIRECTORY/AppManifest.json | jq .[].Dockerfile | tr -d '"')"
+APP_NAME=$(cat $ROOT_DIRECTORY/app/AppManifest.json | jq .[].Name | tr -d '"')
+DOCKERFILE_FILE="$(cat $ROOT_DIRECTORY/app/AppManifest.json | jq .[].Dockerfile | tr -d '"')"
 
 if [ -n "$HTTP_PROXY" ]; then
     echo "Building image with proxy configuration"
