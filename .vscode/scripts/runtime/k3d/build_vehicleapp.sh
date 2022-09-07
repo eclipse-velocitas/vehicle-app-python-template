@@ -17,7 +17,7 @@ APP_NAME=$(cat $ROOT_DIRECTORY/AppManifest.json | jq .[].Name | tr -d '"')
 DOCKERFILE_FILE="$(cat $ROOT_DIRECTORY/AppManifest.json | jq .[].Dockerfile | tr -d '"')"
 BUILD_ARGS=
 
-if [ -n "$HTTP_PROXY" ] || [ -n "$HTTPS_PROXY" ] || [ -n "$FTP_PROXY" ] || [ -n "$ALL_PROXY" ]; then
+if [ -n "$HTTP_PROXY" ]; then
     echo "Building image with proxy configuration"
 
     BUILD_ARGS="--build-arg HTTP_PROXY \
