@@ -27,18 +27,27 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Clone License Check Repo
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           repository: eclipse-velocitas/license-check
-          ref: v1
+          ref: v1.2.0
           path: .github/actions/license-check
 
       - name: Run License Checker
+        id: checker
+        continue-on-error: true
         uses: ./.github/actions/license-check
         with:
           config-file-path: ./.licensechecker.yml
           fail-on-violation: false
-          generate-notice-file: false
+          notice-file-name: "NOTICE-3RD-PARTY-CONTENT"
+
+      - name: Upload notice file if dirty
+        if: ${{ steps.checker.outputs.notice-file-is-dirty == 'true' }}
+        uses: actions/upload-artifact@v3
+        with:
+          name: ${{ steps.checker.outputs.notice-file-path }}
+          path: ${{ steps.checker.outputs.notice-file-path }}
