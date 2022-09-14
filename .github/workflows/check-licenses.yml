@@ -50,9 +50,3 @@ jobs:
         with:
           name: ${{ steps.checker.outputs.notice-file-path }}
           path: ${{ steps.checker.outputs.notice-file-path }}
-
-      - name: Fail workflow if notice file is dirty
-        if: ${{ steps.checker.outputs.notice-file-is-dirty == 'true' }}
-        run: |
-            echo "::error::Check-in updated ${{ steps.checker.outputs.notice-file-path }} to continue!"
-            exit 1
