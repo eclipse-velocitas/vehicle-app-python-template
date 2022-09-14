@@ -38,7 +38,7 @@ jobs:
 
       - name: Run License Checker
         id: checker
-        continue-on-error: true
+        continue-on-error: false
         uses: ./.github/actions/license-check
         with:
           config-file-path: ./.licensechecker.yml
