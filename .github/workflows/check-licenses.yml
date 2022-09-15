@@ -37,7 +37,6 @@ jobs:
           path: .github/actions/license-check
 
       - name: Run License Checker
-        id: checker
         uses: ./.github/actions/license-check
         with:
           config-file-path: ./.licensechecker.yml
