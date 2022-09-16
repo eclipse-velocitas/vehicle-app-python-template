@@ -38,5 +38,9 @@
         "src"
     ],
     "python.linting.banditEnabled": true,
-    "python.linting.pydocstyleEnabled": true
+    "python.linting.pydocstyleEnabled": true,
+    "vs-kubernetes": {
+        "vscode-kubernetes.kubectl-path.linux": "/usr/bin/kubectl",
+        "vscode-kubernetes.helm-path.linux": "/usr/local/bin/helm"
+    },
 }

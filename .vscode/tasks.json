@@ -197,19 +197,6 @@
 			}
 		},
 		{
-			"label": "K3D - Install prerequisites",
-			"detail": "Install prerequisite components K3D, Helm, KubeCTL and Dapr without configuring them.",
-			"type": "shell",
-			"command": "./.vscode/scripts/runtime/k3d/install_prerequisites.sh",
-			"group": "none",
-			"presentation": {
-				"reveal": "always",
-				//"panel": "dedicated",
-				"clear": true,
-				"close": false
-			},
-		},
-		{
 			"label": "K3D - Configure control plane",
 			"detail": "Creates a local container registry used by K3D as well as an K3D cluster with Dapr enabled.",
 			"type": "shell",
@@ -220,10 +207,7 @@
 				//"panel": "dedicated",
 				"clear": true,
 				"close": false
-			},
-			"dependsOn": [
-				"K3D - Install prerequisites"
-			]
+			}
 		},
 		{
 			"label": "K3D - Deploy runtime",
@@ -290,22 +274,6 @@
 			]
 		},
 		{
-			"label": "K3D - Install tooling",
-			"detail": "Installs tooling for local debugging (K9s, Kubernetes Dashboard)",
-			"type": "shell",
-			"command": "./.vscode/scripts/runtime/k3d/install_tooling.sh",
-			"group": "none",
-			"presentation": {
-				"reveal": "always",
-				"panel": "dedicated",
-				"clear": true,
-				"close": false
-			},
-			"dependsOn": [
-				"K3D - Configure control plane"
-			]
-		},
-		{
 			"label": "K3D - Uninstall runtime",
 			"detail": "Uninstalls the runtime components from the K3D cluster (without deleting the cluster).",
 			"type": "shell",
@@ -332,10 +300,7 @@
 				"panel": "dedicated",
 				"clear": true,
 				"close": false
-			},
-			"dependsOn": [
-				"K3D - Install prerequisites"
-			]
+			}
 		},
 		{
 			"label": "Import example app from SDK",

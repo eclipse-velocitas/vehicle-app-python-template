@@ -1,8 +1,9 @@
 {
 	"name": "Python VehicleApp",
-	"dockerFile": "Dockerfile${localEnv:DEVCONTAINER_PROXY}",
 	"build": {
+		"dockerfile": "Dockerfile",
 		"args": {
+			"PROXY": "${localEnv:DEVCONTAINER_PROXY}",
 			"PROXY_PORT": "${localEnv:DEVCONTAINER_PROXY_PORT}",
 			"PROXY_HOST": "${localEnv:DEVCONTAINER_PROXY_HOST}"
 		}
@@ -11,6 +12,7 @@
 		"--init",
 		"--privileged"
 	],
+
 	// Set *default* container specific settings.json values on container create.
 	"settings": {
 		"python.pythonPath": "/usr/bin/python3",
@@ -23,11 +25,11 @@
 		"python.linting.flake8Enabled": true,
 		"python.disableInstallationCheck": true
 	},
+
 	"features": {
-		"docker-in-docker": {
-			"version": "latest",
-			"moby": true
-		},
+        "docker-in-docker": {
+            "version": "20.10"
+        },
 		"common": {
 			"username": "automatic",
 			"uid": "automatic",
@@ -37,7 +39,8 @@
 			"upgradePackages": true,
 			"nonFreePackages": false
 		}
-	},
+    },
+
 	// Add the IDs of extensions you want installed when the container is created.
 	"extensions": [
 		"dbaeumer.vscode-eslint",
@@ -56,9 +59,7 @@
 		"elagil.pre-commit-helper",
 		"ms-python.isort"
 	],
-	// Use 'forwardPorts' to make a list of ports inside the container available locally.
-	// "forwardPorts": [],
-	// Ensure Dapr is running on opening the container
+
 	"onCreateCommand": "bash .devcontainer/scripts/postCreateCommand.sh",
 	// Comment out connect as root instead. More info: https://aka.ms/vscode-remote/containers/non-root.
 	"remoteUser": "vscode"
