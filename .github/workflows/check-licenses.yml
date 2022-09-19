@@ -27,13 +27,13 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Clone License Check Repo
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           repository: eclipse-velocitas/license-check
-          ref: v1
+          ref: v1.2.0
           path: .github/actions/license-check
 
       - name: Run License Checker
@@ -41,4 +41,4 @@ jobs:
         with:
           config-file-path: ./.licensechecker.yml
           fail-on-violation: false
-          generate-notice-file: false
+          notice-file-name: "NOTICE-3RD-PARTY-CONTENT"
