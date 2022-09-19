@@ -24,24 +24,24 @@
 |gitdb|4.0.9|BSD|
 |GitPython|3.1.27|BSD|
 |grpc-stubs|1.24.10|MIT|
-|grpcio|1.46.3|Apache 2.0|
 |grpcio-tools|1.46.3|Apache 2.0|
+|grpcio|1.46.3|Apache 2.0|
 |identify|2.5.1|MIT|
 |idna|3.3|New BSD|
 |isort|5.10.1|MIT|
 |lazy-object-proxy|1.7.1|Simplified BSD|
 |mccabe|0.6.1|MIT|
 |multidict|6.0.2|Apache 2.0|
-|mypy|0.961|MIT|
 |mypy-extensions|0.4.3|MIT|
 |mypy-protobuf|3.2.0|Apache 2.0|
+|mypy|0.961|MIT|
 |nodeenv|1.6.0|BSD|
 |packaging|21.3|Apache 2.0<br/>Simplified BSD|
 |pathspec|0.9.0|Mozilla Public License 2.0 (MPL 2.0)|
 |pbr|5.9.0|Apache 2.0|
 |pep517|0.12.0|MIT|
-|pip|22.0.4|MIT|
 |pip-tools|6.6.2|BSD|
+|pip|22.0.4|MIT|
 |platformdirs|2.5.2|MIT|
 |pre-commit|2.19.0|MIT|
 |protobuf|3.19.4|Google License|
@@ -69,8 +69,8 @@
 ## Workflows
 | Dependency | Version | License |
 |:-----------|:-------:|--------:|
-|actions/checkout|v3|MIT License|
 |actions/checkout|v2|MIT License|
+|actions/checkout|v3|MIT License|
 |actions/download-artifact|v3.0.0|MIT License|
 |actions/setup-node|v1|MIT License|
 |actions/upload-artifact|v2|MIT License|
@@ -78,8 +78,8 @@
 |aquasecurity/trivy-action|0.3.0|Apache License 2.0|
 |ASzc/change-string-case-action|v1|ISC License|
 |battila7/get-version-action|v2|MIT License|
-|dawidd6/action-download-artifact|v2.23.0|MIT License|
 |dawidd6/action-download-artifact|v2|MIT License|
+|dawidd6/action-download-artifact|v2.23.0|MIT License|
 |docker/build-push-action|v2|Apache License 2.0|
 |docker/login-action|v1|Apache License 2.0|
 |docker/setup-buildx-action|v1|Apache License 2.0|
