@@ -20,4 +20,4 @@ This repository provides you with a complete development environment for your ow
 ## Contribution
 - [GitHub Issues](https://github.com/eclipse-velocitas/vehicle-app-python-template/issues)
 - [Mailing List](https://accounts.eclipse.org/mailing-list/velocitas-dev)
-- [Contribution](https://websites.eclipseprojects.io/velocitas/docs/contribution-guidelines)
+- [Contribution](CONTRIBUTING.md)
