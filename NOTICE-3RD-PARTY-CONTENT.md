@@ -92,5 +92,4 @@
 |johanvanhelden/gha-clover-test-coverage-check|v1|MIT License|
 |peaceiris/actions-gh-pages|v3|MIT License|
 |peaceiris/actions-hugo|v2|MIT License|
-|pre-commit/action|v3.0.0|MIT License|
 |softprops/action-gh-release|v1|MIT License|
