@@ -13,30 +13,6 @@
 #
 # SPDX-License-Identifier: Apache-2.0
 
-export HTTP_PROXY=${HTTP_PROXY}
-export HTTPS_PROXY=${HTTPS_PROXY}
-export NO_PROXY=${NO_PROXY}
-
-sudo chmod +x .devcontainer/scripts/*.sh
-sudo chmod +x .vscode/scripts/runtime/k3d/*.sh
-sudo chmod +x .vscode/scripts/runtime/local/*.sh
-sudo chown -R $(whoami) $HOME
-
-echo "#######################################################"
-echo "### Install Jq                                      ###"
-echo "#######################################################"
-sudo apt-get install -y jq
-
-echo "#######################################################"
-echo "### Executing container-set.sh                      ###"
-echo "#######################################################"
-.devcontainer/scripts/container-set.sh 2>&1 | tee -a $HOME/container-set.log
-
-echo "#######################################################"
-echo "### Executing add-python.sh                         ###"
-echo "#######################################################"
-.devcontainer/scripts/add-python.sh 2>&1 | tee -a $HOME/add-python.log
-
 echo "#######################################################"
 echo "### Install python requirements                     ###"
 echo "#######################################################"
