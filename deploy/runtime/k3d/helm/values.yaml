@@ -53,7 +53,7 @@ imageFeederCan:
   daprLogLevel: debug
   candumpfile: "/data/candumpDefault.log"
   dbcfile: "/data/dbcfileDefault.dbc"
-  mappying: "/data/mappingDefault.yml"
+  mapping: "/data/mappingDefault.yml"
   tag: latest
 
 nameOverride: ""

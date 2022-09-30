@@ -18,6 +18,6 @@ metadata:
   name: feeder-config
 data:
   dbcfile: "/mnt/data/dbcfile.dbc"
-  mappying: "/mnt/data/mappying.yml"
+  mapping: "/mnt/data/mapping.yml"
   candump: "/mnt/data/candump.log"
   usecase: "/mnt/data/databroker"
