@@ -40,11 +40,8 @@ ENV PATH=$PATH:/home/vscode/.dapr/bin
 ARG PROXY
 ENV PROXY="${PROXY}"
 
-ARG PROXY_HOST
-ENV PROXY_HOST="${PROXY_HOST:-http://host.docker.internal}"
-
-ARG PROXY_PORT
-ENV PROXY_PORT="${PROXY_PORT:-3128}"
+ARG HTTP_PROXY
+ARG HTTPS_PROXY
 
 ENV NO_PROXY="localhost,127.0.0.1,0.0.0.0,10.0.0.0/8,192.168.122.0/24,cattle-system.svc,.svc,.cluster.local"
 
