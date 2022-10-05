@@ -17,14 +17,12 @@ echo "#######################################################"
 echo "### Configure-proxies                               ###"
 echo "#######################################################"
 
-if [ "${PROXY}" = ".Proxy" ]; then
+if [ "$HTTP_PROXY" != "" ]; then
     USE_PROXIES="true"
-    HTTP_PROXY="${PROXY_HOST}:${PROXY_PORT}"
-    HTTPS_PROXY=$HTTP_PROXY
+    CONFIGURE_GIT="true"
     FTP_PROXY=$HTTP_PROXY
     ALL_PROXY=$HTTP_PROXY
     NO_PROXY="localhost,127.0.0.1,0.0.0.0,10.0.0.0/8,192.168.122.0/24,cattle-system.svc,.svc,.cluster.local"
-    CONFIGURE_GIT="true"
 fi
 
 echo "Use proxies: $USE_PROXIES"
