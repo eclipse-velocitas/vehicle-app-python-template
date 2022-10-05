@@ -1,12 +1,7 @@
 {
 	"name": "Python VehicleApp",
 	"build": {
-		"dockerfile": "Dockerfile",
-		"args": {
-			"PROXY": "${localEnv:DEVCONTAINER_PROXY}",
-			"PROXY_PORT": "${localEnv:DEVCONTAINER_PROXY_PORT}",
-			"PROXY_HOST": "${localEnv:DEVCONTAINER_PROXY_HOST}"
-		}
+		"dockerfile": "Dockerfile"
 	},
 	"runArgs": [
 		"--init",
