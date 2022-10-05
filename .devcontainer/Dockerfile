@@ -35,18 +35,6 @@ ENV DOCKER_BUILDKIT=1
 # Add daprd to the path for the VS Code Dapr extension.
 ENV PATH=$PATH:/home/vscode/.dapr/bin
 
-
-# Proxy
-ARG PROXY
-ENV PROXY="${PROXY}"
-
-ARG HTTP_PROXY
-ENV HTTP_PROXY="${HTTP_PROXY}"
-ARG HTTPS_PROXY
-ENV HTTPS_PROXY="${HTTPS_PROXY}"
-ENV NO_PROXY="localhost,127.0.0.1,0.0.0.0,10.0.0.0/8,192.168.122.0/24,cattle-system.svc,.svc,.cluster.local"
-
-
 COPY scripts/*.sh /tmp/scripts/
 RUN find /tmp/scripts/ -type f -iname "*.sh" -exec chmod +x {} \;
 RUN /bin/bash /tmp/scripts/container-set.sh

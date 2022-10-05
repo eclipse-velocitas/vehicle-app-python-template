@@ -17,7 +17,7 @@ echo "#######################################################"
 echo "### Configure-proxies                               ###"
 echo "#######################################################"
 
-if [ "${PROXY}" = ".Proxy" ]; then
+if [ "$HTTP_PROXY" != "" ]; then
     USE_PROXIES="true"
     CONFIGURE_GIT="true"
     FTP_PROXY=$HTTP_PROXY
