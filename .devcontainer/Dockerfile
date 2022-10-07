@@ -28,14 +28,14 @@ RUN /bin/bash /tmp/scripts/configure-proxies.sh
 
 # Fix for bug in devcontainer features
 ADD https://raw.githubusercontent.com/devcontainers/features/main/src/common-utils/install.sh /tmp/scripts/install-common.sh
-RUN UID="4000" bash /tmp/scripts/install-common.sh 
+RUN UID="4000" bash /tmp/scripts/install-common.sh
 ADD https://raw.githubusercontent.com/devcontainers/features/main/src/docker-in-docker/install.sh /tmp/scripts/install-dind.sh
 RUN VERSION="20.10" bash /tmp/scripts/install-dind.sh
 
 VOLUME [ "/var/lib/docker" ]
 
-# Setting the ENTRYPOINT to docker-init.sh will start up the Docker Engine 
-# inside the container "overrideCommand": false is set in devcontainer.json. 
+# Setting the ENTRYPOINT to docker-init.sh will start up the Docker Engine
+# inside the container "overrideCommand": false is set in devcontainer.json.
 # The script will also execute CMD if you need to alter startup behaviors.
 ENTRYPOINT [ "/usr/local/share/docker-init.sh" ]
 CMD [ "sleep", "infinity" ]
