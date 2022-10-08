@@ -27,6 +27,7 @@ from sdv.util.log import (  # type: ignore
 )
 from sdv.vehicle_app import VehicleApp, subscribe_topic
 from sdv_model import Vehicle, vehicle  # type: ignore
+from sdv.vdb.subscriptions import DataPointReply
 
 logging.setLogRecordFactory(get_opentelemetry_log_factory())
 logging.basicConfig(format=get_opentelemetry_log_format())
@@ -66,10 +67,11 @@ class SampleApp(VehicleApp):
         await self.Vehicle.OBD.Speed.subscribe(self.on_speed_change)
 
     # Is executed when receiving VehicleDataBroker signal.
-    async def on_speed_change(self, data):
+    async def on_speed_change(self, data: DataPointReply):
         logger.debug("Data received: %s", data)
         # Getting current speed from VehicleDataBroker.
-        vehicle_speed = await self.Vehicle.OBD.Speed.get()
+        vehicle_speed = data.get(self.Vehicle.OBD.Speed)
+        
         # Publishes current speed to DATABROKER_SUBSCRIPTION_TOPIC.
         await self.publish_mqtt_event(
             DATABROKER_SUBSCRIPTION_TOPIC,
