@@ -58,18 +58,18 @@ jobs:
         run: docker --version
 
       - name: Set up QEMU
-        uses: docker/setup-qemu-action@v1
+        uses: docker/setup-qemu-action@v2
 
       - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v1
+        uses: docker/setup-buildx-action@v2
 
       - id: github-repository-name-case-adjusted
         name: Prepare repository name in lower case for docker upload. This supports repository names in mixed case
-        uses: ASzc/change-string-case-action@v1
+        uses: ASzc/change-string-case-action@v2
         with:
           string: ${{ github.repository }}
 
-      - uses: fusion-engineering/setup-git-credentials@v2
+      - uses: de-vri-es/setup-git-credentials@v2
         with:
           credentials: https://user:${{ secrets.GITHUB_TOKEN }}@github.com/
 
@@ -84,16 +84,16 @@ jobs:
         run: |
           if [ ${{ inputs.multiarch }} == true ]; then
             echo "Build Multiarch"
-            echo "::set-output name=platforms::linux/amd64, linux/arm64"
+            echo "name=platforms::linux/amd64, linux/arm64" >> $GITHUB_OUTPUT
           else
             echo "Build ${{inputs.platform}}"
-            echo "::set-output name=platforms::linux/${{ inputs.platform }}"
+            echo "name=platforms::linux/${{ inputs.platform }}" >> $GITHUB_OUTPUT
           fi
         shell: bash
 
       - name: "${{ matrix.component.Name }} -- Build image"
         id: image_build
-        uses: docker/build-push-action@v2
+        uses: docker/build-push-action@v3.2.0
         with:
           pull: true
           push: false
@@ -140,14 +140,14 @@ jobs:
 
       - name: "${{ matrix.component.Name }} -- Upload trivy report as artifacts"
         if: ${{ always() && steps.image_build.outcome == 'success' }}
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: test-results
           path: |
             results/Documentation/renderer/*
 
       - name: "${{ matrix.component.Name }} -- Publish Trivy Scan Results"
-        uses: EnricoMi/publish-unit-test-result-action@v1
+        uses: EnricoMi/publish-unit-test-result-action@v2
         if: ${{ always() && steps.image_build.outcome == 'success' }}
         with:
           check_name: Trivy Scan Results (${{ matrix.component.Name }})
