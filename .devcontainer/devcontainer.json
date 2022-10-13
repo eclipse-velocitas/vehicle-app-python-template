@@ -24,21 +24,6 @@
 	"mounts": [
 		"source=dind-var-lib-docker,target=/var/lib/docker,type=volume"
 	],
-	// this is commented out until VSCode will fix self signed certificate issues
-	// "features": {
-    //     "docker-in-docker": {
-    //         "version": "20.10"
-    //     },
-	// 	"common": {
-	// 		"username": "automatic",
-	// 		"uid": "automatic",
-	// 		"gid": "automatic",
-	// 		"installZsh": true,
-	// 		"installOhMyZsh": true,
-	// 		"upgradePackages": true,
-	// 		"nonFreePackages": false
-	// 	}
-    // },
 
 	// Add the IDs of extensions you want installed when the container is created.
 	"extensions": [
