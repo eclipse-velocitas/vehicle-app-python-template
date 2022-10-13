@@ -71,7 +71,7 @@ class SampleApp(VehicleApp):
         logger.debug("Data received: %s", data)
         # Getting current speed from VehicleDataBroker.
         vehicle_speed = data.get(self.Vehicle.OBD.Speed)
-        
+
         # Publishes current speed to DATABROKER_SUBSCRIPTION_TOPIC.
         await self.publish_mqtt_event(
             DATABROKER_SUBSCRIPTION_TOPIC,
