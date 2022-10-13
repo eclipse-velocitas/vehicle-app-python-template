@@ -35,7 +35,7 @@
     "pre-commit-helper.runOnSave": "all hooks",
     "python.linting.mypyArgs": [],
     "mypy.targets": [
-        "src"
+        "app"
     ],
     "python.linting.banditEnabled": true,
     "python.linting.pydocstyleEnabled": true,

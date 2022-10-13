@@ -7,7 +7,6 @@
 		"--init",
 		"--privileged"
 	],
-
 	// Set *default* container specific settings.json values on container create.
 	"settings": {
 		"python.pythonPath": "/usr/bin/python3",
@@ -20,21 +19,11 @@
 		"python.linting.flake8Enabled": true,
 		"python.disableInstallationCheck": true
 	},
-
-	"features": {
-        "docker-in-docker": {
-            "version": "20.10"
-        },
-		"common": {
-			"username": "automatic",
-			"uid": "automatic",
-			"gid": "automatic",
-			"installZsh": true,
-			"installOhMyZsh": true,
-			"upgradePackages": true,
-			"nonFreePackages": false
-		}
-    },
+	// workaround for the devcontainer features
+	"overrideCommand": false,
+	"mounts": [
+		"source=dind-var-lib-docker,target=/var/lib/docker,type=volume"
+	],
 
 	// Add the IDs of extensions you want installed when the container is created.
 	"extensions": [
