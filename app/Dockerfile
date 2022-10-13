@@ -15,7 +15,7 @@
 # syntax=docker/dockerfile:1.2
 
 # Build stage, to create the executable
-FROM --platform=$TARGETPLATFORM python:3.9-slim-bullseye as builder
+FROM --platform=$TARGETPLATFORM python:3.10-slim-bullseye as builder
 
 RUN apt-get update && apt-get install -y binutils
 
