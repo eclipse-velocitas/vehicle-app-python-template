@@ -44,4 +44,4 @@ pip3 install setuptools==59.6.0
 # Required because of pre-commit
 # dependency to python-Levenshtein
 # wheels are missing and have to built from scratch
-sudo apt-get update && sudo apt-get install -y build-essential
+sudo apt-get update && sudo apt-get install -y build-essential python3-dev
