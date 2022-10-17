@@ -29,9 +29,10 @@ from sdv.vdb.subscriptions import DataPointReply
 from sdv.vehicle_app import VehicleApp, subscribe_topic
 from sdv_model import Vehicle, vehicle  # type: ignore
 
+# Configure the VehicleApp logger with the necessary log config and level.
 logging.setLogRecordFactory(get_opentelemetry_log_factory())
 logging.basicConfig(format=get_opentelemetry_log_format())
-logging.getLogger().setLevel("INFO")
+logging.getLogger().setLevel("DEBUG")
 logger = logging.getLogger(__name__)
 
 GET_SPEED_REQUEST_TOPIC = "sampleapp/getSpeed"
@@ -61,40 +62,46 @@ class SampleApp(VehicleApp):
 
     async def on_start(self):
         """Run when the vehicle app starts"""
-        logger.info("SampleApp started.")
-        # Example to subscribe to VehicleDataBroker signals
-        # on start of the app and defining method to execute on change.
+        # This method will be called by the SDK when the connection to the
+        # Vehicle DataBroker is ready.
+        # Here you can subscribe for the Vehicle Signals update (e.g. Vehicle Speed).
         await self.Vehicle.OBD.Speed.subscribe(self.on_speed_change)
 
-    # Is executed when receiving VehicleDataBroker signal.
     async def on_speed_change(self, data: DataPointReply):
-        logger.debug("Data received: %s", data)
-        # Getting current speed from VehicleDataBroker.
+        """The on_speed_change callback, this will be executed when receiving a new
+        vehicle signal updates."""
+        # Get the current vehicle speed value from the received DatapointReply.
+        # The DatapointReply containes the values of all subscribed DataPoints of
+        # the same callback.
         vehicle_speed = data.get(self.Vehicle.OBD.Speed)
 
-        # Publishes current speed to DATABROKER_SUBSCRIPTION_TOPIC.
+        # Do anything with the received value.
+        # Example:
+        # - Publishes current speed to MQTT Topic (i.e. DATABROKER_SUBSCRIPTION_TOPIC).
         await self.publish_mqtt_event(
             DATABROKER_SUBSCRIPTION_TOPIC,
             json.dumps({"speed": vehicle_speed}),
         )
 
-    # SampleApp subscribes to GET_SPEED_REQUEST_TOPIC
-    # and executes the following method
-    # when a message is published to GET_SPEED_REQUEST_TOPIC.
     @subscribe_topic(GET_SPEED_REQUEST_TOPIC)
-    async def on_get_speed_request_received(self, data_str: str) -> None:
-        logger.debug("Data received: %s", data_str)
-        logger.info(
-            "SampleApp received message from topic: %s", GET_SPEED_REQUEST_TOPIC
+    async def on_get_speed_request_received(self, metadata: str) -> None:
+        """The subscribe_topic annotation is used to subscribe for incoming
+        PubSub events, e.g. MQTT event for GET_SPEED_REQUEST_TOPIC.
+        """
+
+        # Use the logger with the desire log level (e.g. debug, info, error, etc)
+        logger.debug(
+            "PubSub event for the Topic: %s -> is received with the metadate: %s",
+            GET_SPEED_REQUEST_TOPIC,
+            metadata,
         )
-        logger.info("SampleApp requests current speed from vehicle")
-        # Getting current speed from VehicleDataBroker.
+
+        # Getting current speed from VehicleDataBroker using the DataPoint getter.
         vehicle_speed = await self.Vehicle.OBD.Speed.get()
 
-        logger.info("Current speed is: %s", vehicle_speed)
-        logger.info("Publishing response to topic: %s", GET_SPEED_RESPONSE_TOPIC)
-
-        # Publishes current speed to GET_SPEED_RESPONSE_TOPIC.
+        # Do anything with the speed value.
+        # Example:
+        # - Publishe the vehicle speed to MQTT topic (i.e. GET_SPEED_RESPONSE_TOPIC).
         await self.publish_mqtt_event(
             GET_SPEED_RESPONSE_TOPIC,
             json.dumps(
