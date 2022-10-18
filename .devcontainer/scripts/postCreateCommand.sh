@@ -35,13 +35,3 @@ REQUIREMENTS="./app/tests/requirements.txt"
 if [ -f $REQUIREMENTS ]; then
     pip3 install -r $REQUIREMENTS
 fi
-
-# Required because of a bug in virtualenv
-# until PR is released
-# https://github.com/pypa/virtualenv/pull/2415
-pip3 install setuptools==59.6.0
-
-# Required because of pre-commit
-# dependency to python-Levenshtein
-# wheels are missing and have to built from scratch
-sudo apt-get update && sudo apt-get install -y build-essential python3-dev
