@@ -89,7 +89,7 @@ class SampleApp(VehicleApp):
         PubSub events, e.g. MQTT event for GET_SPEED_REQUEST_TOPIC.
         """
 
-        # Use the logger with the desire log level (e.g. debug, info, error, etc)
+        # Use the logger with the preferred log level (e.g. debug, info, error, etc)
         logger.debug(
             "PubSub event for the Topic: %s -> is received with the metadate: %s",
             GET_SPEED_REQUEST_TOPIC,
