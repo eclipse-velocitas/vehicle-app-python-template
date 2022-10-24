@@ -23,7 +23,6 @@ on:
     # Run only on branches/commits and not tags
     branches:
       - main
-      - optimization/speed-up-workflows
   pull_request:
     branches:
       - main
