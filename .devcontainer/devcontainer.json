@@ -17,7 +17,13 @@
 		"python.formatting.provider": "black",
 		"python.linting.banditEnabled": true,
 		"python.linting.flake8Enabled": true,
-		"python.disableInstallationCheck": true
+		"python.disableInstallationCheck": true,
+        "terminal.integrated.defaultProfile.linux": "zsh",
+        "terminal.integrated.profiles.linux": {
+            "zsh": {
+                "path": "/usr/bin/zsh"
+            }
+        }
 	},
 	// workaround for the devcontainer features
 	"overrideCommand": false,
