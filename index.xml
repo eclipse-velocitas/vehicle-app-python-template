@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Release Documentation - v25_release_test</title>
+    <title>Release Documentation - v27_release_test</title>
     <link>https://fantastic-fiesta-da4ab8e5.pages.github.io/</link>
-    <description>Recent content on Release Documentation - v25_release_test</description>
+    <description>Recent content on Release Documentation - v27_release_test</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language><atom:link href="https://fantastic-fiesta-da4ab8e5.pages.github.io/index.xml" rel="self" type="application/rss+xml" />
     <item>
@@ -17,29 +17,29 @@
     
     <item>
       <title>Code Coverage Test</title>
-      <link>https://fantastic-fiesta-da4ab8e5.pages.github.io/reports/CodeCoverage-dbf28358-83a1-162b-15e0-15e32129b318.html</link>
+      <link>https://fantastic-fiesta-da4ab8e5.pages.github.io/reports/CodeCoverage-06fad8af-faf5-d4ff-1705-573cfd8bdacf.html</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://fantastic-fiesta-da4ab8e5.pages.github.io/reports/CodeCoverage-dbf28358-83a1-162b-15e0-15e32129b318.html</guid>
+      <guid>https://fantastic-fiesta-da4ab8e5.pages.github.io/reports/CodeCoverage-06fad8af-faf5-d4ff-1705-573cfd8bdacf.html</guid>
       <description>	&amp;lt;package name=&amp;quot;.&amp;quot; line-rate=&amp;quot;1&amp;quot; branch-rate=&amp;quot;1&amp;quot; complexity=&amp;quot;0&amp;quot;&amp;gt; &amp;lt;classes&amp;gt; &amp;lt;class name=&amp;quot;test_run.py&amp;quot; filename=&amp;quot;test_run.py&amp;quot; complexity=&amp;quot;0&amp;quot; line-rate=&amp;quot;1&amp;quot; branch-rate=&amp;quot;1&amp;quot;&amp;gt; &amp;lt;methods/&amp;gt; &amp;lt;lines&amp;gt; &amp;lt;line number=&amp;quot;18&amp;quot; hits=&amp;quot;1&amp;quot;/&amp;gt; &amp;lt;line number=&amp;quot;20&amp;quot; hits=&amp;quot;1&amp;quot;/&amp;gt; &amp;lt;line number=&amp;quot;21&amp;quot; hits=&amp;quot;1&amp;quot;/&amp;gt; &amp;lt;line number=&amp;quot;22&amp;quot; hits=&amp;quot;1&amp;quot;/&amp;gt; &amp;lt;line number=&amp;quot;24&amp;quot; hits=&amp;quot;1&amp;quot;/&amp;gt; &amp;lt;line number=&amp;quot;27&amp;quot; hits=&amp;quot;1&amp;quot;/&amp;gt; &amp;lt;line number=&amp;quot;28&amp;quot; hits=&amp;quot;1&amp;quot;/&amp;gt; &amp;lt;line number=&amp;quot;31&amp;quot; hits=&amp;quot;1&amp;quot; branch=&amp;quot;true&amp;quot; condition-coverage=&amp;quot;100% (2/2)&amp;quot;/&amp;gt; &amp;lt;line number=&amp;quot;37&amp;quot; hits=&amp;quot;1&amp;quot;/&amp;gt; &amp;lt;line number=&amp;quot;38&amp;quot; hits=&amp;quot;1&amp;quot;/&amp;gt; &amp;lt;line number=&amp;quot;41&amp;quot; hits=&amp;quot;1&amp;quot;/&amp;gt; &amp;lt;line number=&amp;quot;42&amp;quot; hits=&amp;quot;1&amp;quot;/&amp;gt; &amp;lt;line number=&amp;quot;46&amp;quot; hits=&amp;quot;1&amp;quot; branch=&amp;quot;true&amp;quot; condition-coverage=&amp;quot;100% (2/2)&amp;quot;/&amp;gt; &amp;lt;line number=&amp;quot;49&amp;quot; hits=&amp;quot;1&amp;quot;/&amp;gt; &amp;lt;line number=&amp;quot;52&amp;quot; hits=&amp;quot;1&amp;quot;/&amp;gt; &amp;lt;line number=&amp;quot;55&amp;quot; hits=&amp;quot;1&amp;quot;/&amp;gt; &amp;lt;line number=&amp;quot;56&amp;quot; hits=&amp;quot;1&amp;quot;/&amp;gt; &amp;lt;/lines&amp;gt; &amp;lt;/class&amp;gt; &amp;lt;/classes&amp;gt; &amp;lt;/package&amp;gt; &amp;lt;/packages&amp;gt;   </description>
     </item>
     
     <item>
       <title>Unit Test Results</title>
-      <link>https://fantastic-fiesta-da4ab8e5.pages.github.io/reports/UnitTest-37868723-f1c6-ed6a-fcb3-15b2d1649a2e.html</link>
+      <link>https://fantastic-fiesta-da4ab8e5.pages.github.io/reports/UnitTest-386ccf81-4ad6-8831-f8d3-d701d678c19d.html</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://fantastic-fiesta-da4ab8e5.pages.github.io/reports/UnitTest-37868723-f1c6-ed6a-fcb3-15b2d1649a2e.html</guid>
-      <description>test_get_current_speed1.039passed  Original Output    1  &amp;lt;?xml version=&amp;#34;1.0&amp;#34; encoding=&amp;#34;utf-8&amp;#34;?&amp;gt;&amp;lt;testsuites&amp;gt;&amp;lt;testsuite name=&amp;#34;pytest&amp;#34; errors=&amp;#34;0&amp;#34; failures=&amp;#34;0&amp;#34; skipped=&amp;#34;0&amp;#34; tests=&amp;#34;1&amp;#34; time=&amp;#34;1.138&amp;#34; timestamp=&amp;#34;2022-10-25T13:08:28.509065&amp;#34; hostname=&amp;#34;fv-az265-475&amp;#34;&amp;gt;&amp;lt;testcase classname=&amp;#34;app.tests.integration.integration_test&amp;#34; name=&amp;#34;test_get_current_speed&amp;#34; file=&amp;#34;app/tests/integration/integration_test.py&amp;#34; line=&amp;#34;25&amp;#34; time=&amp;#34;1.039&amp;#34; /&amp;gt;&amp;lt;/testsuite&amp;gt;&amp;lt;/testsuites&amp;gt;   </description>
+      <guid>https://fantastic-fiesta-da4ab8e5.pages.github.io/reports/UnitTest-386ccf81-4ad6-8831-f8d3-d701d678c19d.html</guid>
+      <description>test_for_get_speed0.012passed test_for_publish_to_topic0.002passed  Original Output    1  &amp;lt;?xml version=&amp;#34;1.0&amp;#34; encoding=&amp;#34;utf-8&amp;#34;?&amp;gt;&amp;lt;testsuites&amp;gt;&amp;lt;testsuite name=&amp;#34;pytest&amp;#34; errors=&amp;#34;0&amp;#34; failures=&amp;#34;0&amp;#34; skipped=&amp;#34;0&amp;#34; tests=&amp;#34;2&amp;#34; time=&amp;#34;0.215&amp;#34; timestamp=&amp;#34;2022-10-25T13:04:12.869967&amp;#34; hostname=&amp;#34;fv-az335-138&amp;#34;&amp;gt;&amp;lt;testcase classname=&amp;#34;test_run&amp;#34; name=&amp;#34;test_for_get_speed&amp;#34; file=&amp;#34;test_run.py&amp;#34; line=&amp;#34;26&amp;#34; time=&amp;#34;0.012&amp;#34; /&amp;gt;&amp;lt;testcase classname=&amp;#34;test_run&amp;#34; name=&amp;#34;test_for_publish_to_topic&amp;#34; file=&amp;#34;test_run.py&amp;#34; line=&amp;#34;40&amp;#34; time=&amp;#34;0.002&amp;#34; /&amp;gt;&amp;lt;/testsuite&amp;gt;&amp;lt;/testsuites&amp;gt;   </description>
     </item>
     
     <item>
       <title>Unit Test Results</title>
-      <link>https://fantastic-fiesta-da4ab8e5.pages.github.io/reports/UnitTest-8a5e1be1-ccc5-ad4d-d54a-f198438f8385.html</link>
+      <link>https://fantastic-fiesta-da4ab8e5.pages.github.io/reports/UnitTest-70625a40-75f2-813e-5fad-6e351c0c9959.html</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://fantastic-fiesta-da4ab8e5.pages.github.io/reports/UnitTest-8a5e1be1-ccc5-ad4d-d54a-f198438f8385.html</guid>
-      <description>test_for_get_speed0.012passed test_for_publish_to_topic0.002passed  Original Output    1  &amp;lt;?xml version=&amp;#34;1.0&amp;#34; encoding=&amp;#34;utf-8&amp;#34;?&amp;gt;&amp;lt;testsuites&amp;gt;&amp;lt;testsuite name=&amp;#34;pytest&amp;#34; errors=&amp;#34;0&amp;#34; failures=&amp;#34;0&amp;#34; skipped=&amp;#34;0&amp;#34; tests=&amp;#34;2&amp;#34; time=&amp;#34;0.215&amp;#34; timestamp=&amp;#34;2022-10-25T13:04:12.869967&amp;#34; hostname=&amp;#34;fv-az335-138&amp;#34;&amp;gt;&amp;lt;testcase classname=&amp;#34;test_run&amp;#34; name=&amp;#34;test_for_get_speed&amp;#34; file=&amp;#34;test_run.py&amp;#34; line=&amp;#34;26&amp;#34; time=&amp;#34;0.012&amp;#34; /&amp;gt;&amp;lt;testcase classname=&amp;#34;test_run&amp;#34; name=&amp;#34;test_for_publish_to_topic&amp;#34; file=&amp;#34;test_run.py&amp;#34; line=&amp;#34;40&amp;#34; time=&amp;#34;0.002&amp;#34; /&amp;gt;&amp;lt;/testsuite&amp;gt;&amp;lt;/testsuites&amp;gt;   </description>
+      <guid>https://fantastic-fiesta-da4ab8e5.pages.github.io/reports/UnitTest-70625a40-75f2-813e-5fad-6e351c0c9959.html</guid>
+      <description>test_get_current_speed1.039passed  Original Output    1  &amp;lt;?xml version=&amp;#34;1.0&amp;#34; encoding=&amp;#34;utf-8&amp;#34;?&amp;gt;&amp;lt;testsuites&amp;gt;&amp;lt;testsuite name=&amp;#34;pytest&amp;#34; errors=&amp;#34;0&amp;#34; failures=&amp;#34;0&amp;#34; skipped=&amp;#34;0&amp;#34; tests=&amp;#34;1&amp;#34; time=&amp;#34;1.138&amp;#34; timestamp=&amp;#34;2022-10-25T13:08:28.509065&amp;#34; hostname=&amp;#34;fv-az265-475&amp;#34;&amp;gt;&amp;lt;testcase classname=&amp;#34;app.tests.integration.integration_test&amp;#34; name=&amp;#34;test_get_current_speed&amp;#34; file=&amp;#34;app/tests/integration/integration_test.py&amp;#34; line=&amp;#34;25&amp;#34; time=&amp;#34;1.039&amp;#34; /&amp;gt;&amp;lt;/testsuite&amp;gt;&amp;lt;/testsuites&amp;gt;   </description>
     </item>
     
   </channel>
