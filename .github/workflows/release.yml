@@ -135,6 +135,7 @@ jobs:
         with:
           workflow: ci.yml
           workflow_conclusion: success
+          name: test-results
           commit: ${{ steps.condval.outputs.value }}
           path: .vehicleApp/Documentation/Inbox
 
