@@ -119,8 +119,8 @@ jobs:
           percentage: "20"
           filename: "results/CodeCoverage/clover.xml"
 
-      - name: Checkout repository
-        uses: actions/checkout@v3
+      # - name: Checkout repository
+      #   uses: actions/checkout@v3
 
   initialize-matrix:
     runs-on: ubuntu-latest
