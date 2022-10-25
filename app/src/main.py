@@ -84,16 +84,16 @@ class SampleApp(VehicleApp):
         )
 
     @subscribe_topic(GET_SPEED_REQUEST_TOPIC)
-    async def on_get_speed_request_received(self, metadata: str) -> None:
+    async def on_get_speed_request_received(self, data: str) -> None:
         """The subscribe_topic annotation is used to subscribe for incoming
         PubSub events, e.g. MQTT event for GET_SPEED_REQUEST_TOPIC.
         """
 
         # Use the logger with the preferred log level (e.g. debug, info, error, etc)
         logger.debug(
-            "PubSub event for the Topic: %s -> is received with the metadate: %s",
+            "PubSub event for the Topic: %s -> is received with the data: %s",
             GET_SPEED_REQUEST_TOPIC,
-            metadata,
+            data,
         )
 
         # Getting current speed from VehicleDataBroker using the DataPoint getter.
