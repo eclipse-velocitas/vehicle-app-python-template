@@ -17,14 +17,19 @@
 		"python.formatting.provider": "black",
 		"python.linting.banditEnabled": true,
 		"python.linting.flake8Enabled": true,
-		"python.disableInstallationCheck": true
+		"python.disableInstallationCheck": true,
+		"terminal.integrated.defaultProfile.linux": "zsh",
+		"terminal.integrated.profiles.linux": {
+			"zsh": {
+				"path": "/usr/bin/zsh"
+			}
+		}
 	},
 	// workaround for the devcontainer features
 	"overrideCommand": false,
 	"mounts": [
 		"source=dind-var-lib-docker,target=/var/lib/docker,type=volume"
 	],
-
 	// Add the IDs of extensions you want installed when the container is created.
 	"extensions": [
 		"dbaeumer.vscode-eslint",
@@ -43,7 +48,6 @@
 		"elagil.pre-commit-helper",
 		"ms-python.isort"
 	],
-
 	"onCreateCommand": "bash .devcontainer/scripts/postCreateCommand.sh",
 	// Comment out connect as root instead. More info: https://aka.ms/vscode-remote/containers/non-root.
 	"remoteUser": "vscode"
