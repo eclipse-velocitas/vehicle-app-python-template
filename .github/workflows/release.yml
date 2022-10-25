@@ -68,22 +68,13 @@ jobs:
         with:
           string: ${{ github.repository }}
 
-      - name: Wait for CI workflow to succeed
+      - name: Wait for Multi-Arch build to succeed
         uses: fountainhead/action-wait-for-check@v1.1.0
         with:
-          checkName: Run Integration Tests (sampleapp)
+          checkName: build-image-multiarch / Building image (sampleapp)
           token: ${{ secrets.GITHUB_TOKEN }}
-          timeoutSeconds: 600
-          intervalSeconds: 10
-
-      - name: Download builds from CI workflow artifacts
-        uses: dawidd6/action-download-artifact@v2.23.0
-        with:
-          github_token: ${{secrets.GITHUB_TOKEN}}
-          workflow: ci.yml
-          workflow_conclusion: success
-          commit: ${{ github.sha }}
-          path: ${{github.workspace}}
+          timeoutSeconds: 1200
+          intervalSeconds: 20
 
       - name: Download builds from Build multiarch image workflow artifacts
         uses: dawidd6/action-download-artifact@v2.23.0
@@ -130,14 +121,6 @@ jobs:
           cond: ${{ !github.event.inputs.name }}
           if_true: ${{ github.event.inputs.name }}
           if_false: ${{ github.sha }}
-
-      - name: Wait for Multi-Arch build to succeed
-        uses: fountainhead/action-wait-for-check@v1.1.0
-        with:
-          checkName: build-image-multiarch / Building image (sampleapp)
-          token: ${{ secrets.GITHUB_TOKEN }}
-          timeoutSeconds: 1200
-          intervalSeconds: 20
 
       - name: Wait for CI workflow to succeed
         uses: fountainhead/action-wait-for-check@v1.1.0
