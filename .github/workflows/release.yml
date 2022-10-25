@@ -71,7 +71,7 @@ jobs:
       - name: Wait for Multi-Arch build to succeed
         uses: fountainhead/action-wait-for-check@v1.1.0
         with:
-          checkName: build-image-multiarch / Building image (sampleapp)
+          checkName: build-image-multiarch / Building image (${{ matrix.component.Name }})
           token: ${{ secrets.GITHUB_TOKEN }}
           timeoutSeconds: 1200
           intervalSeconds: 20
@@ -99,6 +99,10 @@ jobs:
   release-documentation:
     name: Generate release documentation
     runs-on: ubuntu-latest
+    needs: initialize-matrix
+    strategy:
+      matrix:
+        component: ${{ fromJson(needs.initialize-matrix.outputs.deployment-matrix) }}
     env:
       TEST_RESULT_FOLDER_NAME: test-results
     steps:
@@ -125,7 +129,7 @@ jobs:
       - name: Wait for CI workflow to succeed
         uses: fountainhead/action-wait-for-check@v1.1.0
         with:
-          checkName: Run Integration Tests (sampleapp)
+          checkName: Run Integration Tests (${{ matrix.component.Name }})
           token: ${{ secrets.GITHUB_TOKEN }}
           timeoutSeconds: 600
           intervalSeconds: 10
@@ -135,7 +139,6 @@ jobs:
         with:
           workflow: ci.yml
           workflow_conclusion: success
-          name: test-results
           commit: ${{ steps.condval.outputs.value }}
           path: .vehicleApp/Documentation/Inbox
 
