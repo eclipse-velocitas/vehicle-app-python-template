@@ -70,25 +70,25 @@
 ## Workflows
 | Dependency | Version | License |
 |:-----------|:-------:|--------:|
-|actions/checkout|v2|MIT License|
 |actions/checkout|v3|MIT License|
 |actions/download-artifact|v3.0.0|MIT License|
-|actions/setup-node|v1|MIT License|
-|actions/upload-artifact|v2|MIT License|
+|actions/setup-node|v3|MIT License|
+|actions/setup-python|v4|MIT License|
+|actions/upload-artifact|v3|MIT License|
 |actions/upload-artifact|v3.1.0|MIT License|
 |aquasecurity/trivy-action|0.3.0|Apache License 2.0|
-|ASzc/change-string-case-action|v1|ISC License|
+|ASzc/change-string-case-action|v2|ISC License|
 |battila7/get-version-action|v2|MIT License|
 |dawidd6/action-download-artifact|v2|MIT License|
 |dawidd6/action-download-artifact|v2.23.0|MIT License|
-|docker/build-push-action|v2|Apache License 2.0|
-|docker/login-action|v1|Apache License 2.0|
-|docker/setup-buildx-action|v1|Apache License 2.0|
-|docker/setup-qemu-action|v1|Apache License 2.0|
-|EnricoMi/publish-unit-test-result-action|v1|Apache License 2.0|
-|fountainhead/action-wait-for-check|v1.0.0|MIT License|
-|fusion-engineering/setup-git-credentials|v2|BSD 2-Clause "Simplified" License|
-|github/codeql-action|v1|MIT License|
+|de-vri-es/setup-git-credentials|v2|BSD 2-Clause "Simplified" License|
+|docker/build-push-action|v3.2.0|Apache License 2.0|
+|docker/login-action|v2|Apache License 2.0|
+|docker/setup-buildx-action|v2|Apache License 2.0|
+|docker/setup-qemu-action|v2|Apache License 2.0|
+|EnricoMi/publish-unit-test-result-action|v2|Apache License 2.0|
+|fountainhead/action-wait-for-check|v1.1.0|MIT License|
+|github/codeql-action|v2|MIT License|
 |haya14busa/action-cond|v1|MIT License|
 |johanvanhelden/gha-clover-test-coverage-check|v1|MIT License|
 |peaceiris/actions-gh-pages|v3|MIT License|
