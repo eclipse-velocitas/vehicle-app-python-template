@@ -21,7 +21,7 @@
                 {
                     "name": "databroker",
                     "image": "ghcr.io/eclipse/kuksa.val/databroker",
-                    "version": "v0.17.0"
+                    "version": "master"
                 },
                 {
                     "name": "feedercan",
