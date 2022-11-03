@@ -73,7 +73,7 @@ class SampleApp(VehicleApp):
         # Get the current vehicle speed value from the received DatapointReply.
         # The DatapointReply containes the values of all subscribed DataPoints of
         # the same callback.
-        vehicle_speed = data.get(self.Vehicle.OBD.Speed)
+        vehicle_speed = data.get(self.Vehicle.OBD.Speed).value
 
         # Do anything with the received value.
         # Example:
@@ -97,7 +97,7 @@ class SampleApp(VehicleApp):
         )
 
         # Getting current speed from VehicleDataBroker using the DataPoint getter.
-        vehicle_speed = await self.Vehicle.OBD.Speed.get()
+        vehicle_speed = (await self.Vehicle.OBD.Speed.get()).value
 
         # Do anything with the speed value.
         # Example:
