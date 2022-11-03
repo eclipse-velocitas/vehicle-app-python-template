@@ -64,7 +64,7 @@ jobs:
 
       - id: github-repository-name-case-adjusted
         name: Prepare repository name in lower case for docker upload.
-        uses: ASzc/change-string-case-action@v2
+        uses: ASzc/change-string-case-action@v4
         with:
           string: ${{ github.repository }}
 
@@ -93,8 +93,9 @@ jobs:
           VAPP_VERSION: ${{ steps.get_version.outputs.version-without-v }}
           REGISTRY: "ghcr.io/${{steps.github-repository-name-case-adjusted.outputs.lowercase}}"
         run: |
-          echo "Copy vApp image $VAPP_IMAGE to 'docker://$REGISTRY/$VAPP_NAME:$VAPP_VERSION'"
-          skopeo copy --all  oci-archive:$VAPP_IMAGE "docker://$REGISTRY/$VAPP_NAME:$VAPP_VERSION"
+          tag=$(echo docker://$REGISTRY/$VAPP_NAME:$VAPP_VERSION | tr '[:upper:]' '[:lower:]')
+          echo "Copy vApp image $VAPP_IMAGE to '$tag'"
+          skopeo copy --all  oci-archive:$VAPP_IMAGE "$tag"
 
   release-documentation:
     name: Generate release documentation
