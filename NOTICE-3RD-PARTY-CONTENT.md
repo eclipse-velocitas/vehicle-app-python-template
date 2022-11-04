@@ -77,7 +77,7 @@
 |actions/upload-artifact|v3|MIT License|
 |actions/upload-artifact|v3.1.0|MIT License|
 |aquasecurity/trivy-action|0.3.0|Apache License 2.0|
-|ASzc/change-string-case-action|v2|ISC License|
+|ASzc/change-string-case-action|v4|ISC License|
 |battila7/get-version-action|v2|MIT License|
 |dawidd6/action-download-artifact|v2|MIT License|
 |dawidd6/action-download-artifact|v2.23.0|MIT License|
