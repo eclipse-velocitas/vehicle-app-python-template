@@ -42,9 +42,9 @@ fi
 
 if [[ ! -f "$DATABROKER_EXEC_PATH/databroker" ]]
 then
-    API_URL=https://github.com/boschglobal/kuksa.val/releases/download
+    DOWNLOAD_URL=https://github.com/boschglobal/kuksa.val/releases/download
     echo "Downloading databroker:$DATABROKER_TAG"
-    curl -o $DATABROKER_ASSET_FOLDER/$PROCESSOR/$DATABROKER_BINARY_NAME --create-dirs -L -H "Accept: application/octet-stream" "$API_URL/$DATABROKER_TAG/$DATABROKER_BINARY_NAME"
+    curl -o $DATABROKER_ASSET_FOLDER/$PROCESSOR/$DATABROKER_BINARY_NAME --create-dirs -L -H "Accept: application/octet-stream" "$DOWNLOAD_URL/$DATABROKER_TAG/$DATABROKER_BINARY_NAME"
     tar -xf $DATABROKER_ASSET_FOLDER/$PROCESSOR/$DATABROKER_BINARY_NAME -C $DATABROKER_ASSET_FOLDER/$PROCESSOR
 fi
 
