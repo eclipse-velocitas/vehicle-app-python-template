@@ -19,26 +19,30 @@ import pytest
 from sdv.test.inttesthelper import IntTestHelper
 from sdv.test.mqtt_util import MqttClient
 
-GET_SPEED_REQUEST_TOPIC = "sampleapp/getSpeed"
-GET_SPEED_RESPONSE_TOPIC = "sampleapp/getSpeed/response"
+# GET_SPEED_REQUEST_TOPIC = "sampleapp/getSpeed"
+# GET_SPEED_RESPONSE_TOPIC = "sampleapp/getSpeed/response"
 
 
 @pytest.mark.asyncio
 async def test_get_current_speed():
     mqtt_client = MqttClient()
     inttesthelper = IntTestHelper()
+    print(f"{mqtt_client} can be used when your app compiles succesfully!")
+    print(f"{inttesthelper} can be used when your app compiles succesfully!")
 
-    response = await inttesthelper.set_float_datapoint(
-        name="Vehicle.OBD.Speed", value=0
-    )
+    # When your app compiles succesfully use the inttesthelper to get viable responses
+    response = "{}"
+    # response = await inttesthelper.set_float_datapoint(
+    #     name="Vehicle.OBD.Speed", value=0
+    # )
 
-    assert len(response.errors) == 0
+    # assert len(response.errors) == 0
 
-    response = mqtt_client.publish_and_wait_for_response(
-        request_topic=GET_SPEED_REQUEST_TOPIC,
-        response_topic=GET_SPEED_RESPONSE_TOPIC,
-        payload={},
-    )
+    # response = mqtt_client.publish_and_wait_for_response(
+    #     request_topic=GET_SPEED_REQUEST_TOPIC,
+    #     response_topic=GET_SPEED_RESPONSE_TOPIC,
+    #     payload={},
+    # )
 
     body = json.loads(response)
     # add expected message to get it assert
