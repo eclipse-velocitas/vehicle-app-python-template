@@ -28,9 +28,7 @@ async def test_get_current_speed():
     mqtt_client = MqttClient()
     inttesthelper = IntTestHelper()
 
-    response = await inttesthelper.set_float_datapoint(
-        name="Vehicle.OBD.Speed", value=0
-    )
+    response = await inttesthelper.set_float_datapoint(name="Vehicle.Speed", value=0)
 
     assert len(response.errors) == 0
 
