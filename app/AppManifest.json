@@ -20,8 +20,8 @@
                 },
                 {
                     "name": "databroker",
-                    "image": "ghcr.io/eclipse/kuksa.val/databroker",
-                    "version": "0.0.1"
+                    "image": "ghcr.io/boschglobal/kuksa.val/databroker",
+                    "version": "0.0.2"
                 },
                 {
                     "name": "feedercan",

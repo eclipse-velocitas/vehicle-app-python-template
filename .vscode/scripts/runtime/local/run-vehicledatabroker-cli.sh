@@ -26,28 +26,26 @@ source $UTILS_DIRECTORY/get-appmanifest-data.sh
 sudo chown $(whoami) $HOME
 
 # Needed because of how the databroker release is tagged
-DATABROKER_VERSION="databroker-$DATABROKER_TAG"
-
+DATABROKER_ASSET_FOLDER="$ROOT_DIRECTORY/.vscode/scripts/assets/databroker/$DATABROKER_TAG"
 #Detect host environment (distinguish for Mac M1 processor)
 if [[ `uname -m` == 'aarch64' || `uname -m` == 'arm64' ]]; then
     echo "Detected ARM architecture"
     PROCESSOR="aarch64"
     DATABROKER_BINARY_NAME="databroker_aarch64.tar.gz"
-    DATABROKER_EXEC_PATH="$ROOT_DIRECTORY/.vscode/scripts/assets/databroker/$DATABROKER_VERSION/$PROCESSOR/target/aarch64-unknown-linux-gnu/release"
+    DATABROKER_EXEC_PATH="$DATABROKER_ASSET_FOLDER/$PROCESSOR/target/aarch64-unknown-linux-gnu/release"
 else
     echo "Detected x86_64 architecture"
     PROCESSOR="x86_64"
     DATABROKER_BINARY_NAME='databroker_x86_64.tar.gz'
-    DATABROKER_EXEC_PATH="$ROOT_DIRECTORY/.vscode/scripts/assets/databroker/$DATABROKER_VERSION/$PROCESSOR/target/release"
+    DATABROKER_EXEC_PATH="$DATABROKER_ASSET_FOLDER/$PROCESSOR/target/release"
 fi
 
 if [[ ! -f "$DATABROKER_EXEC_PATH/databroker" ]]
 then
-    API_URL=https://api.github.com/repos/eclipse/kuksa.val
-    echo "Downloading databroker:$DATABROKER_VERSION"
-    DATABROKER_ASSET_ID=$(curl $API_URL/releases/tags/$DATABROKER_VERSION | jq -r ".assets[] | select(.name == \"$DATABROKER_BINARY_NAME\") | .id")
-    curl -o $ROOT_DIRECTORY/.vscode/scripts/assets/databroker/$DATABROKER_VERSION/$PROCESSOR/$DATABROKER_BINARY_NAME --create-dirs -L -H "Accept: application/octet-stream" "$API_URL/releases/assets/$DATABROKER_ASSET_ID"
-    tar -xf $ROOT_DIRECTORY/.vscode/scripts/assets/databroker/$DATABROKER_VERSION/$PROCESSOR/$DATABROKER_BINARY_NAME -C $ROOT_DIRECTORY/.vscode/scripts/assets/databroker/$DATABROKER_VERSION/$PROCESSOR
+    DOWNLOAD_URL=https://github.com/boschglobal/kuksa.val/releases/download
+    echo "Downloading databroker:$DATABROKER_TAG"
+    curl -o $DATABROKER_ASSET_FOLDER/$PROCESSOR/$DATABROKER_BINARY_NAME --create-dirs -L -H "Accept: application/octet-stream" "$DOWNLOAD_URL/$DATABROKER_TAG/$DATABROKER_BINARY_NAME"
+    tar -xf $DATABROKER_ASSET_FOLDER/$PROCESSOR/$DATABROKER_BINARY_NAME -C $DATABROKER_ASSET_FOLDER/$PROCESSOR
 fi
 
 $DATABROKER_EXEC_PATH/databroker-cli
