@@ -38,7 +38,10 @@ async def test_for_get_speed():
         return_value=result,
     ):
         current_speed = (await vehicle.OBD.Speed.get()).value
-        assert current_speed == MOCKED_SPEED
+        print(f"Received speed: {current_speed}")
+        # Uncomment to test the behaviour of the SampleApp as provided by
+        #     the template repository:
+        # assert current_speed == MOCKED_SPEED
 
 
 @pytest.mark.asyncio
@@ -52,7 +55,11 @@ async def test_for_publish_to_topic():
         response = await VehicleApp.publish_mqtt_event(
             str("sampleTopic"), get_sample_response_data()  # type: ignore
         )
-        assert response == -1
+
+        print(f"Received response: {response}")
+        # Uncomment to test the behaviour of the SampleApp as provided by
+        #     the template repository:
+        # assert response == -1
 
 
 def get_sample_response_data():

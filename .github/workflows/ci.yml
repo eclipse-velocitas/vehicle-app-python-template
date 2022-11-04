@@ -218,13 +218,13 @@ jobs:
           pip install -r app/tests/requirements.txt
           pytest ./app/tests/integration --override-ini junit_family=xunit1 --junit-xml=./results/IntTest/junit.xml
 
-      - name: Publish Unit Test Results
+      - name: Publish integration test results
         uses: EnricoMi/publish-unit-test-result-action@v2
         if: always()
         with:
           files: ./results/IntTest/junit.xml
 
-      - name: Clone Release Documentation Action repository
+      - name: Clone release documentation action repository
         uses: actions/checkout@v3
         with:
           repository: eclipse-velocitas/release-documentation-action
