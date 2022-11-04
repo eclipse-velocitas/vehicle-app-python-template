@@ -18,6 +18,8 @@
 from unittest import mock
 
 import pytest
+from google.protobuf.timestamp_pb2 import Timestamp
+from sdv.vdb.types import TypedDataPointResult
 from sdv.vehicle_app import VehicleApp
 from sdv_model import vehicle  # type: ignore
 
@@ -26,15 +28,16 @@ MOCKED_SPEED = 0.0
 
 @pytest.mark.asyncio
 async def test_for_get_speed():
+    result = TypedDataPointResult("foo", MOCKED_SPEED, Timestamp(seconds=10, nanos=0))
     # Disable no-value-for-parameter, seems to be false positive with mock lib
     # pylint: disable=no-value-for-parameter
     with mock.patch.object(
         vehicle.OBD.Speed,
         "get",
         new_callable=mock.AsyncMock,
-        return_value=MOCKED_SPEED,
+        return_value=result,
     ):
-        current_speed = await vehicle.OBD.Speed.get()
+        current_speed = (await vehicle.OBD.Speed.get()).value
         assert current_speed == MOCKED_SPEED
 
 
