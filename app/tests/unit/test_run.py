@@ -32,12 +32,12 @@ async def test_for_get_speed():
     # Disable no-value-for-parameter, seems to be false positive with mock lib
     # pylint: disable=no-value-for-parameter
     with mock.patch.object(
-        vehicle.OBD.Speed,
+        vehicle.Speed,
         "get",
         new_callable=mock.AsyncMock,
         return_value=result,
     ):
-        current_speed = (await vehicle.OBD.Speed.get()).value
+        current_speed = (await vehicle.Speed.get()).value
         print(f"Received speed: {current_speed}")
         # Uncomment to test the behaviour of the SampleApp as provided by
         #     the template repository:

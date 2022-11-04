@@ -51,7 +51,7 @@ class SampleApp(VehicleApp):
 
     It also subcribes to the VehicleDataBroker
     directly for updates of the
-    Vehicle.OBD.Speed signal and publishes this
+    Vehicle.Speed signal and publishes this
     information via another specific MQTT topic
     """
 
@@ -65,7 +65,7 @@ class SampleApp(VehicleApp):
         # This method will be called by the SDK when the connection to the
         # Vehicle DataBroker is ready.
         # Here you can subscribe for the Vehicle Signals update (e.g. Vehicle Speed).
-        await self.Vehicle.OBD.Speed.subscribe(self.on_speed_change)
+        await self.Vehicle.Speed.subscribe(self.on_speed_change)
 
     async def on_speed_change(self, data: DataPointReply):
         """The on_speed_change callback, this will be executed when receiving a new
@@ -73,7 +73,7 @@ class SampleApp(VehicleApp):
         # Get the current vehicle speed value from the received DatapointReply.
         # The DatapointReply containes the values of all subscribed DataPoints of
         # the same callback.
-        vehicle_speed = data.get(self.Vehicle.OBD.Speed).value
+        vehicle_speed = data.get(self.Vehicle.Speed).value
 
         # Do anything with the received value.
         # Example:
@@ -97,7 +97,7 @@ class SampleApp(VehicleApp):
         )
 
         # Getting current speed from VehicleDataBroker using the DataPoint getter.
-        vehicle_speed = (await self.Vehicle.OBD.Speed.get()).value
+        vehicle_speed = (await self.Vehicle.Speed.get()).value
 
         # Do anything with the speed value.
         # Example:

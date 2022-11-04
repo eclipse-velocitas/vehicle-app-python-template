@@ -33,7 +33,7 @@ async def test_get_current_speed():
     # When your app compiles succesfully use the inttesthelper to get viable responses
     response = "{}"
     # response = await inttesthelper.set_float_datapoint(
-    #     name="Vehicle.OBD.Speed", value=0
+    #     name="Vehicle.Speed", value=0
     # )
 
     # assert len(response.errors) == 0
