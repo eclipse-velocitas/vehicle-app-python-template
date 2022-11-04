@@ -90,6 +90,26 @@ DI_gear:
           DI_GEAR_P: 0
           DI_GEAR_R: -1
 
+#"DI_GEAR_D" 0 "DI_GEAR_INVALID" 3 "DI_GEAR_N" 1 "DI_GEAR_P" 2 "DI_GEAR_R" 7 "DI_GEAR_SNA" ;
+DI_gear:
+  vss: # taken from https://github.com/COVESA/vehicle_signal_specification/blob/master/spec/Powertrain/Transmission.vspec
+    datatype: bool
+    type: sensor
+    unit: none
+    description: Is the transmission park lock engaged or not. False = Disengaged. True = Engaged.
+  databroker:
+    datatype:  1 # BOOL number taken from types_pb2.py
+    changetype: 2 # ON_CHANGE number taken from types_pb2.py
+  minupdatedelay: 100
+  targets:
+    Vehicle.Powertrain.Transmission.IsParkLockEngaged:
+      transform:
+        fullmapping:
+          DI_GEAR_D: "false"
+          DI_GEAR_INVALID: "false"
+          DI_GEAR_P: "true"
+          DI_GEAR_R: "false"
+
 DIR_torqueActual:
   vss: # taken from https://github.com/COVESA/vehicle_signal_specification/blob/master/spec/Powertrain/ElectricMotor.vspec
     datatype: int16
