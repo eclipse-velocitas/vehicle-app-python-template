@@ -26,8 +26,7 @@ source $UTILS_DIRECTORY/get-appmanifest-data.sh
 sudo chown $(whoami) $HOME
 
 # Needed because of how the databroker release is tagged
-DATABROKER_VERSION="databroker-$DATABROKER_TAG"
-DATABROKER_ASSET_FOLDER="$ROOT_DIRECTORY/.vscode/scripts/assets/databroker/$DATABROKER_VERSION"
+DATABROKER_ASSET_FOLDER="$ROOT_DIRECTORY/.vscode/scripts/assets/databroker/$DATABROKER_TAG"
 #Detect host environment (distinguish for Mac M1 processor)
 if [[ `uname -m` == 'aarch64' || `uname -m` == 'arm64' ]]; then
     echo "Detected ARM architecture"
@@ -43,9 +42,9 @@ fi
 
 if [[ ! -f "$DATABROKER_EXEC_PATH/databroker" ]]
 then
-    API_URL=https://github.com/eclipse/kuksa.val/releases/download/
-    echo "Downloading databroker:$DATABROKER_VERSION"
-    curl -o $DATABROKER_ASSET_FOLDER/$PROCESSOR/$DATABROKER_BINARY_NAME --create-dirs -L -H "Accept: application/octet-stream" "$API_URL/$DATABROKER_VERSION/$DATABROKER_BINARY_NAME"
+    API_URL=https://github.com/boschglobal/kuksa.val/releases/download
+    echo "Downloading databroker:$DATABROKER_TAG"
+    curl -o $DATABROKER_ASSET_FOLDER/$PROCESSOR/$DATABROKER_BINARY_NAME --create-dirs -L -H "Accept: application/octet-stream" "$API_URL/$DATABROKER_TAG/$DATABROKER_BINARY_NAME"
     tar -xf $DATABROKER_ASSET_FOLDER/$PROCESSOR/$DATABROKER_BINARY_NAME -C $DATABROKER_ASSET_FOLDER/$PROCESSOR
 fi
 
