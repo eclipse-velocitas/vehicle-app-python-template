@@ -1,0 +1,49 @@
+# Copyright (c) 2022 Robert Bosch GmbH and Microsoft Corporation
+#
+# This program and the accompanying materials are made available under the
+# terms of the Apache License, Version 2.0 which is available at
+# https://www.apache.org/licenses/LICENSE-2.0.
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+# WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+# License for the specific language governing permissions and limitations
+# under the License.
+#
+# SPDX-License-Identifier: Apache-2.0
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: sampleapp
+  annotations:
+    dapr.io/enabled: "true"
+    dapr.io/app-id: sampleapp
+    dapr.io/app-port: "50008"
+    dapr.io/app-protocol: grpc
+    dapr.io/log-level: info
+  labels:
+    app: sampleapp
+spec:
+  containers:
+    - name: sampleapp
+      imagePullPolicy: IfNotPresent
+      ports:
+        - containerPort: 50008
+      env:
+        - name: SAMPLEAPP_DAPR_APP_ID
+          value: "sampleapp"
+        - name: VEHICLEDATABROKER_DAPR_APP_ID
+          value: "vehicledatabroker"
+
+      # local registry, Image needs to be pushed here first
+      # docker tag localhost:12345/sampleapp:local k3d-registry.localhost:12345/sampleapp:local
+      # docker push k3d-registry.localhost:12345/sampleapp:local
+      #image: k3d-registry.localhost:12345/sampleapp:local
+
+      # remote registry, 'docker login ghcr.io' with GitHub PAT needed
+      # see https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/#registry-secret-existing-credentials
+      image: ghcr.io/eclipse-velocitas/vehicle-app-python-template/sampleapp:0.0.1-bcx
+
+  imagePullSecrets:
+  - name: regcred

@@ -1,0 +1,240 @@
+# Copyright (c) 2022 Robert Bosch GmbH and Microsoft Corporation
+#
+# This program and the accompanying materials are made available under the
+# terms of the Apache License, Version 2.0 which is available at
+# https://www.apache.org/licenses/LICENSE-2.0.
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+# WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+# License for the specific language governing permissions and limitations
+# under the License.
+#
+# SPDX-License-Identifier: Apache-2.0
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: bash
+spec:
+  volumes:
+    - name: pv-storage
+      persistentVolumeClaim:
+        claimName: pv-claim
+  containers:
+  - image: busybox
+    name: bash
+    volumeMounts:
+      - mountPath: "/data"
+        name: pv-storage
+    command: ["ping", "127.0.0.1"]
+---
+apiVersion: v1
+data:
+  candump: /mnt/data/candump.log
+  dbcfile: /mnt/data/dbcfile.dbc
+  mapping: /mnt/data/mapping.yml
+  usecase: /mnt/data/databroker
+kind: ConfigMap
+metadata:
+  annotations:
+    kubectl.kubernetes.io/last-applied-configuration: |
+      {"apiVersion":"v1","data":{"candump":"/mnt/data/candump.log","dbcfile":"/mnt/data/dbcfile.dbc","mapping":"/mnt/data/mapping.yml","usecase":"/mnt/data/databroker"},"kind":"ConfigMap","metadata":{"annotations":{},"name":"feeder-config","namespace":"default"}}
+    meta.helm.sh/release-name: vehicleappruntime
+    meta.helm.sh/release-namespace: default
+  name: feeder-config
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: pv-volume
+  labels:
+    type: local
+spec:
+  storageClassName: manual
+  capacity:
+    storage: 100M
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: "/mnt/data"
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: pv-claim
+spec:
+  storageClassName: manual
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 100M
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: mqtt-broker
+  labels:
+    app: mqtt-broker
+spec:
+  containers:
+      - name: mqtt
+        image: eclipse-mosquitto:2.0.14
+        imagePullPolicy: IfNotPresent
+        args: [ "mosquitto", "-c", "/mosquitto-no-auth.conf" ]
+        ports:
+          - name: default
+            containerPort: 1883
+            protocol: TCP
+          - name: websocket
+            containerPort: 9001
+            protocol: TCP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mqtt-broker
+  labels:
+    app: mqtt-broker
+spec:
+  type: ClusterIP
+  selector:
+    app: mqtt-broker
+  ports:
+    - port: 1883
+      targetPort: default
+      name: default
+      protocol: TCP
+    - port: 9001
+      targetPort: websocket
+      name: websocket
+      protocol: TCP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mqtt-broker-nodeport
+spec:
+  type: NodePort
+  selector:
+    app: mqtt-broker
+  ports:
+  - port: 1883
+    targetPort: 1883
+    nodePort: 31883
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: feedercan
+  labels:
+    app: feedercan
+  annotations:
+    dapr.io/enabled: "true"
+    dapr.io/app-id: "feedercan"
+    dapr.io/log-level: "debug"
+    dapr.io/config: "config"
+    dapr.io/app-protocol: "grpc"
+spec:
+  volumes:
+    - name: pv-storage
+      persistentVolumeClaim:
+        claimName: pv-claim
+  containers:
+    - name: feedercan
+      image: ghcr.io/eclipse/kuksa.val.feeders/dbc2val:v0.1.0
+      imagePullPolicy: Always
+      env:
+        - name: VEHICLEDATABROKER_DAPR_APP_ID
+          value: vehicledatabroker
+        - name: LOG_LEVEL
+          value: "info,databroker=info,dbcfeeder.broker_client=info,dbcfeeder=info"
+        - name: USECASE
+          value: "databroker"
+        - name: CANDUMP_FILE
+          value: "/data/candumpDefault.log"
+        - name: MAPPING_FILE
+          value: "/data/mappingDefault.yml"
+        - name: DBC_FILE
+          value: "/data/dbcfileDefault.dbc"
+      volumeMounts:
+      - mountPath: "/data"
+        name: pv-storage
+---
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: vehicledatabroker
+  labels:
+    app: vehicledatabroker
+  annotations:
+    dapr.io/enabled: "true"
+    dapr.io/app-id: "vehicledatabroker"
+    dapr.io/app-port: "55555"
+    dapr.io/log-level: "debug"
+    dapr.io/config: "config"
+    dapr.io/app-protocol: "grpc"
+spec:
+  containers:
+    - name: vehicledatabroker
+      image: ghcr.io/boschglobal/kuksa.val/databroker:0.0.2
+      imagePullPolicy: Always
+      ports:
+        - name: default
+          containerPort: 55555
+          protocol: TCP
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: vehicledatabroker-nodeport
+spec:
+  type: NodePort
+  selector:
+    app: vehicledatabroker
+  ports:
+    - port: 55555
+      targetPort: 55555
+      nodePort: 30555
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: seatservice
+  labels:
+    app: seatservice
+  annotations:
+    dapr.io/enabled: "true"
+    dapr.io/app-id: "seatservice"
+    dapr.io/app-port: "50051"
+    dapr.io/log-level: "debug"
+    dapr.io/config: "config"
+    dapr.io/app-protocol: "grpc"
+spec:
+  containers:
+    - name: seatservice
+      image: ghcr.io/eclipse/kuksa.val.services/seat_service:v0.1.0
+      imagePullPolicy: Always
+      ports:
+      - name: default
+        containerPort: 50051
+        protocol: TCP
+      env:
+      - name: VEHICLEDATABROKER_DAPR_APP_ID
+        value: vehicledatabroker
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: seatservice-nodeport
+spec:
+  type: NodePort
+  selector:
+    app: seatservice
+  ports:
+    - port: 50051
+      targetPort: 50051
+      nodePort: 30051

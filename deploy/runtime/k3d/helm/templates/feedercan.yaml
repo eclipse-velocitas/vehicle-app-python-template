@@ -50,7 +50,7 @@ spec:
             - name: USECASE
               value: "databroker"
             - name: CANDUMP_FILE
-              value: {{.Values.imageFeederCan.candump}}
+              value: {{.Values.imageFeederCan.candumpfile}}
             - name: MAPPING_FILE
               value: {{.Values.imageFeederCan.mapping}}
             - name: DBC_FILE
