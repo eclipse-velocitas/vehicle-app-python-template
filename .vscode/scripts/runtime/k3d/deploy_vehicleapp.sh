@@ -17,10 +17,11 @@ APP_NAME=$(cat $ROOT_DIRECTORY/app/AppManifest.json | jq .[].Name | tr -d '"' | 
 APP_PORT=$(cat $ROOT_DIRECTORY/app/AppManifest.json | jq .[].Port | tr -d '"')
 APP_REGISTRY="k3d-registry.localhost:12345"
 
+docker push localhost:12345/$APP_NAME:local
+
 helm uninstall vapp-chart --wait
 
 # Deploy in K3D
-REGISTRY="k3d-registry.localhost:12345/$APP_NAME"
 helm install vapp-chart $ROOT_DIRECTORY/deploy/VehicleApp/helm \
     --values $ROOT_DIRECTORY/deploy/VehicleApp/helm/values.yaml \
     --set imageVehicleApp.repository="$APP_REGISTRY/$APP_NAME" \

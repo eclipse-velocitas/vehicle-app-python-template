@@ -237,9 +237,6 @@
 				"clear": true,
 				"close": false
 			},
-			"dependsOn": [
-				"K3D - Deploy runtime"
-			]
 		},
 		{
 			"label": "K3D - Deploy VehicleApp",
@@ -254,6 +251,7 @@
 				"close": false
 			},
 			"dependsOn": [
+				"K3D - Deploy runtime",
 				"K3D - Build VehicleApp"
 			]
 		},
