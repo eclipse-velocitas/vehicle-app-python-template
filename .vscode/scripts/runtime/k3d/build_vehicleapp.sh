@@ -29,7 +29,6 @@ if [ -n "$HTTP_PROXY" ]; then
     --build-arg FTP_PROXY="$FTP_PROXY" \
     --build-arg ALL_PROXY="$ALL_PROXY" \
     --build-arg NO_PROXY="$NO_PROXY" . --no-cache
-    docker push localhost:12345/$APP_NAME:local
 
 else
     echo "Building image without proxy configuration"
@@ -37,5 +36,4 @@ else
 
     cd $ROOT_DIRECTORY
     DOCKER_BUILDKIT=1 docker build -f $DOCKERFILE_FILE --progress=plain -t localhost:12345/$APP_NAME:local . --no-cache
-    docker push localhost:12345/$APP_NAME:local
 fi

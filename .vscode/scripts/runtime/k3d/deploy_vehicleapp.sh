@@ -17,6 +17,8 @@ APP_NAME=$(cat $ROOT_DIRECTORY/app/AppManifest.json | jq .[].Name | tr -d '"' | 
 APP_PORT=$(cat $ROOT_DIRECTORY/app/AppManifest.json | jq .[].Port | tr -d '"')
 APP_REGISTRY="k3d-registry.localhost:12345"
 
+docker push localhost:12345/$APP_NAME:local
+
 helm uninstall vapp-chart --wait
 
 # Deploy in K3D
