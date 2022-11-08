@@ -84,10 +84,10 @@ jobs:
         run: |
           if [ ${{ inputs.multiarch }} == true ]; then
             echo "Build Multiarch"
-            echo "name=platforms::linux/amd64, linux/arm64" >> $GITHUB_OUTPUT
+            echo "platforms=linux/amd64, linux/arm64" >> $GITHUB_OUTPUT
           else
             echo "Build ${{inputs.platform}}"
-            echo "name=platforms::linux/${{ inputs.platform }}" >> $GITHUB_OUTPUT
+            echo "platforms=linux/${{ inputs.platform }}" >> $GITHUB_OUTPUT
           fi
         shell: bash
 
