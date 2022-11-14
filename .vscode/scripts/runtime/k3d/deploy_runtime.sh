@@ -48,7 +48,15 @@ then
     done
 
     # We set the tag to the version from the variables above in the script. This overwrites the default values in the values-file.
-    helm install vehicleappruntime $ROOT_DIRECTORY/deploy/runtime/k3d/helm --values $ROOT_DIRECTORY/deploy/runtime/k3d/helm/values.yaml --set imageSeatService.tag=$SEATSERVICE_TAG --set imageVehicleDataBroker.tag=$DATABROKER_TAG --set imageFeederCan.tag=$FEEDERCAN_TAG --wait --timeout 60s --debug
+    helm install vehicleappruntime \
+        $ROOT_DIRECTORY/deploy/runtime/k3d/helm \
+        --values $ROOT_DIRECTORY/deploy/runtime/k3d/helm/values.yaml \
+        --set imageSeatService.tag=$SEATSERVICE_TAG \
+        --set imageVehicleDataBroker.tag=$DATABROKER_TAG \
+        --set imageFeederCan.tag=$FEEDERCAN_TAG \
+        --wait \
+        --timeout 60s \
+        --debug
 
 else
     echo "Runtime already deployed. To redeploy the components, run the task 'K3D - Uninstall runtime' first."

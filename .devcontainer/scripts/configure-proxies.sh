@@ -22,7 +22,7 @@ if [ "$HTTP_PROXY" != "" ]; then
     CONFIGURE_GIT="true"
     FTP_PROXY=$HTTP_PROXY
     ALL_PROXY=$HTTP_PROXY
-    NO_PROXY="localhost,127.0.0.1,0.0.0.0,10.0.0.0/8,192.168.122.0/24,cattle-system.svc,.svc,.cluster.local"
+    NO_PROXY="localhost,127.0.0.1,0.0.0.0,10.0.0.0/8,192.168.122.0/24,172.0.0.0/8,cattle-system.svc,.svc,.cluster.local"
 fi
 
 echo "Use proxies: $USE_PROXIES"
