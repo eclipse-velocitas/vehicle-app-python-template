@@ -59,7 +59,7 @@ spec:
       targetPort: default
       name: default
       protocol: TCP
-    - port: {{.Values.imageMosquitto.websocketPort}}
+    - port: {{.Values.imageMosquitto.websocketPort}} 
       targetPort: websocket
       name: websocket
       protocol: TCP

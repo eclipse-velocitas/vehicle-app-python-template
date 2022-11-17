@@ -21,6 +21,7 @@ imageSeatService:
   daprLogLevel: debug
   tag: latest
   nodePort: 30051
+  address: localhost:50051
 
 imageVehicleDataBroker:
   name: vehicledatabroker
@@ -31,6 +32,7 @@ imageVehicleDataBroker:
   daprLogLevel: debug
   tag: latest
   nodePort: 30555
+  address: localhost:55555
 
 imageMosquitto:
   name: mqtt-broker
@@ -44,6 +46,7 @@ imageMosquitto:
   port: 1883
   nodePort: 31883
   websocketPort: 9001
+  address: mqtt://localhost:1883
 
 imageFeederCan:
   name: feedercan
@@ -55,6 +58,12 @@ imageFeederCan:
   dbcfile: "/data/dbcfileDefault.dbc"
   mapping: "/data/mappingDefault.yml"
   tag: latest
+
+imageVehicleApp:
+  name: sampleapp
+  repository: k3d-registry.localhost:12345/sampleapp
+  pullPolicy: Always
+  tag: "local"
 
 nameOverride: ""
 fullnameOverride: ""

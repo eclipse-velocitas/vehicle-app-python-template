@@ -28,7 +28,7 @@ spec:
       labels:
         app: {{.Values.imageSeatService.name}}
       annotations:
-        dapr.io/enabled: "true"
+        dapr.io/enabled: "false"
         dapr.io/app-id: "{{.Values.imageSeatService.daprAppid}}"
         dapr.io/app-port: "{{.Values.imageSeatService.daprAppPort}}"
         dapr.io/log-level: "{{.Values.imageSeatService.daprLogLevel}}"

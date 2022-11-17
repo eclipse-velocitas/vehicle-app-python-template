@@ -51,24 +51,25 @@ else
   echo "Cluster already exists."
 fi
 
-if ! kubectl get deployment zipkin &> /dev/null
-then
-  # Deploy Zipkin
-  kubectl create deployment zipkin --image openzipkin/zipkin
-  kubectl expose deployment zipkin --type ClusterIP --port 9411
-else
-  echo "Zipkin is already deployed."
-fi
-
-if ! dapr status -k &> /dev/null
-then
-  # Init Dapr in cluster. The --runtime-version is used to specify the dapr runtime version (i.e. remove the '#')
-  # Dapr runtime releases: https://github.com/dapr/dapr/releases
-  dapr init -k --wait --timeout 600 --runtime-version $DAPR_RUNTIME
-
-  # Apply Dapr config
-  kubectl apply -f $ROOT_DIRECTORY/deploy/runtime/k3d/.dapr/config.yaml
-  kubectl apply -f $ROOT_DIRECTORY/deploy/runtime/k3d/.dapr/components/pubsub.yaml
-else
-  echo "Dapr is already initialized with K3D"
-fi
+#if ! kubectl get deployment zipkin &> /dev/null
+#then
+#  # Deploy Zipkin
+#  # kubectl create deployment zipkin --image openzipkin/zipkin
+#  # kubectl expose deployment zipkin --type ClusterIP --port 9411
+#else
+#  echo "Zipkin is already deployed."
+#fi
+#
+#if ! dapr status -k &> /dev/null
+#then
+#  # Init Dapr in cluster. The --runtime-version is used to specify the dapr runtime version (i.e. remove the '#')
+#  # Dapr runtime releases: https://github.com/dapr/dapr/releases
+#  # dapr init -k --wait --timeout 600 --runtime-version $DAPR_RUNTIME
+#
+#  # Apply Dapr config
+#  # kubectl apply -f $ROOT_DIRECTORY/deploy/runtime/k3d/.dapr/config.yaml
+#  # kubectl apply -f $ROOT_DIRECTORY/deploy/runtime/k3d/.dapr/components/pubsub.yaml
+#else
+#  echo "Dapr is already initialized with K3D"
+#fi
+#

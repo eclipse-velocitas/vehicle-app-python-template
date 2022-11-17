@@ -28,7 +28,7 @@ spec:
       labels:
         app: {{.Values.imageFeederCan.name}}
       annotations:
-        dapr.io/enabled: "true"
+        dapr.io/enabled: "false"
         dapr.io/app-id: "{{.Values.imageFeederCan.daprAppid}}"
         dapr.io/log-level: "{{.Values.imageFeederCan.daprLogLevel}}"
         dapr.io/config: "config"

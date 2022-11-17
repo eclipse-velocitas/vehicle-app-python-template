@@ -20,6 +20,20 @@
                 "SERVICE_DAPR_APP_ID": "${input:SERVICE_NAME}",
                 "VEHICLEDATABROKER_DAPR_APP_ID": "vehicledatabroker"
             }
+        },
+        {
+            "type": "python",
+            "justMyCode": false,
+            "request": "launch",
+            "name": "VehicleApp (native, noDapr)",
+            "program": "${workspaceFolder}/app/src/main.py",
+            "console": "integratedTerminal",
+            "env": {
+                "SDV_MIDDLEWARE_TYPE":"native",
+                "SDV_MQTT_ADDRESS":"mqtt://localhost:1883",
+                "SDV_VEHICLEDATABROKER_ADDRESS": "localhost:55555",
+                "SDV_SEATSERVICE_ADDRESS": "localhost:50051"
+            }
         }
     ],
     "inputs": [

@@ -28,7 +28,7 @@ spec:
       labels:
         app: {{.Values.imageVehicleDataBroker.name}}
       annotations:
-        dapr.io/enabled: "true"
+        dapr.io/enabled: "false"
         dapr.io/app-id: "{{.Values.imageVehicleDataBroker.daprAppid}}"
         dapr.io/app-port: "{{.Values.imageVehicleDataBroker.daprAppPort}}"
         dapr.io/log-level: "{{.Values.imageVehicleDataBroker.daprLogLevel}}"
