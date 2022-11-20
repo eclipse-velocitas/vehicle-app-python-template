@@ -36,7 +36,7 @@ then
       --volume $ROOT_DIRECTORY/deploy/runtime/k3d/volume:/mnt/data@server:0 \
       -e "HTTP_PROXY=$HTTP_PROXY@server:0" \
       -e "HTTPS_PROXY=$HTTPS_PROXY@server:0" \
-      -e "NO_PROXY=$NO_PROXY@server:0"   
+      -e "NO_PROXY=$NO_PROXY@server:0"
   else
     echo "Creating cluster without proxy configuration"
     k3d cluster create cluster \

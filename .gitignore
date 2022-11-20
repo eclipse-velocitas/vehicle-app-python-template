@@ -375,6 +375,8 @@ get_helm.sh
 # Don't commit runtime binaries
 .vscode/**/assets
 
+# venv catalog
 venv/
+
 # Mac files
 .DS_Store
