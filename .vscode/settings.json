@@ -32,7 +32,6 @@
     "python.defaultInterpreterPath": "/usr/bin/python3",
     "python.disableInstallationCheck": true,
     "mypy.runUsingActiveInterpreter": true,
-    "pre-commit-helper.runOnSave": "all hooks",
     "python.linting.mypyArgs": [],
     "mypy.targets": [
         "app"

@@ -45,7 +45,6 @@
 		"matangover.mypy",
 		"anweber.vscode-httpyac",
 		"augustocdias.tasks-shell-input",
-		"elagil.pre-commit-helper",
 		"ms-python.isort"
 	],
 	"onCreateCommand": "bash .devcontainer/scripts/postCreateCommand.sh",
