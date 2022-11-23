@@ -24,9 +24,7 @@ grpcio-tools
 grpc-stubs
 mypy-protobuf
 pre-commit
-pydocstyle
 black
-pylint
 mypy
 bandit
 flake8
