@@ -17,44 +17,16 @@
 # Build stage, to create the executable
 FROM --platform=$TARGETPLATFORM python:3.10-slim-bullseye as builder
 
-RUN apt-get update && apt-get install -y binutils
+RUN apt-get update
 
 COPY ./app /app
 
-# Remove this installation for Arm64 once staticx has a prebuilt wheel for Arm64
-RUN /bin/bash -c 'set -ex && \
-    ARCH=`uname -m` && \
-    if [ "$ARCH" == "aarch64" ]; then \
-    echo "ARM64" && \
-    apt-get install -y gcc && \
-    pip3 install --no-cache-dir scons; \
-    fi'
-
 RUN apt-get install -y git
-RUN pip3 install --no-cache-dir pyinstaller \
-    && pip3 install --no-cache-dir patchelf \
-    && pip3 install --no-cache-dir staticx \
-    && pip3 install --no-cache-dir -r ./app/requirements.txt \
+RUN pip3 install --no-cache-dir -r ./app/requirements.txt \
     && pip3 install --no-cache-dir -r ./app/requirements-links.txt
 
-WORKDIR /app
-
-RUN pyinstaller --clean -F -s src/main.py
-
-WORKDIR /app/dist
-
-RUN staticx main run-exe
-
-# Runner stage, to copy the executable
-FROM scratch
-
-COPY --from=builder ./app/dist/run-exe /dist/
-
-WORKDIR /tmp
-WORKDIR /dist
-
-ENV PATH="/dist:$PATH"
+WORKDIR /
 
 LABEL org.opencontainers.image.source="https://github.com/eclipse-velocitas/vehicle-app-python-template"
 
-CMD ["./run-exe"]
+CMD ["python","/app/src/main.py"]
