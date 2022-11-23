@@ -11,11 +11,14 @@
 	"settings": {
 		"python.pythonPath": "/usr/bin/python3",
 		"python.defaultInterpreterPath": "/usr/bin/python3",
+		// Only Flake8 is used as linter and static code analyzer, as faster tool
 		"python.linting.enabled": true,
 		"python.linting.pylintEnabled": false,
-		"python.formatting.provider": "black",
-		"python.linting.banditEnabled": true,
 		"python.linting.flake8Enabled": true,
+		// Style Formatter
+		"python.formatting.provider": "black",
+		// Security Linter
+		"python.linting.banditEnabled": true,
 		"python.disableInstallationCheck": true,
 		"terminal.integrated.defaultProfile.linux": "zsh",
 		"terminal.integrated.profiles.linux": {
