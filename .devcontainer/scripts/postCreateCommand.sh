@@ -51,6 +51,3 @@ sudo apt-get update && sudo apt-get install -y build-essential python3-dev
 # add repo to git safe.directory
 REPO=$(pwd)
 git config --global --add safe.directory $REPO
-
-# install pre commit into .git/hooks to perform pre-commit before each commit
-sudo pre-commit install
