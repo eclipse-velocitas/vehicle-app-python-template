@@ -12,7 +12,7 @@
 			"httpPort": 3500,
 			"type": "dapr",
 			"presentation": {
-				"close": false,
+				"close": true,
 				"reveal": "never"
 			},
 		},
