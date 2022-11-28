@@ -25,9 +25,9 @@ filelock==3.8.0
     # via
     #   -c app/tests/requirements.txt
     #   virtualenv
-flake8==5.0.4
+flake8==6.0.0
     # via -r requirements-dev.in
-gitdb==4.0.9
+gitdb==4.0.10
     # via gitpython
 gitpython==3.1.29
     # via bandit
@@ -74,14 +74,14 @@ platformdirs==2.5.4
     #   virtualenv
 pre-commit==2.20.0
     # via -r requirements-dev.in
-protobuf==3.20.1
+protobuf==3.20.3
     # via
     #   -c app/requirements.txt
     #   grpcio-tools
     #   mypy-protobuf
-pycodestyle==2.9.1
+pycodestyle==2.10.0
     # via flake8
-pyflakes==2.5.0
+pyflakes==3.0.1
     # via flake8
 pyparsing==3.0.9
     # via
@@ -110,7 +110,7 @@ tomli==2.0.1
     #   build
     #   mypy
     #   pep517
-types-protobuf==3.20.4.5
+types-protobuf==4.21.0.0
     # via mypy-protobuf
 typing-extensions==4.4.0
     # via mypy
