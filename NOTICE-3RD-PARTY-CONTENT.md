@@ -18,9 +18,9 @@
 |deprecation|2.1.0|Apache 2.0|
 |distlib|0.3.6|Python Software Foundation License|
 |filelock|3.8.0|Public Domain|
-|flake8|5.0.4|MIT|
+|flake8|6.0.0|MIT|
 |frozenlist|1.3.3|Apache 2.0|
-|gitdb|4.0.9|BSD|
+|gitdb|4.0.10|BSD|
 |GitPython|3.1.29|BSD|
 |grpc-stubs|1.24.11|MIT|
 |grpcio|1.48.2|Apache 2.0|
@@ -41,9 +41,9 @@
 |pip-tools|6.10.0|BSD|
 |platformdirs|2.5.4|MIT|
 |pre-commit|2.20.0|MIT|
-|protobuf|3.20.1|Google License|
-|pycodestyle|2.9.1|MIT|
-|pyflakes|2.5.0|MIT|
+|protobuf|3.20.3|Google License|
+|pycodestyle|2.10.0|MIT|
+|pyflakes|3.0.1|MIT|
 |pyparsing|3.0.9|MIT|
 |python-dateutil|2.8.2|Apache 2.0<br/>BSD|
 |PyYAML|6.0|MIT|
@@ -53,7 +53,7 @@
 |stevedore|4.1.1|Apache 2.0|
 |toml|0.10.2|MIT|
 |tomli|2.0.1|MIT|
-|types-protobuf|3.20.4.5|Apache 2.0|
+|types-protobuf|4.21.0.0|Apache 2.0|
 |typing-extensions|4.4.0|Python Software Foundation License|
 |virtualenv|20.16.7|MIT|
 |wheel|0.38.4|MIT|
