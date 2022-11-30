@@ -27,13 +27,13 @@ if [ -f $REQUIREMENTS ]; then
     pip3 install -r $REQUIREMENTS
 fi
 # Dependencies for the app
-REQUIREMENTS="./app/requirements.txt"
+REQUIREMENTS="./app/requirements-app.txt"
 if [ -f $REQUIREMENTS ]; then
     pip3 install -r $REQUIREMENTS
 fi
 
 # Dependencies for unit and integration tests
-REQUIREMENTS="./app/tests/requirements.txt"
+REQUIREMENTS="./app/tests/requirements-tests.txt"
 if [ -f $REQUIREMENTS ]; then
     pip3 install -r $REQUIREMENTS
 fi

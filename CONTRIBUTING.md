@@ -25,9 +25,9 @@ https://www.eclipse.org/projects/handbook/#resources-commit
 * Use [Black](https://black.readthedocs.io/) to format your code.
 * Use [isort](https://isort.readthedocs.io/) to sort imports.
 * Use [pydocstyle](https://pydocstyle.readthedocs.io/) to check for PEP-8 style issues.
+* Use [bundit](https://pypi.org/project/bandit/) to check security issues.
 * Use [mypy](https://mypy.readthedocs.io/) to check for type errors.
 * Use [flake8](https://flake8.readthedocs.io/) to check for style issues.
-* Use [pylint](https://pylint.readthedocs.io/) to check for code quality issues.
 * Above and other tools will run automatically if you install
  [pre-commit](https://pre-commit.com/) using the instructions below.
 
@@ -47,6 +47,7 @@ https://www.eclipse.org/projects/handbook/#resources-commit
     pre-commit install
     pre-commit run --all-files
     ```
+   > **_NOTE:_** Or just use task `Local - Pre Commit Action` by pressing `F1` and select `Tasks - Run Task`
 * Make sure the unit and integration test suites passes after your changes.
 * Commit your changes into that branch.
 * Use descriptive and meaningful commit messages. Start the first line of the commit message with the issue number and title e.g. `[#9865] Add token based authentication`.

@@ -12,7 +12,6 @@
 #
 # SPDX-License-Identifier: Apache-2.0
 
-# pylint: disable=C0321
 import json
 
 import pytest

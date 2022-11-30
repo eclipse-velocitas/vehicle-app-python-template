@@ -1,3 +1,4 @@
+#!/bin/bash
 # Copyright (c) 2022 Robert Bosch GmbH and Microsoft Corporation
 #
 # This program and the accompanying materials are made available under the
@@ -12,20 +13,8 @@
 #
 # SPDX-License-Identifier: Apache-2.0
 
-##########################################
-# Import src and test requirements
-##########################################
--c app/requirements-app.txt
--c app/tests/requirements-tests.txt
-##########################################
-# Development Tools Packages
-##########################################
-grpcio-tools
-grpc-stubs
-mypy-protobuf
-pre-commit
-black
-mypy
-bandit
-flake8
-pip-tools
+echo "#######################################################"
+echo "### Pre Commit                                      ###"
+echo "#######################################################"
+
+pre-commit run --show-diff-on-failure --color=always --all-files

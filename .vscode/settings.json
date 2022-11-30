@@ -13,7 +13,6 @@
     ],
     // Only Flake8 is used as linter and static code analyzer, as faster tool
     "python.linting.enabled": true,
-    "python.linting.pylintEnabled": false,
     "python.linting.flake8Enabled": true,
     // Style Checker for Python Docs
     "python.linting.pydocstyleEnabled": true,

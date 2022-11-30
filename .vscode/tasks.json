@@ -103,9 +103,14 @@
 			"label": "Local - Pre Commit Action",
 			"detail": "Perform checking/formating of the code",
 			"type": "shell",
-			"command": "pre-commit run --show-diff-on-failure --color=always --all-files",
+			"command": "./.vscode/scripts/runtime/local/pre-commit-run.sh",
 			"group": "none",
 			"isBackground": false,
+			"options": {
+				"env": {
+					"PATH": "${env:HOME}/.local/bin:${env:PATH}"
+				}
+			}
 		},
 		{
 			"label": "Local - VehicleServices",
