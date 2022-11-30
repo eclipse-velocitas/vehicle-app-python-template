@@ -34,7 +34,7 @@ RUN apt-get install -y git
 RUN pip3 install --no-cache-dir pyinstaller \
     && pip3 install --no-cache-dir patchelf \
     && pip3 install --no-cache-dir staticx \
-    && pip3 install --no-cache-dir -r ./app/requirements.txt \
+    && pip3 install --no-cache-dir -r ./app/requirements-app.txt \
     && pip3 install --no-cache-dir -r ./app/requirements-links.txt
 
 WORKDIR /app

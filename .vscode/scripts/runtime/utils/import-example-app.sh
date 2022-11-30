@@ -25,8 +25,8 @@ if [[ `git status --porcelain` ]]; then
 else
   rm -rf app/ && \
   cp -a $SDV_EXAMPLES_PATH/$@ app && \
-  pip install -r ./app/requirements.txt && \
-  pip install -r ./app/tests/requirements.txt
+  pip install -r ./app/requirements-app.txt && \
+  pip install -r ./app/tests/requirements-tests.txt
   echo "#######################################################"
   echo "Successfully imported $@"
   echo "#######################################################"
