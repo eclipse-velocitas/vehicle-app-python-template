@@ -106,11 +106,6 @@
 			"command": "./.vscode/scripts/runtime/local/pre-commit-run.sh",
 			"group": "none",
 			"isBackground": false,
-			"options": {
-				"env": {
-					"PATH": "${env:HOME}/.local/bin:${env:PATH}"
-				}
-			}
 		},
 		{
 			"label": "Local - VehicleServices",
