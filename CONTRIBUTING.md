@@ -25,9 +25,9 @@ https://www.eclipse.org/projects/handbook/#resources-commit
 * Use [Black](https://black.readthedocs.io/) to format your code.
 * Use [isort](https://isort.readthedocs.io/) to sort imports.
 * Use [pydocstyle](https://pydocstyle.readthedocs.io/) to check for PEP-8 style issues.
+* Use [bandit](https://pypi.org/project/bandit/) to check security issues.
 * Use [mypy](https://mypy.readthedocs.io/) to check for type errors.
 * Use [flake8](https://flake8.readthedocs.io/) to check for style issues.
-* Use [pylint](https://pylint.readthedocs.io/) to check for code quality issues.
 * Above and other tools will run automatically if you install
  [pre-commit](https://pre-commit.com/) using the instructions below.
 
@@ -47,6 +47,7 @@ https://www.eclipse.org/projects/handbook/#resources-commit
     pre-commit install
     pre-commit run --all-files
     ```
+   > **_NOTE:_** Or just use task `Local - Pre Commit Action` by pressing `F1` and select `Tasks - Run Task`
 * Make sure the unit and integration test suites passes after your changes.
 * Commit your changes into that branch.
 * Use descriptive and meaningful commit messages. Start the first line of the commit message with the issue number and title e.g. `[#9865] Add token based authentication`.
@@ -59,10 +60,10 @@ https://www.eclipse.org/projects/handbook/#resources-commit
 In this project, the [pip-tools](https://github.com/jazzband/pip-tools) are used to manage the python dependencies and to keep all packages up-to-date. The required pip-based dependencies of this project are defined in multiple `requirement` input files.
 
 ### Vehicle app runtime dependencies
-* The [./app/requirements.in](./app/requirements.in) file is the requirement input file that used to generate the Vehicle app runtime requirements file [./app/requirements.txt](./app/requirements.txt)
+* The [./app/requirements-app.in](./app/requirements-app.in) file is the requirement input file that used to generate the Vehicle app runtime requirements file [./app/requirements-txt.txt](./app/requirements-app.txt)
 
 ### Unit and Integration testing dependencies
-* The [./app/tests/requirements.in](./app/tests/requirements.in) file is the requirement input file that used to generate the testing requirements file [./app/tests/requirements.txt](./app/tests/requirements.txt). The test requirements file needs to be installed for the development container to execute the unit and integration tests as well as in the CI Workflow test execution.
+* The [./app/tests/requirements-tests.in](./app/tests/requirements-tests.in) file is the requirement input file that used to generate the testing requirements file [./app/tests/requirements-tests.txt](./app/tests/requirements-tests.txt). The test requirements file needs to be installed for the development container to execute the unit and integration tests as well as in the CI Workflow test execution.
 
 ### Development tools dependencies
 * The [./requirements-dev.in](./requirements-dev.in) file is the requirement input file that used to generate requirements file [./requirements-dev.txt](./requirements-dev.txt) for the other development tools. The development requirements list includes all the necessary packages testing and development tools packages and need to be installed before start contributing to the project. The development requirements (i.e. [./requirements-dev.in](./requirements-dev.in) are also aligned with the testing and runtime requirements for better dependency conflict management with the specified constrains.

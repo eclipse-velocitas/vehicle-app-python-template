@@ -15,8 +15,8 @@
 ##########################################
 # Import src and test requirements
 ##########################################
--c app/requirements.txt
--c app/tests/requirements.txt
+-c app/requirements-app.txt
+-c app/tests/requirements-tests.txt
 ##########################################
 # Development Tools Packages
 ##########################################
@@ -24,9 +24,7 @@ grpcio-tools
 grpc-stubs
 mypy-protobuf
 pre-commit
-pydocstyle
 black
-pylint
 mypy
 bandit
 flake8

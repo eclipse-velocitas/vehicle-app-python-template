@@ -18,6 +18,3 @@ echo "### Checking container creation                     ###"
 echo "#######################################################"
 useradd vscode --password vscode -m
 usermod -aG sudo vscode
-
-sudo chown -R vscode $HOME
-echo "export PATH=\"$PATH:/root/.local/bin/\"" >> /home/vscode/.profile

@@ -14,8 +14,6 @@
 
 """A sample skeleton vehicle app."""
 
-# pylint: disable=C0103, C0413, E1101
-
 import asyncio
 import json
 import logging
@@ -58,14 +56,14 @@ class SampleApp(VehicleApp):
     def __init__(self, vehicle_client: Vehicle):
         # SampleApp inherits from VehicleApp.
         super().__init__()
-        self.Vehicle = vehicle_client
+        self.vehicle = vehicle_client
 
     async def on_start(self):
         """Run when the vehicle app starts"""
         # This method will be called by the SDK when the connection to the
         # Vehicle DataBroker is ready.
         # Here you can subscribe for the Vehicle Signals update (e.g. Vehicle Speed).
-        await self.Vehicle.Speed.subscribe(self.on_speed_change)
+        await self.vehicle.Speed.subscribe(self.on_speed_change)
 
     async def on_speed_change(self, data: DataPointReply):
         """The on_speed_change callback, this will be executed when receiving a new
@@ -73,7 +71,7 @@ class SampleApp(VehicleApp):
         # Get the current vehicle speed value from the received DatapointReply.
         # The DatapointReply containes the values of all subscribed DataPoints of
         # the same callback.
-        vehicle_speed = data.get(self.Vehicle.Speed).value
+        vehicle_speed = data.get(self.vehicle.Speed).value
 
         # Do anything with the received value.
         # Example:
@@ -97,7 +95,7 @@ class SampleApp(VehicleApp):
         )
 
         # Getting current speed from VehicleDataBroker using the DataPoint getter.
-        vehicle_speed = (await self.Vehicle.Speed.get()).value
+        vehicle_speed = (await self.vehicle.Speed.get()).value
 
         # Do anything with the speed value.
         # Example:

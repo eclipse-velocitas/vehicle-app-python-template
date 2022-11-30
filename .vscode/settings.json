@@ -1,11 +1,21 @@
 {
+    // Strong Type Checker
     "python.linting.mypyEnabled": true,
+    "mypy.runUsingActiveInterpreter": true,
+    "python.linting.mypyArgs": [],
+    "mypy.targets": [
+        "app"
+    ],
+    // Security Linter
+    "python.linting.banditEnabled": true,
     "python.linting.banditArgs": [
         "-c setup.cfg"
     ],
-    "python.linting.pylintEnabled": true,
-    "python.linting.flake8Enabled": true,
+    // Only Flake8 is used as linter and static code analyzer, as faster tool
     "python.linting.enabled": true,
+    "python.linting.flake8Enabled": true,
+    // Style Checker for Python Docs
+    "python.linting.pydocstyleEnabled": true,
     "python.analysis.extraPaths": [
         "./proto",
         "./src/vehicle_model"
@@ -31,14 +41,6 @@
     ],
     "python.defaultInterpreterPath": "/usr/bin/python3",
     "python.disableInstallationCheck": true,
-    "mypy.runUsingActiveInterpreter": true,
-    "pre-commit-helper.runOnSave": "all hooks",
-    "python.linting.mypyArgs": [],
-    "mypy.targets": [
-        "app"
-    ],
-    "python.linting.banditEnabled": true,
-    "python.linting.pydocstyleEnabled": true,
     "vs-kubernetes": {
         "vscode-kubernetes.kubectl-path.linux": "/usr/bin/kubectl",
         "vscode-kubernetes.helm-path.linux": "/usr/local/bin/helm"

@@ -16,6 +16,8 @@
 echo "#######################################################"
 echo "### Install python requirements                     ###"
 echo "#######################################################"
+# Update pip before installing requirements
+pip3 install --upgrade pip
 REQUIREMENTS="./requirements-dev.txt"
 if [ -f $REQUIREMENTS ]; then
     pip3 install -r $REQUIREMENTS
@@ -25,13 +27,13 @@ if [ -f $REQUIREMENTS ]; then
     pip3 install -r $REQUIREMENTS
 fi
 # Dependencies for the app
-REQUIREMENTS="./app/requirements.txt"
+REQUIREMENTS="./app/requirements-app.txt"
 if [ -f $REQUIREMENTS ]; then
     pip3 install -r $REQUIREMENTS
 fi
 
 # Dependencies for unit and integration tests
-REQUIREMENTS="./app/tests/requirements.txt"
+REQUIREMENTS="./app/tests/requirements-tests.txt"
 if [ -f $REQUIREMENTS ]; then
     pip3 install -r $REQUIREMENTS
 fi
@@ -45,3 +47,7 @@ pip3 install setuptools==59.6.0
 # dependency to python-Levenshtein
 # wheels are missing and have to built from scratch
 sudo apt-get update && sudo apt-get install -y build-essential python3-dev
+
+# add repo to git safe.directory
+REPO=$(pwd)
+git config --global --add safe.directory $REPO

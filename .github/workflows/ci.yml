@@ -45,11 +45,13 @@ jobs:
         with:
           python-version: "3.10"
           cache: "pip"
+          cache-dependency-path: |
+            **/requirements*.txt
       - run: |
           pip install -r requirements-dev.txt
           pip install -r app/requirements-links.txt
-          pip install -r app/requirements.txt
-          pip install -r app/tests/requirements.txt
+          pip install -r app/requirements-app.txt
+          pip install -r app/tests/requirements-tests.txt
 
       - name: Run Linters
         if: ${{ false }}
@@ -64,7 +66,7 @@ jobs:
       - name: unit test
         shell: bash
         run: |
-          pip install -r app/tests/requirements.txt
+          pip install -r app/tests/requirements-tests.txt
           pytest --rootdir=./app/tests/unit --override-ini junit_family=xunit1 --junit-xml=./results/UnitTest/junit.xml --cov ./app/tests/unit --cov-report=xml:results/CodeCoverage/cobertura-coverage.xml --cov-branch ./app/tests/unit --cov-config=setup.cfg
           coverage2clover -i results/CodeCoverage/cobertura-coverage.xml -o results/CodeCoverage/clover.xml
           coveragepy-lcov --data_file_path ./.coverage --output_file_path results/CodeCoverage/lcov.info
@@ -175,10 +177,12 @@ jobs:
         with:
           python-version: "3.10"
           cache: "pip"
+          cache-dependency-path: |
+            **/requirements*.txt
       - run: |
-          pip install -r ./app/requirements.txt
+          pip install -r ./app/requirements-app.txt
           pip install -r ./app/requirements-links.txt
-          pip install -r ./app/tests/requirements.txt
+          pip install -r ./app/tests/requirements-tests.txt
 
       - name: Install K3D and prerequisites
         working-directory: ./.vscode/scripts/runtime/k3d
@@ -216,7 +220,7 @@ jobs:
           VDB_PORT: 30555
           MQTT_PORT: 31883
         run: |
-          pip install -r app/tests/requirements.txt
+          pip install -r app/tests/requirements-tests.txt
           pytest ./app/tests/integration --override-ini junit_family=xunit1 --junit-xml=./results/IntTest/junit.xml
 
       - name: Publish integration test results

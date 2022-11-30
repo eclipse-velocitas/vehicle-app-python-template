@@ -13,7 +13,6 @@
 # SPDX-License-Identifier: Apache-2.0
 
 # skip B101
-# pylint: disable=C0413
 
 from unittest import mock
 
@@ -29,8 +28,7 @@ MOCKED_SPEED = 0.0
 @pytest.mark.asyncio
 async def test_for_get_speed():
     result = TypedDataPointResult("foo", MOCKED_SPEED, Timestamp(seconds=10, nanos=0))
-    # Disable no-value-for-parameter, seems to be false positive with mock lib
-    # pylint: disable=no-value-for-parameter
+
     with mock.patch.object(
         vehicle.Speed,
         "get",
@@ -46,8 +44,6 @@ async def test_for_get_speed():
 
 @pytest.mark.asyncio
 async def test_for_publish_to_topic():
-    # Disable no-value-for-parameter, seems to be false positive with mock lib
-    # pylint: disable=no-value-for-parameter
 
     with mock.patch.object(
         VehicleApp, "publish_mqtt_event", new_callable=mock.AsyncMock, return_value=-1
