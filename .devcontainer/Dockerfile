@@ -12,7 +12,7 @@
 #
 # SPDX-License-Identifier: Apache-2.0
 
-FROM ghcr.io/softwaredefinedvehicle/devcontainer-base-images/python:sha-2648e17
+FROM ghcr.io/eclipse-velocitas/devcontainer-base-images/python:latest
 
 # Force dapr to use localhost traffic
 ENV DAPR_HOST_IP="127.0.0.1"
