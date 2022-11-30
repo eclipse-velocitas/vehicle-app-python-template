@@ -25,7 +25,7 @@ https://www.eclipse.org/projects/handbook/#resources-commit
 * Use [Black](https://black.readthedocs.io/) to format your code.
 * Use [isort](https://isort.readthedocs.io/) to sort imports.
 * Use [pydocstyle](https://pydocstyle.readthedocs.io/) to check for PEP-8 style issues.
-* Use [bundit](https://pypi.org/project/bandit/) to check security issues.
+* Use [bandit](https://pypi.org/project/bandit/) to check security issues.
 * Use [mypy](https://mypy.readthedocs.io/) to check for type errors.
 * Use [flake8](https://flake8.readthedocs.io/) to check for style issues.
 * Above and other tools will run automatically if you install
