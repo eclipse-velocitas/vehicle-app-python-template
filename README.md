@@ -13,7 +13,7 @@ This repository provides you with a complete development environment for your ow
 * [Vehicle App SDK Overview](https://websites.eclipseprojects.io/velocitas/docs/about/development_model/vehicle_app_sdk/)
 
 ## Quickstart Tutorials
-1. [Setup and Explore Development Enviroment](https://websites.eclipseprojects.io/velocitas-docs/docs/tutorials/quickstart/)
+1. [Setup and Explore Development Enviroment](https://websites.eclipseprojects.io/velocitas/docs/tutorials/quickstart/)
 1. [Develop your own Vehicle Model](https://websites.eclipseprojects.io/velocitas/docs/tutorials/tutorial_how_to_create_a_vehicle_model/)
 1. [Develop your own Vehicle App](https://websites.eclipseprojects.io/velocitas/docs/tutorials/vehicle-app-development/)
 
