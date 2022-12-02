@@ -62,7 +62,7 @@
 | Dependency | Version | License |
 |:-----------|:-------:|--------:|
 |actions/checkout|v3|MIT License|
-|actions/download-artifact|v3.0.0|MIT License|
+|actions/download-artifact|v3|MIT License|
 |actions/setup-node|v3|MIT License|
 |actions/setup-python|v4|MIT License|
 |actions/upload-artifact|v3|MIT License|
