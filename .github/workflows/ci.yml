@@ -66,7 +66,6 @@ jobs:
       - name: unit test
         shell: bash
         run: |
-          pip install -r app/tests/requirements-tests.txt
           pytest --rootdir=./app/tests/unit --override-ini junit_family=xunit1 --junit-xml=./results/UnitTest/junit.xml --cov ./app/tests/unit --cov-report=xml:results/CodeCoverage/cobertura-coverage.xml --cov-branch ./app/tests/unit --cov-config=setup.cfg
           coverage2clover -i results/CodeCoverage/cobertura-coverage.xml -o results/CodeCoverage/clover.xml
           coveragepy-lcov --data_file_path ./.coverage --output_file_path results/CodeCoverage/lcov.info
@@ -75,7 +74,7 @@ jobs:
         uses: EnricoMi/publish-unit-test-result-action@v2
         if: always()
         with:
-          files: ./results/UnitTest/junit.xml
+          junit_files: ./results/UnitTest/junit.xml
 
       #########################################################
       # This step was disabled temporarily due to the required
@@ -156,7 +155,8 @@ jobs:
       matrix:
         component: ${{ fromJson(needs.initialize-matrix.outputs.deployment-matrix) }}
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout repository
+        uses: actions/checkout@v3
 
       - uses: de-vri-es/setup-git-credentials@v2
         with:
@@ -168,9 +168,6 @@ jobs:
           registry: ghcr.io
           username: ${{ github.repository_owner }}
           password: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Checkout repository
-        uses: actions/checkout@v3
 
       - name: Install required packages
         uses: actions/setup-python@v4
@@ -198,7 +195,7 @@ jobs:
 
       - id: github-repository-name-case-adjusted
         name: Prepare repository name in lower case for docker upload. This supports repository names in mixed case
-        uses: ASzc/change-string-case-action@v4
+        uses: ASzc/change-string-case-action@v5
         with:
           string: ${{ github.repository }}
 
@@ -227,7 +224,7 @@ jobs:
         uses: EnricoMi/publish-unit-test-result-action@v2
         if: always()
         with:
-          files: ./results/IntTest/junit.xml
+          junit_files: ./results/IntTest/junit.xml
 
       - name: Clone release documentation action repository
         uses: actions/checkout@v3
