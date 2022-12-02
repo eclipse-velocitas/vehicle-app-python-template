@@ -150,7 +150,7 @@ jobs:
           check_name: Trivy Scan Results (${{ matrix.component.Name }})
           comment_title: Trivy Scan Results (${{ matrix.component.Name }})
           fail_on: "errors"
-          junit-files: ./junit.xml
+          junit_files: ./junit.xml
 
       - name: "${{ matrix.component.Name }} -- Upload image to artifacts"
         if: ${{ steps.image_build.outcome == 'success' }}

@@ -66,12 +66,10 @@
 |actions/setup-node|v3|MIT License|
 |actions/setup-python|v4|MIT License|
 |actions/upload-artifact|v3|MIT License|
-|actions/upload-artifact|v3.1.0|MIT License|
-|aquasecurity/trivy-action|0.3.0|Apache License 2.0|
-|ASzc/change-string-case-action|v4|ISC License|
+|aquasecurity/trivy-action|0.8.0|Apache License 2.0|
+|ASzc/change-string-case-action|v5|ISC License|
 |battila7/get-version-action|v2|MIT License|
 |dawidd6/action-download-artifact|v2|MIT License|
-|dawidd6/action-download-artifact|v2.23.0|MIT License|
 |de-vri-es/setup-git-credentials|v2|BSD 2-Clause "Simplified" License|
 |docker/build-push-action|v3.2.0|Apache License 2.0|
 |docker/login-action|v2|Apache License 2.0|
