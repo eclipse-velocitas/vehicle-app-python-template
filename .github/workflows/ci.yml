@@ -200,7 +200,7 @@ jobs:
           string: ${{ github.repository }}
 
       - name: Download stored image from artifacts
-        uses: actions/download-artifact@v3.0.0
+        uses: actions/download-artifact@v3
         env:
           VAPP_IMAGE: ${{ matrix.component.Name }}-amd64
         with:
