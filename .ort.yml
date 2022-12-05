@@ -22,18 +22,30 @@ curations:
     curations:
       comment: "Add correct license"
       concluded_license: Apache-2.0
-  - id: "PyPI::grpcio:1.49.1"
+  - id: "PyPI::gitdb:4.0.10"
     curations:
-      comment: "Add correct license"
+      reason: REFERENCE
+      comment: "Apply correct license from"
+      homepage_url: "https://pypi.org/project/gitdb/"
+      concluded_license: BSD-3-Clause
+  - id: "PyPI::grpcio:1.48.2"
+    curations:
+      reason: REFERENCE
+      comment: "Apply correct license from"
+      homepage_url: "https://pypi.org/project/grpcio/"
       concluded_license: Apache-2.0
-  - id: "PyPI::identify:2.5.6"
+  - id: "PyPI::identify:2.5.9"
     curations:
-      comment: "Add correct license"
-      concluded_license: MIT
-  - id: "PyPI::setuptools:65.5.0"
+      reason: REFERENCE
+      comment: "Apply correct license"
+      homepage_url: "https://pypi.org/project/identify/"
+      concluded_license: MIT     
+  - id: "PyPI::setuptools:65.6.3"
     curations:
-      comment: "Add correct license"
-      concluded_license: MIT
+      reason: REFERENCE
+      comment: "Apply correct license"
+      homepage_url: "https://pypi.org/project/setuptools/"
+      concluded_license: MIT       
 
 resolutions:
   vulnerabilities:
