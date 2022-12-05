@@ -54,9 +54,6 @@ jobs:
           repository: eclipse-velocitas/release-documentation-action
           path: "./.github/actions"
 
-      - name: Check Docker version
-        run: docker --version
-
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v2
 
@@ -65,7 +62,7 @@ jobs:
 
       - id: github-repository-name-case-adjusted
         name: Prepare repository name in lower case for docker upload. This supports repository names in mixed case
-        uses: ASzc/change-string-case-action@v4
+        uses: ASzc/change-string-case-action@v5
         with:
           string: ${{ github.repository }}
 
@@ -115,7 +112,7 @@ jobs:
           skopeo copy oci-archive:${{ matrix.component.Name }}.tar docker-archive:${{ matrix.component.Name }}-arch.tar
 
       - name: "${{ matrix.component.Name }} -- Scan docker image for vulnerabilities"
-        uses: aquasecurity/trivy-action@0.3.0
+        uses: aquasecurity/trivy-action@0.8.0
         with:
           input: ${{ matrix.component.Name }}-arch.tar
           exit-code: "0"
@@ -153,11 +150,11 @@ jobs:
           check_name: Trivy Scan Results (${{ matrix.component.Name }})
           comment_title: Trivy Scan Results (${{ matrix.component.Name }})
           fail_on: "errors"
-          files: ./junit.xml
+          junit_files: ./junit.xml
 
       - name: "${{ matrix.component.Name }} -- Upload image to artifacts"
         if: ${{ steps.image_build.outcome == 'success' }}
-        uses: actions/upload-artifact@v3.1.0
+        uses: actions/upload-artifact@v3
         env:
           VAPP_IMAGE: ${{ matrix.component.Name }}-${{ inputs.platform }}
         with:
