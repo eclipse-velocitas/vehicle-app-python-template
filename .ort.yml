@@ -26,7 +26,7 @@ curations:
     curations:
       reason: REFERENCE
       comment: "Apply correct license from"
-      homepage_url: "https://pypi.org/project/gitdb/""
+      homepage_url: "https://pypi.org/project/gitdb/"
       concluded_license: BSD-3-Clause
   - id: "PyPI::grpcio:1.48.2"
     curations:
