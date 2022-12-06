@@ -16,60 +16,78 @@ curations:
   packages:
   - id: "PyPI::pytest-cov:4.0.0"
     curations:
-      comment: "Add correct license"
+      purl: "pkg:pypi/pytest-cov@4.0.0"
+      comment: "Proper license is defined in package repository"
+      reason: REFERENCE
+      homepage_url: "https://pypi.org/project/pytest-cov/"
       concluded_license: MIT
   - id: "PyPI::coverage:6.5.0"
     curations:
-      comment: "Add correct license"
+      purl: "pkg:pypi/coverage@6.5.0"
+      homepage_url: "https://pypi.org/project/coverage/"
+      reason: REFERENCE
+      comment: "Proper license is defined in package repository"
       concluded_license: Apache-2.0
   - id: "PyPI::gitdb:4.0.10"
     curations:
+      purl: "pkg:pypi/gitdb@4.0.10"
       reason: REFERENCE
-      comment: "Apply correct license from"
+      comment: "Proper license is defined in package repository"
       homepage_url: "https://pypi.org/project/gitdb/"
       concluded_license: BSD-3-Clause
   - id: "PyPI::grpcio:1.48.2"
     curations:
+      purl: "pkg:pypi/grpcio@1.48.2"
       reason: REFERENCE
-      comment: "Apply correct license from"
+      comment: "Proper license is defined in package repository"
       homepage_url: "https://pypi.org/project/grpcio/"
       concluded_license: Apache-2.0
   - id: "PyPI::identify:2.5.9"
     curations:
+      purl: "pkg:pypi/identify@2.5.9"
       reason: REFERENCE
-      comment: "Apply correct license"
+      comment: "Proper license is defined in package repository"
       homepage_url: "https://pypi.org/project/identify/"
-      concluded_license: MIT     
+      concluded_license: MIT
   - id: "PyPI::setuptools:65.6.3"
     curations:
+      purl: "pkg:pypi/setuptools@65.6.3"
       reason: REFERENCE
-      comment: "Apply correct license"
+      comment: "Proper license is defined in package repository"
       homepage_url: "https://pypi.org/project/setuptools/"
-      concluded_license: MIT       
+      concluded_license: MIT
 
 resolutions:
   vulnerabilities:
-  - id: "CVE-2018-20225"
-    reason: CANT_FIX_VULNERABILITY
-    comment: "Requires a change to be made by a third party that is not responsive."
-  - id: "CVE-2022-1941"
-    reason: CANT_FIX_VULNERABILITY
-    comment: "Requires a change to be made by a third party that is not responsive."
-  - id: "CVE-2022-3171"
-    reason: CANT_FIX_VULNERABILITY
-    comment: "Requires a change to be made by a third party that is not responsive."
   - id: "CVE-2022-42969"
-    reason: CANT_FIX_VULNERABILITY
-    comment: "Requires a change to be made by a third party that is not responsive."
+    reason: INEFFECTIVE_VULNERABILITY
+    message: "Vulnerability only applicable for SVN projects"
+    comment: "Requires a change to be made by a third party https://github.com/pytest-dev/py/issues/287"
   - id: "CVE-2018-20225"
-    reason: CANT_FIX_VULNERABILITY
-    comment: "Requires a change to be made by a third party that is not responsive."
+    reason: MITIGATED_VULNERABILITY
+    message: "Vulnerability well known"
+    comment: "Mitigating control: avoiding use of the --extra-index-url parameter for pip"
   - id: "CVE-2019-20907"
-    reason: CANT_FIX_VULNERABILITY
-    comment: "Requires a change to be made by a third party that is not responsive."
+    reason: INVALID_MATCH_VULNERABILITY
+    message: "Only applicable for python version <=3.8.3 or <3.9.0-b5"
+    comment: "python 3.10 in use"
   - id: "CVE-2019-20916"
-    reason: CANT_FIX_VULNERABILITY
-    comment: "Requires a change to be made by a third party that is not responsive."
+    reason: INVALID_MATCH_VULNERABILITY
+    message: "pip 19.2 is affected"
+    comment: "pip in use 22.3.1"
   - id: "sonatype-2012-0071"
+    reason: INVALID_MATCH_VULNERABILITY
+    message: "only relevan for python 2.7"
+    comment: "python 3.10 in use"
+  - id: "sonatype-2022-6046"
+    reason: INVALID_MATCH_VULNERABILITY
+    message: "affected wheel < 0.38.4"
+    comment: "wheel = 0.38.4 in use"
+  - id: "	CVE-2022-33124"
     reason: CANT_FIX_VULNERABILITY
-    comment: "Requires a change to be made by a third party that is not responsive."
+    message: "aiohttp consider this vulnerability as false possitive. No prove that issue leads to DoS attack"
+    comment: "Requires a change to be made by a third party"
+  - id: "CVE-2020-11023"
+    reason: INEFFECTIVE_VULNERABILITY
+    message: "no evidences that pkg:pypi/deprecation@2.1.0 is affected"
+    comment: "mainly jquery package is affected"
