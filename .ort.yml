@@ -16,46 +16,34 @@ curations:
   packages:
   - id: "PyPI::pytest-cov:4.0.0"
     curations:
-      purl: "pkg:pypi/pytest-cov@4.0.0"
-      comment: "Proper license is defined in package repository"
-      reason: REFERENCE
-      homepage_url: "https://pypi.org/project/pytest-cov/"
-      concluded_license: MIT
+      reason: "REFERENCE"
+      comment: "Proper license is defined in package repository https://pypi.org/project/pytest-cov/"
+      concluded_license: "MIT"
   - id: "PyPI::coverage:6.5.0"
     curations:
-      purl: "pkg:pypi/coverage@6.5.0"
-      homepage_url: "https://pypi.org/project/coverage/"
-      reason: REFERENCE
-      comment: "Proper license is defined in package repository"
-      concluded_license: Apache-2.0
+      reason: "REFERENCE"
+      comment: "Proper license is defined in package repository https://pypi.org/project/coverage/"
+      concluded_license: "Apache-2.0"
   - id: "PyPI::gitdb:4.0.10"
     curations:
-      purl: "pkg:pypi/gitdb@4.0.10"
-      reason: REFERENCE
-      comment: "Proper license is defined in package repository"
-      homepage_url: "https://pypi.org/project/gitdb/"
-      concluded_license: BSD-3-Clause
+      reason: "REFERENCE"
+      comment: "Proper license is defined in package repository https://pypi.org/project/gitdb/"
+      concluded_license: "BSD-3-Clause"
   - id: "PyPI::grpcio:1.48.2"
     curations:
-      purl: "pkg:pypi/grpcio@1.48.2"
-      reason: REFERENCE
-      comment: "Proper license is defined in package repository"
-      homepage_url: "https://pypi.org/project/grpcio/"
-      concluded_license: Apache-2.0
+      reason: "REFERENCE"
+      comment: "Proper license is defined in package repository https://pypi.org/project/grpcio/"
+      concluded_license: "Apache-2.0"
   - id: "PyPI::identify:2.5.9"
     curations:
-      purl: "pkg:pypi/identify@2.5.9"
-      reason: REFERENCE
-      comment: "Proper license is defined in package repository"
-      homepage_url: "https://pypi.org/project/identify/"
-      concluded_license: MIT
+      reason: "REFERENCE"
+      comment: "Proper license is defined in package repository https://pypi.org/project/identify/"
+      concluded_license: "MIT"
   - id: "PyPI::setuptools:65.6.3"
     curations:
-      purl: "pkg:pypi/setuptools@65.6.3"
-      reason: REFERENCE
-      comment: "Proper license is defined in package repository"
-      homepage_url: "https://pypi.org/project/setuptools/"
-      concluded_license: MIT
+      reason: "REFERENCE"
+      comment: "Proper license is defined in package repository https://pypi.org/project/setuptools/"
+      concluded_license: "MIT"
 
 resolutions:
   vulnerabilities:
