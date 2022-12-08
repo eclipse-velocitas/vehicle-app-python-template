@@ -49,33 +49,25 @@ resolutions:
   vulnerabilities:
   - id: "CVE-2022-42969"
     reason: INEFFECTIVE_VULNERABILITY
-    message: "Vulnerability only applicable for SVN projects"
-    comment: "Requires a change to be made by a third party https://github.com/pytest-dev/py/issues/287"
+    comment: "Vulnerability only applicable for SVN projects. Requires a change to be made by a third party https://github.com/pytest-dev/py/issues/287"
   - id: "CVE-2018-20225"
     reason: MITIGATED_VULNERABILITY
-    message: "Vulnerability well known"
     comment: "Mitigating control: avoiding use of the --extra-index-url parameter for pip"
   - id: "CVE-2019-20907"
     reason: INVALID_MATCH_VULNERABILITY
-    message: "Only applicable for python version <=3.8.3 or <3.9.0-b5"
-    comment: "python 3.10 in use"
+    comment: "Only applicable for python version <=3.8.3 or <3.9.0-b5 python 3.10 in use"
   - id: "CVE-2019-20916"
     reason: INVALID_MATCH_VULNERABILITY
-    message: "pip 19.2 is affected"
-    comment: "pip in use 22.3.1"
+    comment: "pip < 19.2 is affected pip in use 22.3.1"
   - id: "sonatype-2012-0071"
     reason: INVALID_MATCH_VULNERABILITY
-    message: "only relevan for python 2.7"
-    comment: "python 3.10 in use"
+    comment: "only relevan for python 2.7 python 3.10 in use"
   - id: "sonatype-2022-6046"
     reason: INVALID_MATCH_VULNERABILITY
-    message: "affected wheel < 0.38.4"
-    comment: "wheel = 0.38.4 in use"
+    comment: "affected wheel < 0.38.4 wheel = 0.38.4 in use"
   - id: "	CVE-2022-33124"
     reason: CANT_FIX_VULNERABILITY
-    message: "aiohttp consider this vulnerability as false possitive. No prove that issue leads to DoS attack"
-    comment: "Requires a change to be made by a third party"
+    comment: "aiohttp consider this vulnerability as false possitive. No prove that issue leads to DoS attack. Requires a change to be made by a third party"
   - id: "CVE-2020-11023"
     reason: INEFFECTIVE_VULNERABILITY
-    message: "no evidences that pkg:pypi/deprecation@2.1.0 is affected"
-    comment: "mainly jquery package is affected"
+    comment: "No evidences that pkg:pypi/deprecation@2.1.0 is affected. mainly jquery package is affected"
