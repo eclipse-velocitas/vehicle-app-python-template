@@ -16,58 +16,52 @@ curations:
   packages:
   - id: "PyPI::pytest-cov:4.0.0"
     curations:
-      reason: "REFERENCE"
       comment: "Proper license is defined in package repository https://pypi.org/project/pytest-cov/"
       concluded_license: "MIT"
   - id: "PyPI::coverage:6.5.0"
     curations:
-      reason: "REFERENCE"
       comment: "Proper license is defined in package repository https://pypi.org/project/coverage/"
       concluded_license: "Apache-2.0"
   - id: "PyPI::gitdb:4.0.10"
     curations:
-      reason: "REFERENCE"
       comment: "Proper license is defined in package repository https://pypi.org/project/gitdb/"
       concluded_license: "BSD-3-Clause"
   - id: "PyPI::grpcio:1.48.2"
     curations:
-      reason: "REFERENCE"
       comment: "Proper license is defined in package repository https://pypi.org/project/grpcio/"
       concluded_license: "Apache-2.0"
   - id: "PyPI::identify:2.5.9"
     curations:
-      reason: "REFERENCE"
       comment: "Proper license is defined in package repository https://pypi.org/project/identify/"
       concluded_license: "MIT"
   - id: "PyPI::setuptools:65.6.3"
     curations:
-      reason: "REFERENCE"
       comment: "Proper license is defined in package repository https://pypi.org/project/setuptools/"
       concluded_license: "MIT"
 
 resolutions:
   vulnerabilities:
   - id: "CVE-2022-42969"
-    reason: INEFFECTIVE_VULNERABILITY
+    reason: "INEFFECTIVE_VULNERABILITY"
     comment: "Vulnerability only applicable for SVN projects. Requires a change to be made by a third party https://github.com/pytest-dev/py/issues/287"
   - id: "CVE-2018-20225"
-    reason: MITIGATED_VULNERABILITY
+    reason: "MITIGATED_VULNERABILITY"
     comment: "Mitigating control: avoiding use of the --extra-index-url parameter for pip"
   - id: "CVE-2019-20907"
-    reason: INVALID_MATCH_VULNERABILITY
+    reason: "INVALID_MATCH_VULNERABILITY"
     comment: "Only applicable for python version <=3.8.3 or <3.9.0-b5 python 3.10 in use"
   - id: "CVE-2019-20916"
-    reason: INVALID_MATCH_VULNERABILITY
+    reason: "INVALID_MATCH_VULNERABILITY"
     comment: "pip < 19.2 is affected pip in use 22.3.1"
   - id: "sonatype-2012-0071"
-    reason: INVALID_MATCH_VULNERABILITY
+    reason: "INVALID_MATCH_VULNERABILITY"
     comment: "only relevan for python 2.7 python 3.10 in use"
   - id: "sonatype-2022-6046"
-    reason: INVALID_MATCH_VULNERABILITY
+    reason: "INVALID_MATCH_VULNERABILITY"
     comment: "affected wheel < 0.38.4 wheel = 0.38.4 in use"
   - id: "	CVE-2022-33124"
-    reason: CANT_FIX_VULNERABILITY
+    reason: "CANT_FIX_VULNERABILITY"
     comment: "aiohttp consider this vulnerability as false possitive. No prove that issue leads to DoS attack. Requires a change to be made by a third party"
   - id: "CVE-2020-11023"
-    reason: INEFFECTIVE_VULNERABILITY
+    reason: "INEFFECTIVE_VULNERABILITY"
     comment: "No evidences that pkg:pypi/deprecation@2.1.0 is affected. mainly jquery package is affected"
