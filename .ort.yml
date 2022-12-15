@@ -65,3 +65,6 @@ resolutions:
   - id: "CVE-2020-11023"
     reason: "INEFFECTIVE_VULNERABILITY"
     comment: "No evidences that pkg:pypi/deprecation@2.1.0 is affected. mainly jquery package is affected"
+  -id: "CVE-2022-24439"
+    reason: "INEFFECTIVE_VULNERABILITY"
+    comment: "bandit has dependency on gitpython but not using affected functinality. No usage of gitpython directly"
