@@ -1,0 +1,30 @@
+{
+    "packages": [
+        {
+            "name": "devenv-runtime-local",
+            "version": "v1.0.0"
+        },
+        {
+            "name": "devenv-runtime-k3d",
+            "version": "v1.0.0"
+        },
+        {
+            "name": "devenv-github-workflows",
+            "version": "v1.0.0"
+        },
+        {
+            "name": "devenv-github-templates",
+            "version": "v1.0.0"
+        },
+        {
+            "name": "devenv-devcontainer-setup",
+            "version": "v1.0.0"
+        }
+    ],
+    "variables": {
+        "language": "python",
+        "repoType": "app",
+        "appManifestPath": "app/AppManifest.json",
+        "githubRepoId": "eclipse-velocitas/vehicle-app-python-template"
+    }
+}

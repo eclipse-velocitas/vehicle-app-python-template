@@ -1,4 +1,5 @@
-# Copyright (c) 2022 Robert Bosch GmbH and Microsoft Corporation
+# This file is maintained by velocitas CLI, do not modify manually. Change settings in .velocitas.json
+# Copyright (c) 2022 Robert Bosch GmbH
 #
 # This program and the accompanying materials are made available under the
 # terms of the Apache License, Version 2.0 which is available at
@@ -12,7 +13,13 @@
 #
 # SPDX-License-Identifier: Apache-2.0
 
-name: Check licenses
+# _Summary_
+#
+# Scans the repository for all 3rd party dependencies
+# and generates a notice file containing all used software within
+# the project.
+
+name: Overall - Check licenses
 
 on:
   workflow_dispatch:

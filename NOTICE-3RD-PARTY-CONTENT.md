@@ -64,7 +64,6 @@
 |actions/checkout|v3|MIT License|
 |actions/download-artifact|v3|MIT License|
 |actions/setup-node|v3|MIT License|
-|actions/setup-python|v4|MIT License|
 |actions/upload-artifact|v3|MIT License|
 |aquasecurity/trivy-action|0.8.0|Apache License 2.0|
 |ASzc/change-string-case-action|v5|ISC License|
@@ -82,3 +81,4 @@
 |peaceiris/actions-gh-pages|v3|MIT License|
 |peaceiris/actions-hugo|v2|MIT License|
 |softprops/action-gh-release|v1|MIT License|
+|UnicornGlobal/has-changes-action|v1.0.11|MIT License|
