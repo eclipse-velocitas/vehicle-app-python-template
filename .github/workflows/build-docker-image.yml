@@ -161,3 +161,11 @@ jobs:
           name: ${{ env.VAPP_IMAGE }}
           path: ./${{ matrix.component.Name }}.tar
           if-no-files-found: error
+
+      - name: "${{ matrix.component.Name }} -- Upload AppManifest.json to artifacts"
+        if: ${{ steps.image_build.outcome == 'success' }}
+        uses: actions/upload-artifact@v3
+        with:
+          name: "AppManifest.json"
+          path: ./app/AppManifest.json
+          if-no-files-found: error
