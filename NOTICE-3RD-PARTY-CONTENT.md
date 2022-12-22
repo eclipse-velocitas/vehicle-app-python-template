@@ -66,7 +66,7 @@
 |actions/setup-node|v3|MIT License|
 |actions/setup-python|v4|MIT License|
 |actions/upload-artifact|v3|MIT License|
-|aquasecurity/trivy-action|0.8.0|Apache License 2.0|
+|aquasecurity/trivy-action|0.8.0||
 |ASzc/change-string-case-action|v5|ISC License|
 |battila7/get-version-action|v2|MIT License|
 |dawidd6/action-download-artifact|v2|MIT License|
@@ -79,7 +79,7 @@
 |fountainhead/action-wait-for-check|v1.1.0|MIT License|
 |github/codeql-action|v2|MIT License|
 |haya14busa/action-cond|v1|MIT License|
-|johanvanhelden/gha-clover-test-coverage-check|v1|MIT License|
-|peaceiris/actions-gh-pages|v3|MIT License|
+|johanvanhelden/gha-clover-test-coverage-check|v1||
+|peaceiris/actions-gh-pages|v3||
 |peaceiris/actions-hugo|v2|MIT License|
 |softprops/action-gh-release|v1|MIT License|
