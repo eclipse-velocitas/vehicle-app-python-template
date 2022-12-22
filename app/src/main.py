@@ -17,7 +17,6 @@
 import asyncio
 import json
 import logging
-import signal
 
 from sdv.util.log import (  # type: ignore
     get_opentelemetry_log_factory,
