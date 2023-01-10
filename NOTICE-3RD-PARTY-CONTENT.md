@@ -77,7 +77,6 @@
 |docker/setup-qemu-action|v2|Apache License 2.0|
 |EnricoMi/publish-unit-test-result-action|v2|Apache License 2.0|
 |fountainhead/action-wait-for-check|v1.1.0|MIT License|
-|github/codeql-action|v2|MIT License|
 |haya14busa/action-cond|v1|MIT License|
 |johanvanhelden/gha-clover-test-coverage-check|v1|MIT License|
 |peaceiris/actions-gh-pages|v3|MIT License|
