@@ -96,13 +96,13 @@ jobs:
           tag=$(echo docker://$REGISTRY/$VAPP_NAME:$VAPP_VERSION | tr '[:upper:]' '[:lower:]')
           echo "Copy vApp image $VAPP_IMAGE to '$tag'"
           skopeo copy --all  oci-archive:$VAPP_IMAGE "$tag"
-        
+
       - name: ${{ matrix.component.Name }} -- Download CI artifacts
         uses: dawidd6/action-download-artifact@v2
         with:
           workflow: ci.yml
           workflow_conclusion: success
-      
+
       - name: ${{ matrix.component.Name }} -- Upload AppManifest.json to artifacts"
         uses: actions/upload-artifact@v3
         with:
