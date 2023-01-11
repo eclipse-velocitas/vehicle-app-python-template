@@ -54,7 +54,6 @@ jobs:
           pip install -r app/tests/requirements-tests.txt
 
       - name: Run Linters
-        if: ${{ true }}
         uses: ./.github/actions/pre-commit-action
 
       - name: Clone Release Documentation Action repository
