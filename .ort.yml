@@ -68,3 +68,6 @@ resolutions:
   - id: "CVE-2022-24439"
     reason: "INEFFECTIVE_VULNERABILITY"
     comment: "bandit has dependency on gitpython but not using affected functinality. No usage of gitpython directly"
+  - id: "CVE-2022-23491"
+    reason:  "INVALID_MATCH_VULNERABILITY"
+    comment: "certifi is not used by our components directly or indirectly"
