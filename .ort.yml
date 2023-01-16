@@ -38,6 +38,10 @@ curations:
     curations:
       comment: "Proper license is defined in package repository https://pypi.org/project/setuptools/"
       concluded_license: "MIT"
+  - id: "PyPI::setuptools:66.0.0"
+    curations:
+      comment: "Proper license is defined in package repository https://pypi.org/project/setuptools/"
+      concluded_license: "MIT"
 
 resolutions:
   vulnerabilities:
