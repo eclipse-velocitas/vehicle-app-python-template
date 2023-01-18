@@ -15,7 +15,7 @@
 # syntax=docker/dockerfile:1.2
 
 # Build stage, to create the executable
-FROM --platform=$TARGETPLATFORM python:3.10-slim-bullseye as builder
+FROM --platform=$TARGETPLATFORM python:3.10-slim-bullseye@sha256:1ee6094f44c67781fa9533a4215f44f80dd3f43a68751ad2c855712116c03b05 as builder
 
 RUN apt-get update && apt-get install -y binutils
 
@@ -32,7 +32,7 @@ RUN /bin/bash -c 'set -ex && \
 
 RUN apt-get install -y git
 RUN pip3 install --no-cache-dir pyinstaller \
-    && pip3 install --no-cache-dir patchelf \
+    && pip3 install --no-cache-dir patchelf==0.17.0.0 \
     && pip3 install --no-cache-dir staticx \
     && pip3 install --no-cache-dir -r ./app/requirements-app.txt \
     && pip3 install --no-cache-dir -r ./app/requirements-links.txt
