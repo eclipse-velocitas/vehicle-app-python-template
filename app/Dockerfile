@@ -15,7 +15,7 @@
 # syntax=docker/dockerfile:1.2
 
 # Build stage, to create the executable
-FROM --platform=$TARGETPLATFORM ghcr.io/eclipse-velocitas/devcontainer-base-images/python:latest as builder
+FROM --platform=$TARGETPLATFORM python:3.10-slim-bullseye@sha256:1ee6094f44c67781fa9533a4215f44f80dd3f43a68751ad2c855712116c03b05 as builder
 
 RUN apt-get update && apt-get install -y binutils
 
