@@ -19,7 +19,7 @@
 # and generates a notice file containing all used software within
 # the project.
 
-name: Overall - Check licenses
+name: Check licenses
 
 on:
   workflow_dispatch:
