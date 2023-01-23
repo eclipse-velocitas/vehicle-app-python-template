@@ -39,6 +39,10 @@ jobs:
           velocitas init
           velocitas sync
 
+      - name: Fix dubious ownership
+        run: |
+          git config --global --add safe.directory $( pwd )
+
       - name: Has Changes
         id: changes
         uses: UnicornGlobal/has-changes-action@v1.0.11
