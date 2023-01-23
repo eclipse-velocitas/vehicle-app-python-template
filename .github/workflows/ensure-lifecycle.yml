@@ -15,14 +15,11 @@
 
 name: Ensure lifecycle management
 concurrency:
-  group: ${{ github.ref }}
+  group: ${{ github.ref }}-ensure-lifecycle
   cancel-in-progress: true
 
 on:
   workflow_dispatch:
-  push:
-    branches:
-      - main
   pull_request:
     branches:
       - main
