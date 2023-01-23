@@ -1,5 +1,5 @@
-<!-- This file is maintained by velocitas CLI, do not modify manually. Change settings in .velocitas.json -->
 <?xml version="1.0" ?>
+<!-- This file is maintained by velocitas CLI, do not modify manually. Change settings in .velocitas.json -->
 <testsuites>
 {{- range . -}}
 {{- $failures := len .Vulnerabilities }}
