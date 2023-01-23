@@ -1,5 +1,6 @@
+// This file is maintained by velocitas CLI, do not modify manually. Change settings in .velocitas.json
 {
-	"name": "Python VehicleApp",
+	"name": "Python vehicle app",
 	"build": {
 		"dockerfile": "Dockerfile"
 	},

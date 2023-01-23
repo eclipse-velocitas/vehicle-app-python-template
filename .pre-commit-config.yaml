@@ -90,6 +90,7 @@ repos:
           - license_header.txt
           - --comment-style
           - "#"
+          - --skip-license-insertion-comment=This file is maintained by velocitas CLI, do not modify manually.
       - id: insert-license
         files: '.*\.(proto)$'
         args:

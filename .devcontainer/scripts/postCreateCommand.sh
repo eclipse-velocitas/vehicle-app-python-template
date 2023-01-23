@@ -1,4 +1,5 @@
 #!/bin/bash
+# This file is maintained by velocitas CLI, do not modify manually. Change settings in .velocitas.json
 # Copyright (c) 2022 Robert Bosch GmbH and Microsoft Corporation
 #
 # This program and the accompanying materials are made available under the
@@ -12,6 +13,14 @@
 # under the License.
 #
 # SPDX-License-Identifier: Apache-2.0
+
+echo "#######################################################"
+echo "### Run VADF Lifecycle Management                   ###"
+echo "#######################################################"
+# needed to get rid of old leftovers
+sudo rm -rf ~/.velocitas
+velocitas init
+velocitas sync
 
 echo "#######################################################"
 echo "### Install python requirements                     ###"
@@ -51,3 +60,8 @@ sudo apt-get update && sudo apt-get install -y build-essential python3-dev
 # add repo to git safe.directory
 REPO=$(pwd)
 git config --global --add safe.directory $REPO
+
+echo "#######################################################"
+echo "### VADF package status                             ###"
+echo "#######################################################"
+velocitas upgrade --dry-run
