@@ -1,5 +1,5 @@
 # This file is maintained by velocitas CLI, do not modify manually. Change settings in .velocitas.json
-# Copyright (c) 2022 Robert Bosch GmbH
+# Copyright (c) 2023 Robert Bosch GmbH
 #
 # This program and the accompanying materials are made available under the
 # terms of the Apache License, Version 2.0 which is available at
@@ -39,9 +39,20 @@ jobs:
           velocitas init
           velocitas sync
 
+      - name: Fix dubious ownership
+        run: |
+          git config --global --add safe.directory $( pwd )
+
       - name: Has Changes
         id: changes
-        uses: UnicornGlobal/has-changes-action@v1.0.11
+        run: |
+          if [[ -z "$(git status --porcelain .)" ]];
+          then
+            echo "changed=0" >> $GITHUB_OUTPUT
+          else
+            echo "changed=1" >> $GITHUB_OUTPUT
+          fi
+        shell: bash
 
       - name: Fail if there are changes
         if: steps.changes.outputs.changed == 1

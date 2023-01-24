@@ -81,4 +81,3 @@
 |peaceiris/actions-gh-pages|v3|MIT License|
 |peaceiris/actions-hugo|v2|MIT License|
 |softprops/action-gh-release|v1|MIT License|
-|UnicornGlobal/has-changes-action|v1.0.11|MIT License|
