@@ -18,6 +18,9 @@ name: Release workflow
 on:
   release:
     types: [published, edited]
+  pull_request:
+    branches:
+      - main
 
 jobs:
   initialize-matrix:
@@ -110,6 +113,15 @@ jobs:
           name: "AppManifest.json"
           path: ./AppManifest.json
           if-no-files-found: error
+
+      - name: ${{ matrix.component.Name }} -- Upload assets
+        uses: softprops/action-gh-release@v1
+        if: startsWith(github.ref, 'refs/tags/')
+        with:
+          files: |
+            ./AppManifest.json
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   release-documentation:
     name: Generate release documentation
