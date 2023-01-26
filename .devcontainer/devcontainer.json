@@ -27,10 +27,6 @@
 			}
 		}
 	},
-	"features": {
-         "ghcr.io/devcontainers/features/common-utils:2": {},
-         "ghcr.io/devcontainers/features/docker-in-docker:2": {}
-     },
 	// workaround for the devcontainer features
 	"overrideCommand": false,
 	// Add the IDs of extensions you want installed when the container is created.
