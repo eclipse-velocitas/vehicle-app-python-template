@@ -107,6 +107,9 @@ jobs:
           workflow: ci.yml
           workflow_conclusion: success
 
+      - name: Context
+        run: ls -la      
+
       - name: ${{ matrix.component.Name }} -- Upload assets
         uses: softprops/action-gh-release@v1
         if: startsWith(github.ref, 'refs/tags/')
