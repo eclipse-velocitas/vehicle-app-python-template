@@ -54,61 +54,61 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - id: get_version
-        uses: battila7/get-version-action@v2
+      # - id: get_version
+      #   uses: battila7/get-version-action@v2
 
-      - run: echo "Using VehicleApp version ${{ steps.get_version.outputs.version-without-v }} from tag"
+      # - run: echo "Using VehicleApp version ${{ steps.get_version.outputs.version-without-v }} from tag"
 
-      - name: Login to GitHub Container Registry
-        uses: docker/login-action@v2
-        with:
-          registry: ghcr.io
-          username: ${{ github.repository_owner }}
-          password: ${{ secrets.GITHUB_TOKEN }}
+      # - name: Login to GitHub Container Registry
+      #   uses: docker/login-action@v2
+      #   with:
+      #     registry: ghcr.io
+      #     username: ${{ github.repository_owner }}
+      #     password: ${{ secrets.GITHUB_TOKEN }}
 
-      - id: github-repository-name-case-adjusted
-        name: Prepare repository name in lower case for docker upload.
-        uses: ASzc/change-string-case-action@v5
-        with:
-          string: ${{ github.repository }}
+      # - id: github-repository-name-case-adjusted
+      #   name: Prepare repository name in lower case for docker upload.
+      #   uses: ASzc/change-string-case-action@v5
+      #   with:
+      #     string: ${{ github.repository }}
 
-      - name: Wait for Multi-Arch build to succeed
-        uses: fountainhead/action-wait-for-check@v1.1.0
-        with:
-          checkName: build-image-multiarch / Building image (${{ matrix.component.Name }})
-          token: ${{ secrets.GITHUB_TOKEN }}
-          timeoutSeconds: 1200
-          intervalSeconds: 20
+      # - name: Wait for Multi-Arch build to succeed
+      #   uses: fountainhead/action-wait-for-check@v1.1.0
+      #   with:
+      #     checkName: build-image-multiarch / Building image (${{ matrix.component.Name }})
+      #     token: ${{ secrets.GITHUB_TOKEN }}
+      #     timeoutSeconds: 1200
+      #     intervalSeconds: 20
 
-      - name: Download builds from Build multiarch image workflow artifacts
-        uses: dawidd6/action-download-artifact@v2
-        with:
-          github_token: ${{secrets.GITHUB_TOKEN}}
-          workflow: build-multiarch-image.yml
-          workflow_conclusion: success
-          commit: ${{ github.sha }}
-          path: ${{github.workspace}}
+      # - name: Download builds from Build multiarch image workflow artifacts
+      #   uses: dawidd6/action-download-artifact@v2
+      #   with:
+      #     github_token: ${{secrets.GITHUB_TOKEN}}
+      #     workflow: build-multiarch-image.yml
+      #     workflow_conclusion: success
+      #     commit: ${{ github.sha }}
+      #     path: ${{github.workspace}}
 
-      - name: "${{ matrix.component.Name }} -- Publish release image to GHCR"
-        working-directory: ${{github.workspace}}
-        env:
-          VAPP_IMAGE: ${{ matrix.component.Name }}-multiarch/${{ matrix.component.Name }}.tar
-          VAPP_NAME: ${{ matrix.component.Name }}
-          VAPP_VERSION: ${{ steps.get_version.outputs.version-without-v }}
-          REGISTRY: "ghcr.io/${{steps.github-repository-name-case-adjusted.outputs.lowercase}}"
-        run: |
-          tag=$(echo docker://$REGISTRY/$VAPP_NAME:$VAPP_VERSION | tr '[:upper:]' '[:lower:]')
-          echo "Copy vApp image $VAPP_IMAGE to '$tag'"
-          skopeo copy --all  oci-archive:$VAPP_IMAGE "$tag"
+      # - name: "${{ matrix.component.Name }} -- Publish release image to GHCR"
+      #   working-directory: ${{github.workspace}}
+      #   env:
+      #     VAPP_IMAGE: ${{ matrix.component.Name }}-multiarch/${{ matrix.component.Name }}.tar
+      #     VAPP_NAME: ${{ matrix.component.Name }}
+      #     VAPP_VERSION: ${{ steps.get_version.outputs.version-without-v }}
+      #     REGISTRY: "ghcr.io/${{steps.github-repository-name-case-adjusted.outputs.lowercase}}"
+      #   run: |
+      #     tag=$(echo docker://$REGISTRY/$VAPP_NAME:$VAPP_VERSION | tr '[:upper:]' '[:lower:]')
+      #     echo "Copy vApp image $VAPP_IMAGE to '$tag'"
+      #     skopeo copy --all  oci-archive:$VAPP_IMAGE "$tag"
 
-      - name: ${{ matrix.component.Name }} -- Download CI artifacts
-        uses: dawidd6/action-download-artifact@v2
-        with:
-          workflow: ci.yml
-          workflow_conclusion: success
+      # - name: ${{ matrix.component.Name }} -- Download CI artifacts
+      #   uses: dawidd6/action-download-artifact@v2
+      #   with:
+      #     workflow: ci.yml
+      #     workflow_conclusion: success
 
       - name: Context
-        run: ls -la      
+        run: ls -la
 
       - name: ${{ matrix.component.Name }} -- Upload assets
         uses: softprops/action-gh-release@v1
