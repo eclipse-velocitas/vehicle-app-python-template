@@ -104,7 +104,7 @@ jobs:
           workflow: ci.yml
           workflow_conclusion: success
           path: ./ci-artifacts
-      
+
       - name: ${{ matrix.component.Name }} -- Upload assets
         uses: softprops/action-gh-release@v1
         if: startsWith(github.ref, 'refs/tags/')
