@@ -169,6 +169,6 @@ jobs:
         if: ${{ steps.image_build.outcome == 'success' }}
         uses: actions/upload-artifact@v3
         with:
-          name: "AppManifest.json"
+          name: AppManifest
           path: ./app/AppManifest.json
           if-no-files-found: error
