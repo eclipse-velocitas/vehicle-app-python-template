@@ -26,14 +26,6 @@ RUN find /tmp/scripts/ -type f -iname "*.sh" -exec chmod +x {} \;
 RUN /bin/bash /tmp/scripts/container-set.sh
 RUN /bin/bash /tmp/scripts/configure-proxies.sh
 
-# Fix for bug in devcontainer features
-ADD https://raw.githubusercontent.com/devcontainers/features/7fa90110d762797cc0b1c2fe8fcc028c9b813d56/src/common-utils/install.sh /tmp/scripts/install-common.sh
-RUN UID="4000" bash /tmp/scripts/install-common.sh
-ADD https://raw.githubusercontent.com/devcontainers/features/7fa90110d762797cc0b1c2fe8fcc028c9b813d56/src/docker-in-docker/install.sh /tmp/scripts/install-dind.sh
-RUN VERSION="20.10" bash /tmp/scripts/install-dind.sh
-
-VOLUME [ "/var/lib/docker" ]
-
 # Setting the ENTRYPOINT to docker-init.sh will start up the Docker Engine
 # inside the container "overrideCommand": false is set in devcontainer.json.
 # The script will also execute CMD if you need to alter startup behaviors.
