@@ -61,23 +61,23 @@
 ## Workflows
 | Dependency | Version | License |
 |:-----------|:-------:|--------:|
-|actions/checkout|v3||
+|actions/checkout|v3|MIT License|
 |actions/download-artifact|v3|MIT License|
-|actions/setup-node|v3||
-|actions/upload-artifact|v3||
-|aquasecurity/trivy-action|0.8.0||
+|actions/setup-node|v3|MIT License|
+|actions/upload-artifact|v3|MIT License|
+|aquasecurity/trivy-action|0.8.0|Apache License 2.0|
 |ASzc/change-string-case-action|v5|ISC License|
 |battila7/get-version-action|v2|MIT License|
-|dawidd6/action-download-artifact|v2||
-|de-vri-es/setup-git-credentials|v2||
-|docker/build-push-action|v3.2.0||
-|docker/login-action|v2||
-|docker/setup-buildx-action|v2||
+|dawidd6/action-download-artifact|v2|MIT License|
+|de-vri-es/setup-git-credentials|v2|BSD 2-Clause "Simplified" License|
+|docker/build-push-action|v3.2.0|Apache License 2.0|
+|docker/login-action|v2|Apache License 2.0|
+|docker/setup-buildx-action|v2|Apache License 2.0|
 |docker/setup-qemu-action|v2|Apache License 2.0|
-|EnricoMi/publish-unit-test-result-action|v2||
-|fountainhead/action-wait-for-check|v1.1.0||
-|haya14busa/action-cond|v1||
-|johanvanhelden/gha-clover-test-coverage-check|v1||
+|EnricoMi/publish-unit-test-result-action|v2|Apache License 2.0|
+|fountainhead/action-wait-for-check|v1.1.0|MIT License|
+|haya14busa/action-cond|v1|MIT License|
+|johanvanhelden/gha-clover-test-coverage-check|v1|MIT License|
 |peaceiris/actions-gh-pages|v3|MIT License|
-|peaceiris/actions-hugo|v2||
-|softprops/action-gh-release|v1||
+|peaceiris/actions-hugo|v2|MIT License|
+|softprops/action-gh-release|v1|MIT License|
