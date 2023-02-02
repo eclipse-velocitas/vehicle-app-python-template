@@ -6,7 +6,7 @@
 #
 bandit==1.7.4
     # via -r requirements-dev.in
-black==22.10.0
+black==23.1.0
     # via -r requirements-dev.in
 build==0.9.0
     # via pip-tools
@@ -54,10 +54,11 @@ mypy-protobuf==3.3.0
     # via -r requirements-dev.in
 nodeenv==1.7.0
     # via pre-commit
-packaging==21.3
+packaging==23.0
     # via
     #   -c app/requirements-app.txt
     #   -c app/tests/requirements-tests.txt
+    #   black
     #   build
 pathspec==0.10.2
     # via black
@@ -83,11 +84,6 @@ pycodestyle==2.10.0
     # via flake8
 pyflakes==3.0.1
     # via flake8
-pyparsing==3.0.9
-    # via
-    #   -c app/requirements-app.txt
-    #   -c app/tests/requirements-tests.txt
-    #   packaging
 pyyaml==6.0
     # via
     #   bandit
