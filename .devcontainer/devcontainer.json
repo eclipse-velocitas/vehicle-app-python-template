@@ -8,6 +8,9 @@
 		"--init",
 		"--privileged"
 	],
+	"containerEnv": {
+		"GITHUB_API_TOKEN": "${localEnv:GITHUB_API_TOKEN}"
+	},
 	// Set *default* container specific settings.json values on container create.
 	"settings": {
 		"python.pythonPath": "/usr/bin/python3",
