@@ -17,6 +17,7 @@
 import asyncio
 import json
 import logging
+import signal
 
 from sdv.util.log import (  # type: ignore
     get_opentelemetry_log_factory,
@@ -121,4 +122,7 @@ async def main():
     await vehicle_app.run()
 
 
-asyncio.run(main())
+LOOP = asyncio.get_event_loop()
+LOOP.add_signal_handler(signal.SIGTERM, LOOP.stop)
+LOOP.run_until_complete(main())
+LOOP.close()
