@@ -32,6 +32,7 @@
 	},
 	// workaround for the devcontainer features
 	"overrideCommand": false,
+	"mounts": ["source=dind-var-lib-docker,target=/var/lib/docker,type=volume"],
 	// Add the IDs of extensions you want installed when the container is created.
 	"extensions": [
 		"dbaeumer.vscode-eslint",
