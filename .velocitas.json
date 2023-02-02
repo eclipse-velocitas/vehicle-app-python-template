@@ -18,13 +18,14 @@
         },
         {
             "name": "devenv-devcontainer-setup",
-            "version": "v1.0.6"
+            "version": "model-generator"
         }
     ],
     "variables": {
         "language": "python",
         "repoType": "app",
         "appManifestPath": "app/AppManifest.json",
-        "githubRepoId": "eclipse-velocitas/vehicle-app-python-template"
+        "githubRepoId": "eclipse-velocitas/vehicle-app-python-template",
+        "generatedModelPath": "./gen/vehicle_model"
     }
 }
