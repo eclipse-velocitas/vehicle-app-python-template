@@ -4,7 +4,9 @@
         "Port": 50008,
         "DAPR_GRPC_PORT": 50001,
         "Dockerfile": "./app/Dockerfile",
-        "vspec": "https://github.com/COVESA/vehicle_signal_specification/releases/download/v3.0/vss_rel_3.0.json",
+        "vehicle_model": {
+            "src": "https://github.com/COVESA/vehicle_signal_specification/releases/download/v3.0/vss_rel_3.0.json"
+        },
         "dependencies": {
             "services": [
                 {
