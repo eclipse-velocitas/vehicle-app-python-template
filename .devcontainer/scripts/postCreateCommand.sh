@@ -65,3 +65,6 @@ echo "#######################################################"
 echo "### VADF package status                             ###"
 echo "#######################################################"
 velocitas upgrade --dry-run
+
+# Don't let container creation fail if lifecycle management fails
+echo "Done!"
