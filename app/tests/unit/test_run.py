@@ -44,7 +44,6 @@ async def test_for_get_speed():
 
 @pytest.mark.asyncio
 async def test_for_publish_to_topic():
-
     with mock.patch.object(
         VehicleApp, "publish_mqtt_event", new_callable=mock.AsyncMock, return_value=-1
     ):

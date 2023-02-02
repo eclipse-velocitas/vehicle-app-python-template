@@ -114,7 +114,6 @@ class SampleApp(VehicleApp):
 
 
 async def main():
-
     """Main function"""
     logger.info("Starting SampleApp...")
     # Constructing SampleApp and running it.

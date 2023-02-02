@@ -8,7 +8,7 @@
 |async-timeout|4.0.2|Apache 2.0|
 |attrs|22.1.0|MIT|
 |bandit|1.7.4|Apache 2.0|
-|black|22.10.0|MIT|
+|black|23.1.0|MIT|
 |build|0.9.0|MIT|
 |cfgv|3.3.1|MIT|
 |charset-normalizer|2.1.1|MIT|
@@ -33,7 +33,7 @@
 |mypy-extensions|0.4.3|MIT|
 |mypy-protobuf|3.3.0|Apache 2.0|
 |nodeenv|1.7.0|BSD|
-|packaging|21.3|Apache 2.0<br/>Simplified BSD|
+|packaging|23.0|Apache 2.0<br/>BSD|
 |pathspec|0.10.2|Mozilla Public License 2.0 (MPL 2.0)|
 |pbr|5.11.0|Apache 2.0|
 |pep517|0.13.0|MIT|
@@ -44,7 +44,6 @@
 |protobuf|3.20.3|Google License|
 |pycodestyle|2.10.0|MIT|
 |pyflakes|3.0.1|MIT|
-|pyparsing|3.0.9|MIT|
 |python-dateutil|2.8.2|Apache 2.0<br/>BSD|
 |PyYAML|6.0|MIT|
 |setuptools|58.1.0|MIT|
