@@ -38,7 +38,6 @@
 		"dbaeumer.vscode-eslint",
 		"ms-azuretools.vscode-dapr",
 		"ms-azuretools.vscode-docker",
-		"ms-vscode.vscode-typescript-tslint-plugin",
 		"ms-python.python",
 		"cschleiden.vscode-github-actions",
 		"pspester.pester-test",
@@ -46,7 +45,6 @@
 		"dotjoshjohnson.xml",
 		"ms-kubernetes-tools.vscode-kubernetes-tools",
 		"matangover.mypy",
-		"anweber.vscode-httpyac",
 		"augustocdias.tasks-shell-input",
 		"ms-python.isort"
 	],
