@@ -2,7 +2,7 @@
     "packages": [
         {
             "name": "devenv-runtime-local",
-            "version": "v1.0.0"
+            "version": "v1.0.2"
         },
         {
             "name": "devenv-runtime-k3d",
@@ -18,7 +18,7 @@
         },
         {
             "name": "devenv-devcontainer-setup",
-            "version": "v1.0.3"
+            "version": "v1.0.4"
         }
     ],
     "variables": {
