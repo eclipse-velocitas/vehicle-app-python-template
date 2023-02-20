@@ -10,7 +10,7 @@
         },
         {
             "name": "devenv-github-workflows",
-            "version": "v1.0.6"
+            "version": "cpp-template"
         },
         {
             "name": "devenv-github-templates",
@@ -18,7 +18,7 @@
         },
         {
             "name": "devenv-devcontainer-setup",
-            "version": "v1.0.4"
+            "version": "v1.0.5"
         }
     ],
     "variables": {
