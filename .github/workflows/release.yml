@@ -33,8 +33,6 @@ jobs:
       - name: Get matrix data
         id: export-deployment-matrix
         run: |
-          SITE_PACKAGES=$(python -m site --user-site)
-          sed -i "s|SITE_PACKAGES|$SITE_PACKAGES|g" ./app/AppManifest.json
           MATRIX=$(cat ./app/AppManifest.json | tr '\n' ' ')
 
           echo "deployment-matrix=$MATRIX" >> $GITHUB_OUTPUT
@@ -211,7 +209,7 @@ jobs:
 
           cp ./README.md ./hugo/content/documentation/_index.md
           sed -i '1d' hugo/content/documentation/_index.md
-          sed -i '1s/^/---\ntitle: "VehicleApp using Python"\ndraft: false\n---\n/' hugo/content/documentation/_index.md
+          sed -i '1s/^/---\ntitle: "VehicleApp using python"\ndraft: false\n---\n/' hugo/content/documentation/_index.md
 
           cp .vehicleApp/Documentation/Outbox/* ./hugo/content/reports
 

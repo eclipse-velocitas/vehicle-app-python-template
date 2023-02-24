@@ -36,8 +36,6 @@ jobs:
       - name: Get matrix data
         id: export-deployment-matrix
         run: |
-          SITE_PACKAGES=$(python -m site --user-site)
-          sed -i "s|SITE_PACKAGES|$SITE_PACKAGES|g" ./app/AppManifest.json
           MATRIX=$(cat ./app/AppManifest.json | tr '\n' ' ')
 
           echo "deployment-matrix=$MATRIX" >> $GITHUB_OUTPUT
