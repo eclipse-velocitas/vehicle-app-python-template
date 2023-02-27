@@ -3,32 +3,21 @@
 ## Python
 | Dependency | Version | License |
 |:-----------|:-------:|--------:|
-|aiohttp|3.8.3|Apache 2.0|
-|aiosignal|1.3.1|Apache 2.0|
-|async-timeout|4.0.2|Apache 2.0|
-|attrs|22.1.0|MIT|
 |bandit|1.7.4|Apache 2.0|
 |black|23.1.0|MIT|
 |build|0.9.0|MIT|
 |cfgv|3.3.1|MIT|
-|charset-normalizer|2.1.1|MIT|
 |click|8.1.3|New BSD|
-|cloudevents|1.7.1|Apache 2.0|
-|dapr|1.8.3|Apache 2.0|
-|deprecation|2.1.0|Apache 2.0|
 |distlib|0.3.6|Python Software Foundation License|
 |filelock|3.8.0|Public Domain|
 |flake8|6.0.0|MIT|
-|frozenlist|1.3.3|Apache 2.0|
 |gitdb|4.0.10|BSD|
 |GitPython|3.1.29|BSD|
 |grpc-stubs|1.24.11|MIT|
 |grpcio|1.48.2|Apache 2.0|
 |grpcio-tools|1.48.2|Apache 2.0|
 |identify|2.5.9|MIT|
-|idna|3.4|BSD|
 |mccabe|0.7.0|MIT|
-|multidict|6.0.2|Apache 2.0|
 |mypy|0.991|MIT|
 |mypy-extensions|0.4.3|MIT|
 |mypy-protobuf|3.3.0|Apache 2.0|
@@ -44,7 +33,6 @@
 |protobuf|3.20.3|Google License|
 |pycodestyle|2.10.0|MIT|
 |pyflakes|3.0.1|MIT|
-|python-dateutil|2.8.2|Apache 2.0<br/>BSD|
 |PyYAML|6.0|MIT|
 |setuptools|58.1.0|MIT|
 |six|1.16.0|MIT|
@@ -56,7 +44,6 @@
 |typing-extensions|4.4.0|Python Software Foundation License|
 |virtualenv|20.16.7|MIT|
 |wheel|0.38.4|MIT|
-|yarl|1.8.1|Apache 2.0|
 ## Workflows
 | Dependency | Version | License |
 |:-----------|:-------:|--------:|
