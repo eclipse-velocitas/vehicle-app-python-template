@@ -318,7 +318,7 @@
 			"label": "(Re-)generate vehicle model",
 			"detail": "(Re-)generates the vehicle model from source files specified in the AppManifest.",
 			"type": "shell",
-			"command": "velocitas exec model-generator generate-model",
+			"command": "velocitas exec vehicle-model-lifecycle generate-model",
 			"group": "none",
 			"presentation": {
 				"reveal": "always",
