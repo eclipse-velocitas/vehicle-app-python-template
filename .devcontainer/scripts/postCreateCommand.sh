@@ -36,7 +36,7 @@ if [ -f $REQUIREMENTS ]; then
     pip3 install -r $REQUIREMENTS
 fi
 # Dependencies for the app
-REQUIREMENTS="./app/requirements-app.txt"
+REQUIREMENTS="./app/requirements.txt"
 if [ -f $REQUIREMENTS ]; then
     pip3 install -r $REQUIREMENTS
 fi
