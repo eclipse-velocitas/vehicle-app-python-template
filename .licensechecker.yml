@@ -18,4 +18,4 @@ scan-dirs:
     python-version: 3
     python-pip-included-requirement-files:
       - requirements-dev.txt
-      - app/requirements-app.txt
+      - app/requirements.txt

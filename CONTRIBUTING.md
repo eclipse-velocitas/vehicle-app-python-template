@@ -60,7 +60,7 @@ https://www.eclipse.org/projects/handbook/#resources-commit
 In this project, the [pip-tools](https://github.com/jazzband/pip-tools) are used to manage the python dependencies and to keep all packages up-to-date. The required pip-based dependencies of this project are defined in multiple `requirement` input files.
 
 ### Vehicle app runtime dependencies
-* The [./app/requirements-app.in](./app/requirements-app.in) file is the requirement input file that used to generate the Vehicle app runtime requirements file [./app/requirements-txt.txt](./app/requirements-app.txt)
+* The [./app/requirements.in](./app/requirements.in) file is the requirement input file that used to generate the Vehicle app runtime requirements file [./app/requirements-txt.txt](./app/requirements.txt)
 
 ### Unit and Integration testing dependencies
 * The [./app/tests/requirements-tests.in](./app/tests/requirements-tests.in) file is the requirement input file that used to generate the testing requirements file [./app/tests/requirements-tests.txt](./app/tests/requirements-tests.txt). The test requirements file needs to be installed for the development container to execute the unit and integration tests as well as in the CI Workflow test execution.
