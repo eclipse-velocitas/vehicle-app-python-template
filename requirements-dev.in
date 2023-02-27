@@ -15,7 +15,7 @@
 ##########################################
 # Import src and test requirements
 ##########################################
--c app/requirements-app.txt
+-c app/requirements.txt
 -c app/tests/requirements-tests.txt
 ##########################################
 # Development Tools Packages

@@ -47,7 +47,7 @@ jobs:
         run: |
           pip install -r requirements-dev.txt
           pip install -r app/requirements-links.txt
-          pip install -r app/requirements-app.txt
+          pip install -r app/requirements.txt
           pip install -r app/tests/requirements-tests.txt
 
       - name: Fix dubious ownership
@@ -176,7 +176,7 @@ jobs:
 
       - name: Install required packages
         run: |
-          pip install -r ./app/requirements-app.txt
+          pip install -r ./app/requirements.txt
           pip install -r ./app/requirements-links.txt
           pip install -r ./app/tests/requirements-tests.txt
 
