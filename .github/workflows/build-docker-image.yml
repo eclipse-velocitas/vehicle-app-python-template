@@ -119,10 +119,10 @@ jobs:
           labels: |
             org.opencontainers.image.source=https://github.com/${{steps.github-repository-name-case-adjusted.outputs.lowercase}}
 
-      - name: "Install skopeo"
-        run: |
-          sudo apt-get update
-          sudo apt-get -y install skopeo
+      # - name: "Install skopeo"
+      #   run: |
+      #     sudo apt-get update
+      #     sudo apt-get -y install skopeo
 
       - name: "${{ matrix.component.Name }} -- Inspect tar image with skopeo"
         run: |
