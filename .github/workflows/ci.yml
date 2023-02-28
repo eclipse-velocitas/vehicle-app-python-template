@@ -163,13 +163,13 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Init velocitas project
-        run: |
-          velocitas init
-
       - uses: de-vri-es/setup-git-credentials@v2
         with:
           credentials: https://user:${{ secrets.GITHUB_TOKEN }}@github.com/
+
+      - name: Init velocitas project
+        run: |
+          velocitas init
 
       - name: Login to GitHub Container Registry
         uses: docker/login-action@v2

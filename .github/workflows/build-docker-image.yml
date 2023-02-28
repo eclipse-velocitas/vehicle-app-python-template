@@ -52,14 +52,6 @@ jobs:
         with:
           submodules: "recursive"
 
-      - name: Init velocitas project
-        run: |
-          velocitas init
-
-      - name: Get python version
-        run: |
-          pip list
-
       - name: Clone Release Documentation Action repository
         uses: actions/checkout@v3
         with:
@@ -83,6 +75,10 @@ jobs:
       - uses: de-vri-es/setup-git-credentials@v2
         with:
           credentials: https://user:${{ secrets.GITHUB_TOKEN }}@github.com/
+
+      - name: Init velocitas project
+        run: |
+          velocitas init
 
       - name: Setup git config
         shell: bash
