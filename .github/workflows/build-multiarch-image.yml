@@ -21,9 +21,6 @@ on:
     # Run only on branches/commits and not tags
     branches:
       - main
-  pull_request:
-    branches:
-      - main
 
 jobs:
   initialize-matrix:
