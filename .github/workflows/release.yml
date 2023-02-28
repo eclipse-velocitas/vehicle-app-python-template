@@ -124,12 +124,13 @@ jobs:
       - name: Clone Release Documentation Action repository
         uses: actions/checkout@v3
         with:
-          repository: eclipse-velocitas/release-documentation-action@update-node-to-16
+          repository: eclipse-velocitas/release-documentation-action
+          ref: update-node-to-16
           path: "./.github/actions"
 
       - uses: actions/setup-node@v3
         with:
-          node-version: 19.6.1
+          node-version: 18.14.1
 
       - name: Conditional input event value
         uses: haya14busa/action-cond@v1
