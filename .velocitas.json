@@ -6,7 +6,7 @@
         },
         {
             "name": "devenv-runtime-k3d",
-            "version": "feature/add-check-of-vspec-file-path-for-vdb-deployment"
+            "version": "v1.0.1"
         },
         {
             "name": "devenv-github-workflows",
