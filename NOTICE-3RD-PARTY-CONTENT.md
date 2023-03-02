@@ -21,7 +21,7 @@
 |flake8|6.0.0|MIT|
 |frozenlist|1.3.3|Apache 2.0|
 |gitdb|4.0.10|BSD|
-|GitPython|3.1.29|BSD|
+|GitPython|3.1.31|BSD|
 |grpc-stubs|1.24.11|MIT|
 |grpcio|1.48.2|Apache 2.0|
 |grpcio-tools|1.48.2|Apache 2.0|
