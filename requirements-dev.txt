@@ -29,7 +29,7 @@ flake8==6.0.0
     # via -r requirements-dev.in
 gitdb==4.0.10
     # via gitpython
-gitpython==3.1.29
+gitpython==3.1.31
     # via bandit
 grpc-stubs==1.24.11
     # via -r requirements-dev.in
@@ -105,7 +105,6 @@ tomli==2.0.1
     #   black
     #   build
     #   mypy
-    #   pep517
 types-protobuf==4.21.0.0
     # via mypy-protobuf
 typing-extensions==4.4.0
