@@ -18,7 +18,7 @@
         },
         {
             "name": "devenv-devcontainer-setup",
-            "version": "model-generator"
+            "version": "v1.1.0"
         }
     ],
     "variables": {
