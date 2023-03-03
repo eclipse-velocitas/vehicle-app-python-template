@@ -313,6 +313,19 @@
 			"detail": "Import example app from SDK",
 			"type": "shell",
 			"command": "./.vscode/scripts/import-example-app.sh ${input:exampleApp}",
+		},
+		{
+			"label": "(Re-)generate vehicle model",
+			"detail": "(Re-)generates the vehicle model from source files specified in the AppManifest.",
+			"type": "shell",
+			"command": "velocitas exec vehicle-model-lifecycle generate-model",
+			"group": "none",
+			"presentation": {
+				"reveal": "always",
+				"panel": "dedicated",
+				"clear": true,
+				"close": false
+			}
 		}
 	],
 	"inputs": [

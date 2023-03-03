@@ -25,7 +25,7 @@ from sdv.util.log import (  # type: ignore
 )
 from sdv.vdb.subscriptions import DataPointReply
 from sdv.vehicle_app import VehicleApp, subscribe_topic
-from sdv_model import Vehicle, vehicle  # type: ignore
+from vehicle import Vehicle, vehicle  # type: ignore
 
 # Configure the VehicleApp logger with the necessary log config and level.
 logging.setLogRecordFactory(get_opentelemetry_log_factory())

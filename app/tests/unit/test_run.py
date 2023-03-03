@@ -20,7 +20,7 @@ import pytest
 from google.protobuf.timestamp_pb2 import Timestamp
 from sdv.vdb.types import TypedDataPointResult
 from sdv.vehicle_app import VehicleApp
-from sdv_model import vehicle  # type: ignore
+from vehicle import vehicle  # type: ignore
 
 MOCKED_SPEED = 0.0
 
