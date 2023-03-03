@@ -38,6 +38,7 @@ jobs:
   build-image:
     name: "Building image (${{ matrix.component.Name }})"
     runs-on: ubuntu-latest
+    container: ghcr.io/eclipse-velocitas/devcontainer-base-images/python:latest
     strategy:
       matrix:
         component: ${{ fromJson(inputs.deployment-matrix-str) }}
@@ -75,6 +76,10 @@ jobs:
         with:
           credentials: https://user:${{ secrets.GITHUB_TOKEN }}@github.com/
 
+      - name: Init velocitas project
+        run: |
+          velocitas init
+
       - name: Setup git config
         shell: bash
         run: |
@@ -109,6 +114,11 @@ jobs:
           tags: ${{ github.sha }}
           labels: |
             org.opencontainers.image.source=https://github.com/${{steps.github-repository-name-case-adjusted.outputs.lowercase}}
+
+      - name: "Install skopeo"
+        run: |
+          sudo apt-get update
+          sudo apt-get -y install skopeo
 
       - name: "${{ matrix.component.Name }} -- Inspect tar image with skopeo"
         run: |
