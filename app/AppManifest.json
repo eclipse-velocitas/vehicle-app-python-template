@@ -12,7 +12,7 @@
                 {
                     "name": "seatservice",
                     "image": "ghcr.io/boschglobal/kuksa.val.services/seat_service",
-                    "version": "v0.2.0"
+                    "version": "v0.3.0"
                 }
             ],
             "runtime": [
@@ -23,8 +23,8 @@
                 },
                 {
                     "name": "databroker",
-                    "image": "ghcr.io/boschglobal/kuksa.val/databroker",
-                    "version": "0.0.2"
+                    "image": "ghcr.io/eclipse/kuksa.val/databroker",
+                    "version": "0.3.0"
                 },
                 {
                     "name": "feedercan",
