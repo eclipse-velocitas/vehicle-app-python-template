@@ -37,10 +37,10 @@
             },
             "dapr": {
                 "cli": {
-                    "version": "1.9.1"
+                    "version": "1.10.0"
                 },
                 "runtime": {
-                    "version": "1.8.1"
+                    "version": "1.10.2"
                 }
             }
         }
