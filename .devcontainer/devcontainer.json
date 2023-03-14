@@ -1,6 +1,5 @@
-// This file is maintained by velocitas CLI, do not modify manually. Change settings in .velocitas.json
 {
-	"name": "Python vehicle app",
+	"name": "Python VehicleApp",
 	"build": {
 		"dockerfile": "Dockerfile"
 	},
@@ -8,9 +7,6 @@
 		"--init",
 		"--privileged"
 	],
-	"containerEnv": {
-		"GITHUB_API_TOKEN": "${localEnv:GITHUB_API_TOKEN}"
-	},
 	"customizations": {
 		"vscode": {
 			// Set *default* container specific settings.json values on container create.
@@ -37,6 +33,7 @@
 				"dbaeumer.vscode-eslint",
 				"ms-azuretools.vscode-dapr",
 				"ms-azuretools.vscode-docker",
+				"ms-vscode.vscode-typescript-tslint-plugin",
 				"ms-python.python",
 				"cschleiden.vscode-github-actions",
 				"pspester.pester-test",
@@ -44,6 +41,7 @@
 				"dotjoshjohnson.xml",
 				"ms-kubernetes-tools.vscode-kubernetes-tools",
 				"matangover.mypy",
+				"anweber.vscode-httpyac",
 				"augustocdias.tasks-shell-input",
 				"ms-python.isort",
 				"ms-python.flake8"

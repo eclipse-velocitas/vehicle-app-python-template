@@ -2,7 +2,7 @@
     "packages": [
         {
             "name": "devenv-runtime-local",
-            "version": "v1.0.5"
+            "version": "new-app-manifest"
         },
         {
             "name": "devenv-runtime-k3d",
