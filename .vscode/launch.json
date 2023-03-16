@@ -21,27 +21,5 @@
                 "VEHICLEDATABROKER_DAPR_APP_ID": "vehicledatabroker"
             }
         }
-    ],
-    "inputs": [
-        {
-            "id": "DAPR_GRPC_PORT",
-            "type": "command",
-            "command": "shellCommand.execute",
-            "args": {
-                "useSingleResult": true,
-                "command": "cat ./app/AppManifest.json | jq .[].DAPR_GRPC_PORT | tr -d '\"'",
-                "cwd": "${workspaceFolder}",
-            }
-        },
-        {
-            "id": "SERVICE_NAME",
-            "type": "command",
-            "command": "shellCommand.execute",
-            "args": {
-                "useSingleResult": true,
-                "command": "cat ./app/AppManifest.json | jq .[].Name | tr -d '\"'",
-                "cwd": "${workspaceFolder}",
-            }
-        }
     ]
 }
