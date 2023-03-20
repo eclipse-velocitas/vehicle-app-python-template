@@ -6,20 +6,13 @@
     "compounds": [],
     "configurations": [
         {
-            "type": "python",
-            "justMyCode": false,
-            "request": "launch",
             "name": "VehicleApp",
-            "program": "${workspaceFolder}/app/src/main.py",
-            "console": "integratedTerminal",
-            "preLaunchTask": "dapr-VehicleApp-run",
-            "postDebugTask": "dapr-VehicleApp-stop",
-            "env": {
-                "DAPR_HTTP_PORT": "3500",
-                "DAPR_GRPC_PORT": "${input:DAPR_GRPC_PORT}",
-                "SERVICE_DAPR_APP_ID": "${input:SERVICE_NAME}",
-                "VEHICLEDATABROKER_DAPR_APP_ID": "vehicledatabroker"
-            }
+            "type": "python",
+            "request": "attach",
+            "processId": "${command:pickProcess}",
+            "justMyCode": true,
+            "preLaunchTask": "vehicle-app-deploy",
+            "postDebugTask": "vehicle-app-undeploy"
         }
     ]
 }
