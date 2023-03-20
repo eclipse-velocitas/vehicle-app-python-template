@@ -2,15 +2,11 @@
 	"version": "2.0.0",
 	"tasks": [
 		{
-			"label": "dapr-VehicleApp-run",
-			"appId": "vehicleapp",
-			"appPort": 50008,
-			"componentsPath": "./.dapr/components",
-			"config": "./.dapr/config.yaml",
-			"appProtocol": "grpc",
-			"grpcPort": 50001,
-			"httpPort": 3500,
-			"type": "dapr",
+			"label": "vehicle-app-deploy",
+			"type": "shell",
+			"command": [
+				"${workspaceFolder}/velocitas-cli/bin/dev exec runtime-local deploy ${workspaceFolder}/app/src/main.py"
+			],
 			"presentation": {
 				"close": true,
 				"reveal": "never"
@@ -18,7 +14,7 @@
 			"hide": true
 		},
 		{
-			"label": "dapr-VehicleApp-stop",
+			"label": "vehicle-app-undeploy",
 			"type": "shell",
 			"command": [
 				"dapr stop --app-id vehicleapp"
