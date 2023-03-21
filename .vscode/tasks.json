@@ -26,21 +26,10 @@
 			"hide": true
 		},
 		{
-			"label": "Local - Ensure Dapr",
-			"detail": "Ensures that the Dapr binaries are installed and Dapr is configured for local execution.",
+			"label": "Local Runtime - Up",
+			"detail": "Starts up the local runtime",
 			"type": "shell",
-			"command": "velocitas exec runtime-local ensure-dapr",
-			"group": "none",
-			"presentation": {
-				"close": true
-			},
-			"problemMatcher": []
-		},
-		{
-			"label": "Local - Mosquitto",
-			"detail": "Runs Mosquitto MQTT Broker in a container (with docker run) with exposed port 1883.",
-			"type": "shell",
-			"command": "velocitas exec runtime-local run-mosquitto",
+			"command": "velocitas exec runtime-local up",
 			"group": "none",
 			"presentation": {
 				"reveal": "always",
@@ -64,34 +53,7 @@
 			}
 		},
 		{
-			"label": "Local - VehicleDataBroker",
-			"detail": "Runs the VehicleDataBroker as background task.",
-			"type": "shell",
-			"command": "velocitas exec runtime-local run-vehicledatabroker",
-			"group": "none",
-			"presentation": {
-				"reveal": "always",
-				"panel": "dedicated"
-			},
-			"isBackground": true,
-			"problemMatcher": {
-				"pattern": [
-					{
-						"regexp": ".",
-						"file": 1,
-						"location": 2,
-						"message": 3
-					}
-				],
-				"background": {
-					"activeOnStart": true,
-					"beginsPattern": "^You're up and running! Dapr logs will appear here.",
-					"endsPattern": "."
-				}
-			}
-		},
-		{
-			"label": "Local - VehicleDataBroker CLI",
+			"label": "Local Runtime - VehicleDataBroker CLI",
 			"detail": "Starts the VehicleDataBroker CLI",
 			"type": "shell",
 			"command": "velocitas exec runtime-local run-vehicledatabroker-cli",
@@ -106,73 +68,6 @@
 			"command": "pre-commit run --show-diff-on-failure --color=always --all-files",
 			"group": "none",
 			"isBackground": false,
-			"problemMatcher": []
-		},
-		{
-			"label": "Local - VehicleServices",
-			"detail": "Runs all configured VehicleServices as background task.",
-			"type": "shell",
-			"command": "velocitas exec runtime-local run-vehicleservices",
-			"group": "none",
-			"presentation": {
-				"reveal": "always",
-				"panel": "dedicated"
-			},
-			"isBackground": true,
-			"problemMatcher": {
-				"pattern": [
-					{
-						"regexp": ".",
-						"file": 1,
-						"location": 2,
-						"message": 3
-					}
-				],
-				"background": {
-					"activeOnStart": true,
-					"beginsPattern": "^You're up and running! Dapr logs will appear here.",
-					"endsPattern": "."
-				}
-			}
-		},
-		{
-			"label": "Local - FeederCan",
-			"detail": "Runs FeederCan as background task.",
-			"type": "shell",
-			"command": "velocitas exec runtime-local run-feedercan",
-			"group": "none",
-			"presentation": {
-				"reveal": "always",
-				"panel": "dedicated"
-			},
-			"isBackground": true,
-			"problemMatcher": {
-				"pattern": [
-					{
-						"regexp": ".",
-						"file": 1,
-						"location": 2,
-						"message": 3
-					}
-				],
-				"background": {
-					"activeOnStart": true,
-					"beginsPattern": "^You're up and running! Dapr logs will appear here.",
-					"endsPattern": "."
-				}
-			}
-		},
-		{
-			"label": "Local - Start VehicleApp runtime",
-			"detail": "Runs all components of the VehicleApp runtime.",
-			"dependsOn": [
-				"Local - Ensure Dapr",
-				"Local - Mosquitto",
-				"Local - VehicleDataBroker",
-				"Local - VehicleServices",
-				"Local - FeederCan"
-			],
-			"dependsOrder": "sequence",
 			"problemMatcher": []
 		},
 		{
