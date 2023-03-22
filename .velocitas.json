@@ -1,12 +1,8 @@
 {
     "packages": [
         {
-            "name": "devenv-runtime-local",
+            "name": "devenv-runtimes",
             "version": "new-app-manifest"
-        },
-        {
-            "name": "devenv-runtime-k3d",
-            "version": "v1.0.1"
         },
         {
             "name": "devenv-github-workflows",
