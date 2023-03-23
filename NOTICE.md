@@ -30,5 +30,5 @@ SPDX-License-Identifier: Apache-2.0
 |   GRPC   |           https://github.com/grpc/grpc/blob/master/LICENSE           |
 
 ### Further 3rd party licenses used in project
-[Auto-generated 3rd party licenses](./NOTICE-3RD-PARTY-CONTENT.md)
-[Full list of dependencies in the devcontainer base-image](https://github.com/eclipse-velocitas/devcontainer-base-images/blob/sbom/SBOM/python.spdx.json)
+* [Auto-generated 3rd party licenses](./NOTICE-3RD-PARTY-CONTENT.md)
+* [Full list of dependencies in the devcontainer base-image](https://github.com/eclipse-velocitas/devcontainer-base-images/blob/sbom/SBOM/python.md)
