@@ -10,7 +10,7 @@
         },
         {
             "name": "devenv-github-workflows",
-            "version": "v1.0.12"
+            "version": "lightweight-integration"
         },
         {
             "name": "devenv-github-templates",

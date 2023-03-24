@@ -1,5 +1,5 @@
 # This file is maintained by velocitas CLI, do not modify manually. Change settings in .velocitas.json
-# Copyright (c) 2022 Robert Bosch GmbH and Microsoft Corporation
+# Copyright (c) 2023 Robert Bosch GmbH and Microsoft Corporation
 #
 # This program and the accompanying materials are made available under the
 # terms of the Apache License, Version 2.0 which is available at
@@ -14,7 +14,6 @@
 # SPDX-License-Identifier: Apache-2.0
 
 name: CI workflow
-
 concurrency:
   group: ${{ github.ref }}
   cancel-in-progress: true
@@ -31,217 +30,21 @@ on:
 
 jobs:
   unit-tests:
-    runs-on: ubuntu-22.04
-    container: ghcr.io/eclipse-velocitas/devcontainer-base-images/python:latest
-    name: Run unit tests and linters
+    uses: eclipse-velocitas/devenv-github-workflows/.github/workflows/python-app-unit-test.yml@lightweight-integration
+    with:
+      selfCommitRef: lightweight-integration
 
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
-
-      - uses: de-vri-es/setup-git-credentials@v2
-        with:
-          credentials: https://user:${{ secrets.GITHUB_TOKEN }}@github.com/
-
-      - name: Init velocitas project
-        run: |
-          velocitas init
-
-      - name: Install required packages
-        run: |
-          pip install -r requirements-dev.txt
-          pip install -r app/requirements-links.txt
-          pip install -r app/requirements.txt
-          pip install -r app/tests/requirements-tests.txt
-
-      - name: Fix dubious ownership
-        run: |
-          git config --global --add safe.directory $( pwd )
-
-      - name: Run Linters
-        uses: ./.github/actions/pre-commit-action
-
-      - name: Clone Release Documentation Action repository
-        uses: actions/checkout@v3
-        with:
-          repository: eclipse-velocitas/release-documentation-action
-          path: "./.github/release-documentation/actions"
-
-      - name: unit test
-        shell: bash
-        run: |
-          pytest --rootdir=./app/tests/unit --override-ini junit_family=xunit1 --junit-xml=./results/UnitTest/junit.xml --cov ./app/tests/unit --cov-report=xml:results/CodeCoverage/cobertura-coverage.xml --cov-branch ./app/tests/unit --cov-config=setup.cfg
-          coverage2clover -i results/CodeCoverage/cobertura-coverage.xml -o results/CodeCoverage/clover.xml
-          coveragepy-lcov --data_file_path ./.coverage --output_file_path results/CodeCoverage/lcov.info
-
-      - name: Publish Unit Test Results
-        uses: EnricoMi/publish-unit-test-result-action@v2
-        if: always()
-        with:
-          junit_files: ./results/UnitTest/junit.xml
-
-      #########################################################
-      # This step was disabled temporarily due to the required
-      # write access rights of the PRs for external contributors.
-      #########################################################
-      #- name: Add code coverage comment to pr
-      #  uses: romeovs/lcov-reporter-action@v0.3.1
-      #  with:
-      #    github-token: ${{ secrets.GITHUB_TOKEN }}
-      #    lcov-file: results/CodeCoverage/lcov.info
-      #    delete-old-comments: true
-      #  if: github.event_name == 'pull_request'
-
-      - name: Package unit test files
-        uses: ./.github/release-documentation/actions/package
-        with:
-          name: "UnitTest"
-          type: "UnitTest"
-          schema: "JUnit"
-          sourcePath: ./results/UnitTest/junit.xml
-          packagePath: ./results/Documentation/renderer
-
-      - name: Package code coverage files
-        uses: ./.github/release-documentation/actions/package
-        with:
-          name: "CodeCoverage"
-          type: "CodeCoverage"
-          schema: "Cobertura"
-          sourcePath: results/CodeCoverage
-          packagePath: results/Documentation/renderer
-
-      - name: Upload test results as artifacts
-        uses: actions/upload-artifact@v3
-        if: always()
-        with:
-          name: "test-results"
-          path: |
-            results/Documentation/renderer/*
-
-      - name: Checking unit test code coverage
-        id: test-coverage
-        uses: johanvanhelden/gha-clover-test-coverage-check@v1
-        with:
-          percentage: "20"
-          filename: "results/CodeCoverage/clover.xml"
-
-  initialize-matrix:
-    runs-on: ubuntu-latest
-    name: Setting up build matrix
-    outputs:
-      deployment-matrix: ${{ steps.export-deployment-matrix.outputs.deployment-matrix }}
-
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
-
-      - name: Get matrix data
-        id: export-deployment-matrix
-        run: |
-          SITE_PACKAGES=$(python -m site --user-site)
-          sed -i "s|SITE_PACKAGES|$SITE_PACKAGES|g" ./app/AppManifest.json
-          MATRIX=$(cat ./app/AppManifest.json | tr '\n' ' ')
-
-          echo "deployment-matrix=$MATRIX" >> $GITHUB_OUTPUT
-
-  build-image-amd64:
-    uses: ./.github/workflows/build-docker-image.yml
-    needs: [initialize-matrix]
+  build-container-image:
+    uses: eclipse-velocitas/devenv-github-workflows/.github/workflows/app-build-docker-image.yml@lightweight-integration
     with:
       platform: amd64
-      deployment-matrix-str: ${{ needs.initialize-matrix.outputs.deployment-matrix }}
+      appExecutionPlatforms: linux/amd64, linux/arm64
+      appName: MyVehicleApp
+      appDockerfilePath: ./app/Dockerfile
+      language: python
 
   run-integration-tests:
-    name: Run Integration Tests (${{ matrix.component.Name }})
-    runs-on: ubuntu-22.04
-    container: ghcr.io/eclipse-velocitas/devcontainer-base-images/python:latest
-    needs: [initialize-matrix, build-image-amd64]
-    strategy:
-      matrix:
-        component: ${{ fromJson(needs.initialize-matrix.outputs.deployment-matrix) }}
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
-
-      - uses: de-vri-es/setup-git-credentials@v2
-        with:
-          credentials: https://user:${{ secrets.GITHUB_TOKEN }}@github.com/
-
-      - name: Init velocitas project
-        run: |
-          velocitas init
-
-      - name: Login to GitHub Container Registry
-        uses: docker/login-action@v2
-        with:
-          registry: ghcr.io
-          username: ${{ github.repository_owner }}
-          password: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Install required packages
-        run: |
-          pip install -r ./app/requirements.txt
-          pip install -r ./app/requirements-links.txt
-          pip install -r ./app/tests/requirements-tests.txt
-
-      - name: Configure K3D cluster
-        run: velocitas exec runtime-k3d configure_controlplane
-
-      - name: Install runtime containers in K3D cluster
-        run: velocitas exec runtime-k3d deploy_runtime
-
-      - id: github-repository-name-case-adjusted
-        name: Prepare repository name in lower case for docker upload. This supports repository names in mixed case
-        uses: ASzc/change-string-case-action@v5
-        with:
-          string: ${{ github.repository }}
-
-      - name: Download stored image from artifacts
-        uses: actions/download-artifact@v3
-        env:
-          VAPP_IMAGE: ${{ matrix.component.Name }}-amd64
-        with:
-          name: ${{ env.VAPP_IMAGE }}
-          path: ./.github/scripts/
-
-      - name: Deploy images
-        working-directory: ./.github/scripts
-        run: ./deploy_image_from_artifact.sh
-
-      - name: Run Python integration tests
-        shell: bash
-        env:
-          VDB_PORT: 30555
-          MQTT_PORT: 31883
-        run: |
-          pip install -r app/tests/requirements-tests.txt
-          pytest ./app/tests/integration --override-ini junit_family=xunit1 --junit-xml=./results/IntTest/junit.xml
-
-      - name: Publish integration test results
-        uses: EnricoMi/publish-unit-test-result-action@v2
-        if: always()
-        with:
-          junit_files: ./results/IntTest/junit.xml
-
-      - name: Clone release documentation action repository
-        uses: actions/checkout@v3
-        with:
-          repository: eclipse-velocitas/release-documentation-action
-          path: "./.github/actions"
-
-      - name: Package integration test result files
-        uses: ./.github/actions/package
-        with:
-          name: "IntegrationTest"
-          type: "UnitTest"
-          schema: "JUnit"
-          sourcePath: ./results/IntTest/junit.xml
-          packagePath: ./results/Documentation/renderer
-
-      - name: Upload integration test results as artifacts
-        uses: actions/upload-artifact@v3
-        if: always()
-        with:
-          name: "test-results"
-          path: |
-            results/Documentation/renderer/*
+    needs: [build-container-image]
+    uses: eclipse-velocitas/devenv-github-workflows/.github/workflows/python-app-integration-test.yml@lightweight-integration
+    with:
+      appName: MyVehicleApp
