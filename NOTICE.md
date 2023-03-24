@@ -26,9 +26,8 @@ SPDX-License-Identifier: Apache-2.0
 ### Development
 | Software |                               License                                |
 | :------: | :------------------------------------------------------------------: |
-|  Thread  | https://github.com/loretoparisi/python-threading/blob/master/LICENSE |
 |   GRPC   |           https://github.com/grpc/grpc/blob/master/LICENSE           |
 
 ### Further 3rd party licenses used in project
 * [Auto-generated 3rd party licenses](./NOTICE-3RD-PARTY-CONTENT.md)
-* [Full list of dependencies in the devcontainer base-image](https://github.com/eclipse-velocitas/devcontainer-base-images/blob/sbom/SBOM/python.md)
+* [Full list of dependencies in the devcontainer base-image](https://github.com/eclipse-velocitas/devcontainer-base-images/tree/sbom/SBOM/Markdown)
