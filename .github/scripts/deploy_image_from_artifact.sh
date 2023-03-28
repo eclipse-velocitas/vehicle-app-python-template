@@ -19,8 +19,8 @@ set -e
 APP_NAME=$(echo $VELOCITAS_APP_MANIFEST | jq .Name | tr -d '"' | tr '[:upper:]' '[:lower:]')
 APP_PORT=$(echo $VELOCITAS_APP_MANIFEST | jq .Port | tr -d '"')
 APP_REGISTRY="k3d-registry.localhost:12345"
-RUNTIME_VERSION=$(cat .velocitas.json | jq -r '.packages[]| select(.name=="devenv-runtime-k3d")'.version)
-CONFIG_DIR="~/.velocitas/packages/devenv-runtime-k3d/$RUNTIME_VERSION/src/deployment/config"
+RUNTIME_VERSION=$(cat $VELOCITAS_WORKSPACE_DIR/.velocitas.json | jq -r '.packages[]| select(.name=="devenv-runtime-k3d")'.version)
+CONFIG_DIR="$HOME/.velocitas/packages/devenv-runtime-k3d/$RUNTIME_VERSION/src/deployment/config"
 
 local_tag="$APP_REGISTRY/$APP_NAME:local"
 echo "Local URL: $local_tag"
