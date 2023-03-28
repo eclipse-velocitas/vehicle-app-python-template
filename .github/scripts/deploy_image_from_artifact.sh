@@ -22,7 +22,7 @@ APP_REGISTRY="k3d-registry.localhost:12345"
 SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 CONFIG_DIR="$(dirname "$SCRIPT_DIR")/deployment/config"
 
-$(echo $VELOCITAS_APP_MANIFEST | jq -c '.[]' | while read i; do
+$(echo $VELOCITAS_APP_MANIFEST) | jq -c '.[]' | while read i; do
     name=$(jq -r '.Name' <<< "$i")
 
     local_tag="$APP_REGISTRY/$name:local"
@@ -43,7 +43,7 @@ helm install vapp-chart $ROOT_DIRECTORY/deploy/VehicleApp/helm \
 kubectl get svc --all-namespaces
 kubectl get pods
 
-$(echo $VELOCITAS_APP_MANIFEST | jq -c '.[]' | while read i; do
+$(echo $VELOCITAS_APP_MANIFEST) | jq -c '.[]' | while read i; do
     name=$(jq -r '.Name' <<< "$i")
     podname=$(kubectl get pods -o name | grep $name)
     kubectl describe $podname
