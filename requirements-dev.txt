@@ -21,7 +21,7 @@ distlib==0.3.6
     # via
     #   -c app/tests/requirements-tests.txt
     #   virtualenv
-filelock==3.8.0
+filelock==3.9.0
     # via
     #   -c app/tests/requirements-tests.txt
     #   virtualenv
@@ -68,7 +68,7 @@ pep517==0.13.0
     # via build
 pip-tools==6.10.0
     # via -r requirements-dev.in
-platformdirs==2.5.4
+platformdirs==3.0.0
     # via
     #   -c app/tests/requirements-tests.txt
     #   black
@@ -91,7 +91,6 @@ pyyaml==6.0
 six==1.16.0
     # via
     #   -c app/requirements.txt
-    #   -c app/tests/requirements-tests.txt
     #   grpcio
 smmap==5.0.0
     # via gitdb
@@ -105,11 +104,12 @@ tomli==2.0.1
     #   black
     #   build
     #   mypy
+    #   pep517
 types-protobuf==4.21.0.0
     # via mypy-protobuf
 typing-extensions==4.4.0
     # via mypy
-virtualenv==20.16.7
+virtualenv==20.20.0
     # via
     #   -c app/tests/requirements-tests.txt
     #   pre-commit
