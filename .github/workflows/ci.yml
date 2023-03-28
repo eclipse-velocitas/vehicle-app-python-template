@@ -184,6 +184,7 @@ jobs:
           pip install -r ./app/requirements.txt
           pip install -r ./app/requirements-links.txt
           pip install -r ./app/tests/requirements-tests.txt
+          eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
           brew install kubernetes-cli helm
 
       - name: Configure K3D cluster
