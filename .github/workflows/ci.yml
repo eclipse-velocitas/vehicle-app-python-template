@@ -154,7 +154,6 @@ jobs:
   run-integration-tests:
     name: Run Integration Tests (${{ matrix.component.Name }})
     runs-on: ubuntu-22.04
-    container: ghcr.io/eclipse-velocitas/devcontainer-base-images/python:latest
     needs: [initialize-matrix, build-image-amd64]
     strategy:
       matrix:

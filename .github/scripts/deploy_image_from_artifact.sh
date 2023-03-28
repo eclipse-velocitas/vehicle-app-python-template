@@ -16,12 +16,13 @@
 
 set -e
 
-ROOT_DIRECTORY=$( realpath "$( cd -- "$(dirname "$0")" >/dev/null 2>&1 ; pwd -P )/../.." )
-APP_NAME=$(cat $ROOT_DIRECTORY/app/AppManifest.json | jq .[].Name | tr -d '"' | tr '[:upper:]' '[:lower:]')
-APP_PORT=$(cat $ROOT_DIRECTORY/app/AppManifest.json | jq .[].Port | tr -d '"')
+APP_NAME=$(echo $VELOCITAS_APP_MANIFEST | jq .Name | tr -d '"' | tr '[:upper:]' '[:lower:]')
+APP_PORT=$(echo $VELOCITAS_APP_MANIFEST | jq .Port | tr -d '"')
 APP_REGISTRY="k3d-registry.localhost:12345"
+SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
+CONFIG_DIR="$(dirname "$SCRIPT_DIR")/deployment/config"
 
-jq -c '.[]' $ROOT_DIRECTORY/app/AppManifest.json | while read i; do
+$(echo $VELOCITAS_APP_MANIFEST | jq -c '.[]' | while read i; do
     name=$(jq -r '.Name' <<< "$i")
 
     local_tag="$APP_REGISTRY/$name:local"
@@ -42,7 +43,7 @@ helm install vapp-chart $ROOT_DIRECTORY/deploy/VehicleApp/helm \
 kubectl get svc --all-namespaces
 kubectl get pods
 
-jq -c '.[]' $ROOT_DIRECTORY/app/AppManifest.json | while read i; do
+$(echo $VELOCITAS_APP_MANIFEST | jq -c '.[]' | while read i; do
     name=$(jq -r '.Name' <<< "$i")
     podname=$(kubectl get pods -o name | grep $name)
     kubectl describe $podname
