@@ -179,13 +179,16 @@ jobs:
           username: ${{ github.repository_owner }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Set up Homebrew
+        id: set-up-homebrew
+        uses: Homebrew/actions/setup-homebrew@master
+
       - name: Install required packages
         run: |
           pip install -r ./app/requirements.txt
           pip install -r ./app/requirements-links.txt
           pip install -r ./app/tests/requirements-tests.txt
-          eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
-          brew install kubernetes-cli helm k3d
+          brew install k3d kubernetes-cli helm
 
       - name: Configure K3D cluster
         run: velocitas exec runtime-k3d configure_controlplane
