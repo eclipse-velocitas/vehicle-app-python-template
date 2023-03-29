@@ -188,7 +188,7 @@ jobs:
           pip install -r ./app/requirements.txt
           pip install -r ./app/requirements-links.txt
           pip install -r ./app/tests/requirements-tests.txt
-          brew install k3d kubernetes-cli helm
+          brew install k3d kubernetes-cli helm dapr/tap/dapr-cli
 
       - name: Configure K3D cluster
         run: velocitas exec runtime-k3d configure_controlplane
