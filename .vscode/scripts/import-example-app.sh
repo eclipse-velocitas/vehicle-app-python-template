@@ -19,14 +19,23 @@ if [[ `git status --porcelain` ]]; then
   echo "####################### WARNING #######################"
   echo "####  Please commit or stash your changes before   ####"
   echo "####  importing the example app.                   ####"
-  echo "####  Otherwise all changes will be discarded!     ####
-  "
+  echo "####  Otherwise all changes will be discarded!     ####"
   echo "####################### WARNING #######################"
 else
-  rm -rf app/ && \
-  cp -a $SDV_EXAMPLES_PATH/$@ app && \
-  pip install -r ./app/requirements.txt && \
-  pip install -r ./app/tests/requirements-tests.txt
+  cp -a $SDV_EXAMPLES_PATH/$@/. app/
+
+  if [[ -f "./app/requirements.txt" ]]; then
+    pip install -r ./app/requirements.txt
+  fi
+
+  if [[ -f "./app/requirements-links.txt" ]]; then
+    pip install -r ./app/requirements-links.txt
+  fi
+
+  if [[ -f "./app/tests/requirements.txt" ]]; then
+    pip install -r ./app/tests/requirements.txt
+  fi
+
   echo "#######################################################"
   echo "Successfully imported $@"
   echo "#######################################################"
