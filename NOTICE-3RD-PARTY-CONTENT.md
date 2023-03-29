@@ -17,7 +17,7 @@
 |dapr|1.8.3|Apache 2.0|
 |deprecation|2.1.0|Apache 2.0|
 |distlib|0.3.6|Python Software Foundation License|
-|filelock|3.8.0|Public Domain|
+|filelock|3.9.0|The Unlicense (Unlicense)|
 |flake8|6.0.0|MIT|
 |frozenlist|1.3.3|Apache 2.0|
 |gitdb|4.0.10|BSD|
@@ -39,7 +39,7 @@
 |pep517|0.13.0|MIT|
 |pip|22.0.4|MIT|
 |pip-tools|6.10.0|BSD|
-|platformdirs|2.5.4|MIT|
+|platformdirs|3.0.0|MIT|
 |pre-commit|2.20.0|MIT|
 |protobuf|3.20.3|Google License|
 |pycodestyle|2.10.0|MIT|
@@ -54,7 +54,7 @@
 |tomli|2.0.1|MIT|
 |types-protobuf|4.21.0.0|Apache 2.0|
 |typing-extensions|4.4.0|Python Software Foundation License|
-|virtualenv|20.16.7|MIT|
+|virtualenv|20.20.0|MIT|
 |wheel|0.38.4|MIT|
 |yarl|1.8.1|Apache 2.0|
 ## Workflows
@@ -76,6 +76,7 @@
 |EnricoMi/publish-unit-test-result-action|v2|Apache License 2.0|
 |fountainhead/action-wait-for-check|v1.1.0|MIT License|
 |haya14busa/action-cond|v1|MIT License|
+|Homebrew/actions|master|BSD 2-Clause "Simplified" License|
 |johanvanhelden/gha-clover-test-coverage-check|v1|MIT License|
 |peaceiris/actions-gh-pages|v3|MIT License|
 |peaceiris/actions-hugo|v2|MIT License|
