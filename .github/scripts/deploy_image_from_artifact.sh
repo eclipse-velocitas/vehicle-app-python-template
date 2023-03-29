@@ -14,23 +14,23 @@
 #
 # SPDX-License-Identifier: Apache-2.0
 
+set -e
+
 ROOT_DIRECTORY=$( realpath "$( cd -- "$(dirname "$0")" >/dev/null 2>&1 ; pwd -P )/../.." )
 APP_NAME=$(cat $ROOT_DIRECTORY/app/AppManifest.json | jq .[].Name | tr -d '"' | tr '[:upper:]' '[:lower:]')
 APP_PORT=$(cat $ROOT_DIRECTORY/app/AppManifest.json | jq .[].Port | tr -d '"')
 APP_REGISTRY="k3d-registry.localhost:12345"
+RUNTIME_VERSION=$(cat $ROOT_DIRECTORY/.velocitas.json | jq -r '.packages[]| select(.name=="devenv-runtime-k3d")'.version)
+CONFIG_DIR="$HOME/.velocitas/packages/devenv-runtime-k3d/$RUNTIME_VERSION/src/deployment/config"
 
-jq -c '.[]' $ROOT_DIRECTORY/app/AppManifest.json | while read i; do
-    name=$(jq -r '.Name' <<< "$i")
+local_tag="$APP_REGISTRY/$APP_NAME:local"
+echo "Local URL: $local_tag"
 
-    local_tag="$APP_REGISTRY/$name:local"
-    echo "Local URL: $local_tag"
+docker load -i "$APP_NAME.tar" | sed -n 's/^Loaded image ID: sha256:\([0-9a-f]*\).*/\1/p' | xargs -i docker tag {} $local_tag
+docker push $local_tag
 
-    docker load -i "$APP_NAME.tar" | sed -n 's/^Loaded image ID: sha256:\([0-9a-f]*\).*/\1/p' | xargs -i docker tag {} $local_tag
-    docker push $local_tag
-done
-
-helm install vapp-chart $ROOT_DIRECTORY/deploy/VehicleApp/helm \
-    --values $ROOT_DIRECTORY/deploy/VehicleApp/helm/values.yaml \
+helm install vapp-chart $CONFIG_DIR/helm \
+    --values $CONFIG_DIR/helm/values.yaml \
     --set imageVehicleApp.repository="$APP_REGISTRY/$APP_NAME" \
     --set imageVehicleApp.name=$APP_NAME \
     --set imageVehicleApp.daprAppid=$APP_NAME \
@@ -40,11 +40,6 @@ helm install vapp-chart $ROOT_DIRECTORY/deploy/VehicleApp/helm \
 kubectl get svc --all-namespaces
 kubectl get pods
 
-jq -c '.[]' $ROOT_DIRECTORY/app/AppManifest.json | while read i; do
-    name=$(jq -r '.Name' <<< "$i")
-    podname=$(kubectl get pods -o name | grep $name)
-    kubectl describe $podname
-    kubectl logs $podname --all-containers
-done
-
-sleep 5s
+podname=$(kubectl get pods -o name | grep $APP_NAME)
+kubectl describe $podname
+kubectl logs $podname --all-containers
