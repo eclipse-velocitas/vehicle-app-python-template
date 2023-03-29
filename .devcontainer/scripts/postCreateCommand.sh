@@ -27,7 +27,7 @@ echo "### Install python requirements                     ###"
 echo "#######################################################"
 # Update pip before installing requirements
 pip3 install --upgrade pip
-REQUIREMENTS="./requirements-dev.txt"
+REQUIREMENTS="./requirements.txt"
 if [ -f $REQUIREMENTS ]; then
     pip3 install -r $REQUIREMENTS
 fi
@@ -42,7 +42,7 @@ if [ -f $REQUIREMENTS ]; then
 fi
 
 # Dependencies for unit and integration tests
-REQUIREMENTS="./app/tests/requirements-tests.txt"
+REQUIREMENTS="./app/tests/requirements.txt"
 if [ -f $REQUIREMENTS ]; then
     pip3 install -r $REQUIREMENTS
 fi

@@ -38,7 +38,7 @@ https://www.eclipse.org/projects/handbook/#resources-commit
 * Install dependencies:
 
    ```bash
-   pip3 install -r requirements-dev.txt
+   pip3 install -r requirements.txt
    ```
 * Make your changes following the code style guide (see Code Style Guide section above).
 * When you create new files make sure you include a proper license header at the top of the file (see License Header section below).
@@ -60,13 +60,13 @@ https://www.eclipse.org/projects/handbook/#resources-commit
 In this project, the [pip-tools](https://github.com/jazzband/pip-tools) are used to manage the python dependencies and to keep all packages up-to-date. The required pip-based dependencies of this project are defined in multiple `requirement` input files.
 
 ### Vehicle app runtime dependencies
-* The [./app/requirements.in](./app/requirements.in) file is the requirement input file that used to generate the Vehicle app runtime requirements file [./app/requirements-txt.txt](./app/requirements.txt)
+* The [./app/requirements.in](./app/requirements.in) file is the requirement input file that used to generate the Vehicle app runtime requirements file [./app/requirements.txt](./app/requirements.txt)
 
 ### Unit and Integration testing dependencies
-* The [./app/tests/requirements-tests.in](./app/tests/requirements-tests.in) file is the requirement input file that used to generate the testing requirements file [./app/tests/requirements-tests.txt](./app/tests/requirements-tests.txt). The test requirements file needs to be installed for the development container to execute the unit and integration tests as well as in the CI Workflow test execution.
+* The [./app/tests/requirements.in](./app/tests/requirements.in) file is the requirement input file that used to generate the testing requirements file [./app/tests/requirements.txt](./app/tests/requirements.txt). The test requirements file needs to be installed for the development container to execute the unit and integration tests as well as in the CI Workflow test execution.
 
 ### Development tools dependencies
-* The [./requirements-dev.in](./requirements-dev.in) file is the requirement input file that used to generate requirements file [./requirements-dev.txt](./requirements-dev.txt) for the other development tools. The development requirements list includes all the necessary packages testing and development tools packages and need to be installed before start contributing to the project. The development requirements (i.e. [./requirements-dev.in](./requirements-dev.in) are also aligned with the testing and runtime requirements for better dependency conflict management with the specified constrains.
+* The [./requirements.in](./requirements.in) file is the requirement input file that used to generate requirements file [./requirements.txt](./requirements.txt) for the other development tools. The development requirements list includes all the necessary packages testing and development tools packages and need to be installed before start contributing to the project. The development requirements (i.e. [./requirements.in](./requirements.in) are also aligned with the testing and runtime requirements for better dependency conflict management with the specified constrains.
 
 The process to manage the dependencies of this project can be summarized as following:
 * The `pip-compile` tool will generate the corresponding python `requirements`. When executing this tools for a specific requirements input file, the python `"requirements<<type>>.txt"` file will be updated with all underlying dependencies. The command below shall be executed every time a new python package is added to the project and/or to bump the package versions.
