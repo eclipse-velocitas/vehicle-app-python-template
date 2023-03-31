@@ -2,10 +2,11 @@
 	"version": "2.0.0",
 	"tasks": [
 		{
-			"label": "vehicle-app-deploy",
+			"label": "run-vehicle-app",
+			"detail": "Starts the VehicleApp under development (including Dapr sidecar if middleware type is Dapr)",
 			"type": "shell",
 			"command": [
-				"${workspaceFolder}/velocitas-cli/bin/dev exec runtime-local deploy ${workspaceFolder}/app/src/main.py"
+				"velocitas exec runtime-local run-vehicle-app --dapr-app-id vehicleapp --dapr-app-port 50008 python3 ${workspaceFolder}/app/src/main.py"
 			],
 			"presentation": {
 				"close": true,
@@ -14,7 +15,35 @@
 			"hide": true
 		},
 		{
-			"label": "vehicle-app-undeploy",
+			"label": "dapr-sidecar-start",
+			"detail": "Start Dapr sidecar (with dapr run) to be present for debugging the VehicleApp (used by launch config).",
+			"type": "shell",
+			"command": "velocitas exec runtime-local run-dapr-sidecar vehicleapp --app-port 50008 --dapr-grpc-port 50001 --dapr-http-port 3500",
+			"group": "none",
+			"isBackground": true,
+			"presentation": {
+				"close": true,
+				"reveal": "never"
+			},
+			"problemMatcher": {
+				"pattern": [
+					{
+						"regexp": ".",
+						"file": 1,
+						"location": 2,
+						"message": 3
+					}
+				],
+				"background": {
+					"activeOnStart": true,
+					"beginsPattern": "^You're up and running! Dapr logs will appear here.",
+					"endsPattern": "."
+				}
+			}
+		},
+		{
+			"label": "dapr-sidecar-stop",
+			"detail": "Stop Dapr sidecar after finish debugging the VehicleApp (used by launch config).",
 			"type": "shell",
 			"command": [
 				"dapr stop --app-id vehicleapp"
@@ -69,37 +98,6 @@
 			"group": "none",
 			"isBackground": false,
 			"problemMatcher": []
-		},
-		{
-			"label": "Local - VehicleApp (Dapr run)",
-			"detail": "Start VehicleApp with dapr run (p.e. for running integration tests locally).",
-			"type": "shell",
-			"command": [
-				"dapr run",
-				"--app-id vehicleapp",
-				"--app-protocol grpc",
-				"--app-port 50008",
-				"--config ./.dapr/config.yaml",
-				"--components-path ./.dapr/components",
-				"python3 ./app/src/main.py"
-			],
-			"group": "none",
-			"isBackground": true,
-			"problemMatcher": {
-				"pattern": [
-					{
-						"regexp": ".",
-						"file": 1,
-						"location": 2,
-						"message": 3
-					}
-				],
-				"background": {
-					"activeOnStart": true,
-					"beginsPattern": "^You're up and running! Both Dapr and your app logs will appear here.",
-					"endsPattern": "."
-				}
-			}
 		},
 		{
 			"label": "K3D - Configure control plane",
