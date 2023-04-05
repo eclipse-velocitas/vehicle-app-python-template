@@ -25,9 +25,3 @@ COPY scripts/*.sh /tmp/scripts/
 RUN find /tmp/scripts/ -type f -iname "*.sh" -exec chmod +x {} \;
 RUN /bin/bash /tmp/scripts/container-set.sh
 RUN /bin/bash /tmp/scripts/configure-proxies.sh
-
-# Setting the ENTRYPOINT to docker-init.sh will start up the Docker Engine
-# inside the container "overrideCommand": false is set in devcontainer.json.
-# The script will also execute CMD if you need to alter startup behaviors.
-ENTRYPOINT [ "/usr/local/share/docker-init.sh" ]
-CMD [ "sleep", "infinity" ]
