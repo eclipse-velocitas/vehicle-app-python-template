@@ -15,6 +15,7 @@
 				"close": true,
 				"reveal": "never"
 			},
+			"hide": true
 		},
 		{
 			"label": "dapr-VehicleApp-stop",
@@ -26,6 +27,7 @@
 				"close": true,
 				"reveal": "never"
 			},
+			"hide": true
 		},
 		{
 			"label": "Local - Ensure Dapr",
@@ -35,7 +37,8 @@
 			"group": "none",
 			"presentation": {
 				"close": true
-			}
+			},
+			"problemMatcher": []
 		},
 		{
 			"label": "Local - Mosquitto",
@@ -98,6 +101,7 @@
 			"command": "velocitas exec runtime-local run-vehicledatabroker-cli",
 			"group": "none",
 			"isBackground": false,
+			"problemMatcher": []
 		},
 		{
 			"label": "Local - Pre Commit Action",
@@ -106,6 +110,7 @@
 			"command": "pre-commit run --show-diff-on-failure --color=always --all-files",
 			"group": "none",
 			"isBackground": false,
+			"problemMatcher": []
 		},
 		{
 			"label": "Local - VehicleServices",
@@ -171,7 +176,8 @@
 				"Local - VehicleServices",
 				"Local - FeederCan"
 			],
-			"dependsOrder": "sequence"
+			"dependsOrder": "sequence",
+			"problemMatcher": []
 		},
 		{
 			"label": "Local - VehicleApp (Dapr run)",
@@ -212,10 +218,10 @@
 			"group": "none",
 			"presentation": {
 				"reveal": "always",
-				//"panel": "dedicated",
 				"clear": true,
 				"close": false
-			}
+			},
+			"problemMatcher": []
 		},
 		{
 			"label": "K3D - Deploy runtime",
@@ -225,13 +231,13 @@
 			"group": "none",
 			"presentation": {
 				"reveal": "always",
-				//"panel": "dedicated",
 				"clear": true,
 				"close": false
 			},
 			"dependsOn": [
 				"K3D - Configure control plane"
-			]
+			],
+			"problemMatcher": []
 		},
 		{
 			"label": "K3D - Build VehicleApp",
@@ -245,6 +251,7 @@
 				"clear": true,
 				"close": false
 			},
+			"problemMatcher": []
 		},
 		{
 			"label": "K3D - Deploy VehicleApp",
@@ -261,7 +268,8 @@
 			"dependsOn": [
 				"K3D - Deploy runtime",
 				"K3D - Build VehicleApp"
-			]
+			],
+			"problemMatcher": []
 		},
 		{
 			"label": "K3D - Deploy VehicleApp (without rebuild)",
@@ -277,7 +285,8 @@
 			},
 			"dependsOn": [
 				"K3D - Deploy runtime"
-			]
+			],
+			"problemMatcher": []
 		},
 		{
 			"label": "K3D - Uninstall runtime",
@@ -293,7 +302,8 @@
 			},
 			"dependsOn": [
 				"K3D - Configure control plane"
-			]
+			],
+			"problemMatcher": []
 		},
 		{
 			"label": "K3D - Reset control plane",
@@ -306,13 +316,14 @@
 				"panel": "dedicated",
 				"clear": true,
 				"close": false
-			}
+			},
+			"problemMatcher": []
 		},
 		{
 			"label": "Import example app from SDK",
 			"detail": "Import example app from SDK",
 			"type": "shell",
-			"command": "./.vscode/scripts/import-example-app.sh ${input:exampleApp}",
+			"command": "./.vscode/scripts/import-example-app.sh ${input:exampleApp}"
 		},
 		{
 			"label": "(Re-)generate vehicle model",
@@ -325,7 +336,8 @@
 				"panel": "dedicated",
 				"clear": true,
 				"close": false
-			}
+			},
+			"problemMatcher": []
 		}
 	],
 	"inputs": [
