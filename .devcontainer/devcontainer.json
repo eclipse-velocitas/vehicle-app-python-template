@@ -45,7 +45,8 @@
 				"ms-kubernetes-tools.vscode-kubernetes-tools",
 				"matangover.mypy",
 				"augustocdias.tasks-shell-input",
-				"ms-python.isort"
+				"ms-python.isort",
+				"ms-python.flake8"
 			]
 		}
 	},
