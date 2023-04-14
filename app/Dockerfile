@@ -32,7 +32,7 @@ RUN /bin/bash -c 'set -ex && \
     fi'
 
 RUN apt-get install -y git
-RUN pip3 install --no-cache-dir pyinstaller \
+RUN pip3 install --no-cache-dir pyinstaller==5.9.0 \
     && pip3 install --no-cache-dir patchelf==0.17.0.0 \
     && pip3 install --no-cache-dir staticx \
     && pip3 install --no-cache-dir -r ./app/requirements.txt \
