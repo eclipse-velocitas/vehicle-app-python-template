@@ -45,4 +45,5 @@
         "vscode-kubernetes.kubectl-path.linux": "/usr/bin/kubectl",
         "vscode-kubernetes.helm-path.linux": "/usr/local/bin/helm"
     },
+    "python.analysis.typeCheckingMode": "basic",
 }
