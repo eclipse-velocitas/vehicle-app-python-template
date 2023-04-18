@@ -90,4 +90,4 @@ The Eclipse Foundation Board of Directors may amend this Code from time to time 
 
 This Code was inspired by the [Contributor Covenant](https://www.contributor-covenant.org/), version 1.4, available [here](https://www.contributor-covenant.org/version/1/4/code-of-conduct/).
 
-[^1]: Capitalized terms used herein without definition shall have the meanings assigned to them in the Bylaws.
+[^1]: Capitalized terms used herein without definition shall have the meanings assigned to them in the Eclipse Bylaws.
