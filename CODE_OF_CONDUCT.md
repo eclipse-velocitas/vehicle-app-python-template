@@ -1,6 +1,6 @@
 # Community Code of Conduct
 
-**Version 2.0
+**Version 1.0
 January 1, 2023**
 
 ## Our Pledge
@@ -49,7 +49,7 @@ This Code applies within all Project, Working Group, and Interest Group spaces a
 
 ## Enforcement
 
-Instances of abusive, harassing, or otherwise unacceptable behavior may be reported by contacting the Conduct Committee via conduct@eclipse-foundation.org. All complaints will be reviewed and investigated and will result in a response that is deemed necessary and appropriate to the circumstances. Without the explicit consent of the reporter, the Conduct Committee is obligated to maintain confidentiality with regard to the reporter of an incident. The Conduct Committee is further obligated to ensure that the respondent is provided with sufficient information about the complaint to reply. If such details cannot be provided while maintaining confidentiality, the Conduct Committee will take the respondent‘s inability to provide a defense into account in its deliberations and decisions. Further details of enforcement guidelines may be posted separately.
+Instances of abusive, harassing, or otherwise unacceptable behavior may be reported by contacting the Conduct Committee via <velocitas-dev@eclipse.org>. All complaints will be reviewed and investigated and will result in a response that is deemed necessary and appropriate to the circumstances. Without the explicit consent of the reporter, the Conduct Committee is obligated to maintain confidentiality with regard to the reporter of an incident. The Conduct Committee is further obligated to ensure that the respondent is provided with sufficient information about the complaint to reply. If such details cannot be provided while maintaining confidentiality, the Conduct Committee will take the respondent‘s inability to provide a defense into account in its deliberations and decisions. Further details of enforcement guidelines may be posted separately.
 
 Staff, Committers and Project Leads have the right to report, remove, edit, or reject comments, commits, code, wiki edits, issues, and other contributions that are not aligned to this Code, or to block temporarily or permanently any Contributor for other behaviors that they deem inappropriate, threatening, offensive, or harmful. Any such actions will be reported to the Conduct Committee for transparency and record keeping.
 
@@ -57,13 +57,13 @@ Any Staff (including officers and directors of the Eclipse Foundation), Committe
 
 ## Responsibility
 
-The responsibility for administering this Code rests with the Conduct Committee, with oversight by the Executive Director and the Board of Directors. For additional information on the Conduct Committee and its process, please write to <conduct@eclipse-foundation.org>.
+The responsibility for administering this Code rests with the Conduct Committee, with oversight by the Executive Director and the Board of Directors. For additional information on the Conduct Committee and its process, please write to <velocitas-dev@eclipse.org>.
 
 ## Investigation of Potential Code Violations
 
 All conflict is not bad as a healthy debate may sometimes be necessary to push us to do our best. It is, however, unacceptable to be disrespectful or offensive, or violate this Code. If you see someone engaging in objectionable behavior violating this Code, we encourage you to address the behavior directly with those involved. If for some reason, you are unable to resolve the matter or feel uncomfortable doing so, or if the behavior is threatening or harassing, please report it following the procedure laid out below.
 
-Reports should be directed to <conduct@eclipse-foundation.org>. It is the Conduct Committee’s role to receive and address reported violations of this Code and to ensure a fair and speedy resolution.
+Reports should be directed to <velocitas-dev@eclipse.org>. It is the Conduct Committee’s role to receive and address reported violations of this Code and to ensure a fair and speedy resolution.
 
 The Eclipse Foundation takes all reports of potential Code violations seriously and is committed to confidentiality and a full investigation of all allegations. The identity of the reporter will be omitted from the details of the report supplied to the accused. Contributors who are being investigated for a potential Code violation will have an opportunity to be heard prior to any final determination. Those found to have violated the Code can seek reconsideration of the violation and disciplinary action decisions. Every effort will be made to have all matters disposed of within 60 days of the receipt of the complaint.
 
@@ -80,7 +80,7 @@ The Eclipse community relies upon and values the help of Contributors who identi
 
 False reporting, especially when intended to retaliate or exclude, is itself a violation of this Code and will not be accepted or tolerated.
 
-Everyone is encouraged to ask questions about this Code. Your feedback is welcome, and you will get a response within three business days. Write to <conduct@eclipse-foundation.org>.
+Everyone is encouraged to ask questions about this Code. Your feedback is welcome, and you will get a response within three business days. Write to <velocitas-dev@eclipse.org>.
 
 ## Amendments
 
