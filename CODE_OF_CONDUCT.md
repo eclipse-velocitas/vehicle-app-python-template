@@ -88,6 +88,6 @@ The Eclipse Foundation Board of Directors may amend this Code from time to time 
 
 ### Attribution
 
-This Code was inspired by the [Contributor Covenant](https://www.contributor-covenant.org/), version 1.4, available [here](https://www.contributor-covenant.org/version/1/4/code-of-conduct/).
+This Code was inherited from [Eclipse Foundation Code of Conduct](https://www.eclipse.org/org/documents/Community_Code_of_Conduct.php) and inspired by the [Contributor Covenant](https://www.contributor-covenant.org/), version 1.4, available [here](https://www.contributor-covenant.org/version/1/4/code-of-conduct/). 
 
 [^1]: Capitalized terms used herein without definition shall have the meanings assigned to them in the Eclipse Bylaws.
