@@ -5,14 +5,11 @@
 Please explain the changes you've made.
 -->
 
-## Azure DevOps PBI/Task reference
+## Issue ticket number and link
 
 <!--
-We strive to have all PR being opened based on an Azure DevOps PBI/Task.
-Please reference the PBI/Task this PR will close:
+Please provide a reference to the issue or the bug that you filed for the issue you are solving.
 -->
-
-AB#_[PBI/Task number]_
 
 ## Checklist
 
