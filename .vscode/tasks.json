@@ -2,19 +2,6 @@
 	"version": "2.0.0",
 	"tasks": [
 		{
-			"label": "run-vehicle-app",
-			"detail": "Starts the VehicleApp under development (including Dapr sidecar if middleware type is Dapr)",
-			"type": "shell",
-			"command": [
-				"velocitas exec runtime-local run-vehicle-app --dapr-app-id vehicleapp --dapr-app-port 50008 python3 ${workspaceFolder}/app/src/main.py"
-			],
-			"presentation": {
-				"close": true,
-				"reveal": "never"
-			},
-			"hide": true
-		},
-		{
 			"label": "dapr-sidecar-start",
 			"detail": "Start Dapr sidecar (with dapr run) to be present for debugging the VehicleApp (used by launch config).",
 			"type": "shell",
@@ -39,7 +26,8 @@
 					"beginsPattern": "^You're up and running! Dapr logs will appear here.",
 					"endsPattern": "."
 				}
-			}
+			},
+			"hide": true
 		},
 		{
 			"label": "dapr-sidecar-stop",
@@ -82,6 +70,19 @@
 			}
 		},
 		{
+			"label": "Local Runtime - Run VehicleApp",
+			"detail": "Starts the VehicleApp under development (including Dapr sidecar if middleware type is Dapr)",
+			"type": "shell",
+			"command": [
+				"velocitas exec runtime-local run-vehicle-app --dapr-app-id vehicleapp --dapr-app-port 50008 python3 ${workspaceFolder}/app/src/main.py"
+			],
+			"presentation": {
+				"close": true,
+				"reveal": "never"
+			},
+			"problemMatcher": []
+		},
+		{
 			"label": "Local Runtime - VehicleDataBroker CLI",
 			"detail": "Starts the VehicleDataBroker CLI",
 			"type": "shell",
@@ -91,7 +92,7 @@
 			"problemMatcher": []
 		},
 		{
-			"label": "Local - Pre Commit Action",
+			"label": "Pre Commit Action",
 			"detail": "Perform checking/formating of the code",
 			"type": "shell",
 			"command": "pre-commit run --show-diff-on-failure --color=always --all-files",
