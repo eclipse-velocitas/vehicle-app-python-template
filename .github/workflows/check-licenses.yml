@@ -49,3 +49,11 @@ jobs:
           config-file-path: ./.licensechecker.yml
           fail-on-violation: false
           notice-file-name: "NOTICE-3RD-PARTY-CONTENT"
+
+      - name: Upload dash input as artifacts
+        uses: actions/upload-artifact@v3
+        if: always()
+        with:
+          name: "clearlydefined.input"
+          path: |
+            clearlydefined.input
