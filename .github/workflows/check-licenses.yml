@@ -50,6 +50,12 @@ jobs:
           fail-on-violation: false
           notice-file-name: "NOTICE-3RD-PARTY-CONTENT"
 
+      - name: Run dash
+        shell: bash
+        run: |
+          wget -O dash.jar "https://repo.eclipse.org/service/local/artifact/maven/redirect?r=dash-licenses&g=org.eclipse.dash&a=org.eclipse.dash.licenses&v=LATEST"
+          java -jar dash.jar clearlydefined.input -summary DEPENDENCIES         
+
       - name: Upload dash input as artifacts
         uses: actions/upload-artifact@v3
         if: always()
@@ -57,3 +63,5 @@ jobs:
           name: "clearlydefined.input"
           path: |
             clearlydefined.input
+            DEPENDENCIES
+
