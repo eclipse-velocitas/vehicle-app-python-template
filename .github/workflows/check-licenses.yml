@@ -50,8 +50,14 @@ jobs:
           fail-on-violation: false
           notice-file-name: "NOTICE-3RD-PARTY-CONTENT"
 
+      - name: Setup Java JDK
+        uses: actions/setup-java@v1.4.4
+        with:
+          java-version: latest
+
       - name: Run dash
         shell: bash
+        continue-on-error: true
         run: |
           wget -O dash.jar "https://repo.eclipse.org/service/local/artifact/maven/redirect?r=dash-licenses&g=org.eclipse.dash&a=org.eclipse.dash.licenses&v=0.0.1-20230502.055027-834"
           java -jar dash.jar clearlydefined.input -summary DEPENDENCIES
@@ -59,7 +65,6 @@ jobs:
       - name: Upload dash input/output as artifacts
         uses: actions/upload-artifact@v3
         if: always()
-        continue-on-error: true
         with:
           name: "dash.artifacts"
           path: |
