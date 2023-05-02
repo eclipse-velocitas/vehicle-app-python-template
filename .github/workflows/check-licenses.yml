@@ -49,6 +49,7 @@ jobs:
           config-file-path: ./.licensechecker.yml
           fail-on-violation: false
           notice-file-name: "NOTICE-3RD-PARTY-CONTENT"
+          generate-dash: true
 
       - name: Setup Java JDK
         uses: actions/setup-java@v1.4.4
