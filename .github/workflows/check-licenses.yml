@@ -53,14 +53,15 @@ jobs:
       - name: Run dash
         shell: bash
         run: |
-          wget -O dash.jar "https://repo.eclipse.org/service/local/artifact/maven/redirect?r=dash-licenses&g=org.eclipse.dash&a=org.eclipse.dash.licenses&v=LATEST"
+          wget -O dash.jar "https://repo.eclipse.org/service/local/artifact/maven/redirect?r=dash-licenses&g=org.eclipse.dash&a=org.eclipse.dash.licenses&v=0.0.1-20230502.055027-834"
           java -jar dash.jar clearlydefined.input -summary DEPENDENCIES
 
       - name: Upload dash input/output as artifacts
         uses: actions/upload-artifact@v3
         if: always()
+        continue-on-error: true
         with:
-          name: "clearlydefined.input"
+          name: "dash.artifacts"
           path: |
             clearlydefined.input
             DEPENDENCIES
