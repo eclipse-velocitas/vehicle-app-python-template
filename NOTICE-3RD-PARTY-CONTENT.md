@@ -62,6 +62,7 @@
 |:-----------|:-------:|--------:|
 |actions/checkout|v3|MIT License|
 |actions/download-artifact|v3|MIT License|
+|actions/setup-java|v1.4.4|MIT License|
 |actions/setup-node|v3|MIT License|
 |actions/upload-artifact|v3|MIT License|
 |aquasecurity/trivy-action|0.8.0|Apache License 2.0|
