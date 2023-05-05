@@ -2,7 +2,7 @@
     "packages": [
         {
             "name": "devenv-runtimes",
-            "version": "new-app-manifest"
+            "version": "unit-tests"
         },
         {
             "name": "devenv-github-workflows",

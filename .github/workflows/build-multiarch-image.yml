@@ -20,7 +20,7 @@ on:
   push:
     # Run only on branches/commits and not tags
     branches:
-      - main
+      - add-podspec-helm-generation
 
 jobs:
   initialize-matrix:
