@@ -382,3 +382,5 @@ venv/
 
 # generated files
 gen/
+helm/
+podspec.yaml
