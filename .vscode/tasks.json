@@ -52,22 +52,7 @@
 				"reveal": "always",
 				"panel": "dedicated"
 			},
-			"isBackground": true,
-			"problemMatcher": {
-				"pattern": [
-					{
-						"regexp": ".",
-						"file": 1,
-						"location": 2,
-						"message": 4
-					}
-				],
-				"background": {
-					"activeOnStart": true,
-					"beginsPattern": "^\\d{10}: mosquitto version \\d{1}\\.\\d{1}\\.\\d{1} starting$",
-					"endsPattern": "^\\d{10}: Opening ipv6 listen socket on port \\d{3,5}\\.$"
-				}
-			}
+			"problemMatcher": []
 		},
 		{
 			"label": "Local Runtime - Run VehicleApp",
