@@ -26,10 +26,15 @@ on:
   pull_request:
     branches:
       - main
+  push:
+    branches:
+      - test-license-check-tag
 
 jobs:
   check-licenses:
     runs-on: ubuntu-latest
+    env:
+      LICENSE_CHECKER_TAG_SPECIFIER: v1.2
     name: Check Software Licenses
 
     steps:
@@ -40,8 +45,14 @@ jobs:
         uses: actions/checkout@v3
         with:
           repository: eclipse-velocitas/license-check
-          ref: v1.2.3
           path: .github/actions/license-check
+
+      - name: Checkout desired license-check tag specifier
+        run: |
+          cd .github/actions/license-check
+          git fetch --all --tags
+          LATEST_TAG_BY_SPECIFIER=$(git tag --list --sort=-version:refname "$LICENSE_CHECKER_TAG_SPECIFIER*" | head -n 1)
+          git checkout --progress --force refs/tags/$LATEST_TAG_BY_SPECIFIER
 
       - name: Run License Checker
         uses: ./.github/actions/license-check
