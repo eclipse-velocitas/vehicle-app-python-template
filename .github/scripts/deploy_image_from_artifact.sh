@@ -17,7 +17,8 @@
 set -e
 
 ROOT_DIRECTORY=$( realpath "$( cd -- "$(dirname "$0")" >/dev/null 2>&1 ; pwd -P )/../.." )
-APP_NAME=$(cat $ROOT_DIRECTORY/app/AppManifest.json | jq .[].name | tr -d '"')
+APP_NAME=$(cat $ROOT_DIRECTORY/app/AppManifest.json | jq .[].name | tr -d '"' | tr '[:upper:]' '[:lower:]')
+APP_ARTIFACT_NAME=$(cat $ROOT_DIRECTORY/app/AppManifest.json | jq .[].name | tr -d '"')
 APP_PORT=50008
 APP_REGISTRY="k3d-registry.localhost:12345"
 RUNTIME_VERSION=$(cat $ROOT_DIRECTORY/.velocitas.json | jq -r '.packages[]| select(.name=="devenv-runtimes")'.version)
@@ -26,7 +27,7 @@ CONFIG_DIR="$HOME/.velocitas/packages/devenv-runtimes/$RUNTIME_VERSION/runtime-k
 local_tag="$APP_REGISTRY/$APP_NAME:local"
 echo "Local URL: $local_tag"
 
-docker load -i "$APP_NAME.tar" | sed -n 's/^Loaded image ID: sha256:\([0-9a-f]*\).*/\1/p' | xargs -i docker tag {} $local_tag
+docker load -i "$APP_ARTIFACT_NAME.tar" | sed -n 's/^Loaded image ID: sha256:\([0-9a-f]*\).*/\1/p' | xargs -i docker tag {} $local_tag
 docker push $local_tag
 
 helm install vapp-chart $CONFIG_DIR/helm \
