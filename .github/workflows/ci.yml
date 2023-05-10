@@ -152,7 +152,7 @@ jobs:
       deployment-matrix-str: ${{ needs.initialize-matrix.outputs.deployment-matrix }}
 
   run-integration-tests:
-    name: Run Integration Tests (${{ matrix.component.Name }})
+    name: Run Integration Tests (${{ matrix.component.name }})
     runs-on: ubuntu-22.04
     needs: [initialize-matrix, build-image-amd64]
     strategy:
@@ -161,6 +161,10 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
+
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
 
       - uses: de-vri-es/setup-git-credentials@v2
         with:
@@ -190,11 +194,8 @@ jobs:
           pip install -r ./app/tests/requirements.txt
           brew install k3d kubernetes-cli helm dapr/tap/dapr-cli
 
-      - name: Configure K3D cluster
-        run: velocitas exec runtime-k3d configure_controlplane
-
-      - name: Install runtime containers in K3D cluster
-        run: velocitas exec runtime-k3d deploy_runtime
+      - name: Configure K3D cluster and install runtime containers in K3D cluster
+        run: velocitas exec runtime-k3d runtime-up
 
       - id: github-repository-name-case-adjusted
         name: Prepare repository name in lower case for docker upload. This supports repository names in mixed case
@@ -205,7 +206,7 @@ jobs:
       - name: Download stored image from artifacts
         uses: actions/download-artifact@v3
         env:
-          VAPP_IMAGE: ${{ matrix.component.Name }}-amd64
+          VAPP_IMAGE: ${{ matrix.component.name }}-amd64
         with:
           name: ${{ env.VAPP_IMAGE }}
           path: ./.github/scripts/
