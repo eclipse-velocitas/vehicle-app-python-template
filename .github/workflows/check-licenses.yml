@@ -33,8 +33,6 @@ on:
 jobs:
   check-licenses:
     runs-on: ubuntu-latest
-    env:
-      LICENSE_CHECKER_TAG_SPECIFIER: v1.2
     name: Check Software Licenses
 
     steps:
