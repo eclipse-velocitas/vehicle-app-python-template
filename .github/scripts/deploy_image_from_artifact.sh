@@ -17,7 +17,7 @@
 set -e
 
 ROOT_DIRECTORY=$( realpath "$( cd -- "$(dirname "$0")" >/dev/null 2>&1 ; pwd -P )/../.." )
-APP_NAME=$(cat $ROOT_DIRECTORY/app/AppManifest.json | jq .[].name | tr -d '"' | tr '[:upper:]' '[:lower:]')
+APP_NAME=$(cat $ROOT_DIRECTORY/app/AppManifest.json | jq .[].name | tr -d '"')
 APP_PORT=50008
 APP_REGISTRY="k3d-registry.localhost:12345"
 RUNTIME_VERSION=$(cat $ROOT_DIRECTORY/.velocitas.json | jq -r '.packages[]| select(.name=="devenv-runtimes")'.version)
