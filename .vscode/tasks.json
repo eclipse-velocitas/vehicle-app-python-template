@@ -86,10 +86,10 @@
 			"problemMatcher": []
 		},
 		{
-			"label": "K3D - Configure control plane",
-			"detail": "Creates a local container registry used by K3D as well as an K3D cluster with Dapr enabled.",
+			"label": "K3D Runtime - Up",
+			"detail": "Starts up the K3D runtime.",
 			"type": "shell",
-			"command": "velocitas exec runtime-k3d configure_controlplane",
+			"command": "velocitas exec runtime-k3d runtime-up",
 			"group": "none",
 			"presentation": {
 				"reveal": "always",
@@ -99,10 +99,10 @@
 			"problemMatcher": []
 		},
 		{
-			"label": "K3D - Deploy runtime",
-			"detail": "Deploys the runtime components (like Vehicle Data Broker, Seat Service, ...) within the K3D cluster.",
+			"label": "K3D Runtime - Down",
+			"detail": "Stops up the local runtime",
 			"type": "shell",
-			"command": "velocitas exec runtime-k3d deploy_runtime",
+			"command": "velocitas exec runtime-k3d runtime-down",
 			"group": "none",
 			"presentation": {
 				"reveal": "always",
@@ -115,10 +115,10 @@
 			"problemMatcher": []
 		},
 		{
-			"label": "K3D - Build VehicleApp",
+			"label": "K3D Runtime - Build VehicleApp",
 			"detail": "Builds the VehicleApp and pushes it to the local K3D registry.",
 			"type": "shell",
-			"command": "velocitas exec deployment-k3d build_vehicleapp",
+			"command": "velocitas exec deployment-k3d build-vehicleapp",
 			"group": "none",
 			"presentation": {
 				"reveal": "always",
@@ -129,10 +129,10 @@
 			"problemMatcher": []
 		},
 		{
-			"label": "K3D - Deploy VehicleApp",
+			"label": "K3D Runtime - Deploy VehicleApp",
 			"detail": "Builds and deploys the VehicleApp via Helm to the K3D cluster.",
 			"type": "shell",
-			"command": "velocitas exec deployment-k3d deploy_vehicleapp",
+			"command": "velocitas exec deployment-k3d deploy-vehicleapp",
 			"group": "none",
 			"presentation": {
 				"reveal": "always",
@@ -141,16 +141,16 @@
 				"close": false
 			},
 			"dependsOn": [
-				"K3D - Deploy runtime",
-				"K3D - Build VehicleApp"
+				"K3D Runtime - Deploy runtime",
+				"K3D Runtime - Build VehicleApp"
 			],
 			"problemMatcher": []
 		},
 		{
-			"label": "K3D - Deploy VehicleApp (without rebuild)",
+			"label": "K3D Runtime - Deploy VehicleApp (without rebuild)",
 			"detail": "Deploys the VehicleApp via Helm to the K3D cluster (without rebuilding it)",
 			"type": "shell",
-			"command": "velocitas exec deployment-k3d deploy_vehicleapp",
+			"command": "velocitas exec deployment-k3d deploy-vehicleapp",
 			"group": "none",
 			"presentation": {
 				"reveal": "always",
@@ -159,39 +159,8 @@
 				"close": false
 			},
 			"dependsOn": [
-				"K3D - Deploy runtime"
+				"K3D Runtime - Deploy runtime"
 			],
-			"problemMatcher": []
-		},
-		{
-			"label": "K3D - Uninstall runtime",
-			"detail": "Uninstalls the runtime components from the K3D cluster (without deleting the cluster).",
-			"type": "shell",
-			"command": "velocitas exec runtime-k3d uninstall_runtime",
-			"group": "none",
-			"presentation": {
-				"reveal": "always",
-				"panel": "dedicated",
-				"clear": true,
-				"close": false
-			},
-			"dependsOn": [
-				"K3D - Configure control plane"
-			],
-			"problemMatcher": []
-		},
-		{
-			"label": "K3D - Reset control plane",
-			"detail": "Deletes the K3D cluster with all deployed pods/services.",
-			"type": "shell",
-			"command": "velocitas exec runtime-k3d reset_controlplane",
-			"group": "none",
-			"presentation": {
-				"reveal": "always",
-				"panel": "dedicated",
-				"clear": true,
-				"close": false
-			},
 			"problemMatcher": []
 		},
 		{
