@@ -89,7 +89,7 @@
 			"label": "K3D Runtime - Up",
 			"detail": "Starts up the K3D runtime.",
 			"type": "shell",
-			"command": "velocitas exec runtime-k3d runtime-up",
+			"command": "velocitas exec runtime-k3d up",
 			"group": "none",
 			"presentation": {
 				"reveal": "always",
@@ -102,16 +102,13 @@
 			"label": "K3D Runtime - Down",
 			"detail": "Stops up the local runtime",
 			"type": "shell",
-			"command": "velocitas exec runtime-k3d runtime-down",
+			"command": "velocitas exec runtime-k3d down",
 			"group": "none",
 			"presentation": {
 				"reveal": "always",
 				"clear": true,
 				"close": false
 			},
-			"dependsOn": [
-				"K3D - Configure control plane"
-			],
 			"problemMatcher": []
 		},
 		{
