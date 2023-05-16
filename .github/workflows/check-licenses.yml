@@ -40,7 +40,7 @@ jobs:
         uses: actions/checkout@v3
         with:
           repository: eclipse-velocitas/license-check
-          ref: v1.2.2
+          ref: v1.2.3
           path: .github/actions/license-check
 
       - name: Run License Checker
@@ -49,3 +49,25 @@ jobs:
           config-file-path: ./.licensechecker.yml
           fail-on-violation: false
           notice-file-name: "NOTICE-3RD-PARTY-CONTENT"
+          generate-dash: true
+
+      - name: Setup Java JDK
+        uses: actions/setup-java@v1.4.4
+        with:
+          java-version: 11.0.19
+
+      - name: Run dash
+        shell: bash
+        continue-on-error: true
+        run: |
+          wget -O dash.jar "https://github.com/eclipse/dash-licenses/releases/download/1.0.0M1/org.eclipse.dash.licenses-0.0.1-SNAPSHOT.jar"
+          java -jar dash.jar clearlydefined.input -summary DEPENDENCIES
+
+      - name: Upload dash input/output as artifacts
+        uses: actions/upload-artifact@v3
+        if: always()
+        with:
+          name: "dash-artifacts"
+          path: |
+            clearlydefined.input
+            DEPENDENCIES

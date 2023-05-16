@@ -2,11 +2,11 @@
     "packages": [
         {
             "name": "devenv-runtimes",
-            "version": "unit-tests"
+            "version": "new-app-manifest"
         },
         {
             "name": "devenv-github-workflows",
-            "version": "v1.0.13"
+            "version": "new-app-manifest"
         },
         {
             "name": "devenv-github-templates",
@@ -14,7 +14,7 @@
         },
         {
             "name": "devenv-devcontainer-setup",
-            "version": "new-app-manifest"
+            "version": "v1.1.6"
         }
     ],
     "variables": {
