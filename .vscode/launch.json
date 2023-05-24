@@ -12,35 +12,13 @@
             "name": "VehicleApp",
             "program": "${workspaceFolder}/app/src/main.py",
             "console": "integratedTerminal",
-            "preLaunchTask": "dapr-VehicleApp-run",
-            "postDebugTask": "dapr-VehicleApp-stop",
+            "preLaunchTask": "dapr-sidecar-start",
+            "postDebugTask": "dapr-sidecar-stop",
             "env": {
+                "APP_PORT": "50008",
                 "DAPR_HTTP_PORT": "3500",
-                "DAPR_GRPC_PORT": "${input:DAPR_GRPC_PORT}",
-                "SERVICE_DAPR_APP_ID": "${input:SERVICE_NAME}",
+                "DAPR_GRPC_PORT": "50001",
                 "VEHICLEDATABROKER_DAPR_APP_ID": "vehicledatabroker"
-            }
-        }
-    ],
-    "inputs": [
-        {
-            "id": "DAPR_GRPC_PORT",
-            "type": "command",
-            "command": "shellCommand.execute",
-            "args": {
-                "useSingleResult": true,
-                "command": "cat ./app/AppManifest.json | jq .[].DAPR_GRPC_PORT | tr -d '\"'",
-                "cwd": "${workspaceFolder}",
-            }
-        },
-        {
-            "id": "SERVICE_NAME",
-            "type": "command",
-            "command": "shellCommand.execute",
-            "args": {
-                "useSingleResult": true,
-                "command": "cat ./app/AppManifest.json | jq .[].Name | tr -d '\"'",
-                "cwd": "${workspaceFolder}",
             }
         }
     ]

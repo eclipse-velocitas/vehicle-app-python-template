@@ -2,23 +2,36 @@
 	"version": "2.0.0",
 	"tasks": [
 		{
-			"label": "dapr-VehicleApp-run",
-			"appId": "vehicleapp",
-			"appPort": 50008,
-			"componentsPath": "./.dapr/components",
-			"config": "./.dapr/config.yaml",
-			"appProtocol": "grpc",
-			"grpcPort": 50001,
-			"httpPort": 3500,
-			"type": "dapr",
+			"label": "dapr-sidecar-start",
+			"detail": "Start Dapr sidecar (with dapr run) to be present for debugging the VehicleApp (used by launch config).",
+			"type": "shell",
+			"command": "velocitas exec runtime-local run-dapr-sidecar vehicleapp --app-port 50008 --dapr-grpc-port 50001 --dapr-http-port 3500",
+			"group": "none",
+			"isBackground": true,
 			"presentation": {
 				"close": true,
 				"reveal": "never"
 			},
+			"problemMatcher": {
+				"pattern": [
+					{
+						"regexp": ".",
+						"file": 1,
+						"location": 2,
+						"message": 3
+					}
+				],
+				"background": {
+					"activeOnStart": true,
+					"beginsPattern": "^You're up and running! Dapr logs will appear here.",
+					"endsPattern": "."
+				}
+			},
 			"hide": true
 		},
 		{
-			"label": "dapr-VehicleApp-stop",
+			"label": "dapr-sidecar-stop",
+			"detail": "Stop Dapr sidecar after finish debugging the VehicleApp (used by launch config).",
 			"type": "shell",
 			"command": [
 				"dapr stop --app-id vehicleapp"
@@ -30,72 +43,32 @@
 			"hide": true
 		},
 		{
-			"label": "Local - Ensure Dapr",
-			"detail": "Ensures that the Dapr binaries are installed and Dapr is configured for local execution.",
+			"label": "Local Runtime - Up",
+			"detail": "Starts up the local runtime",
 			"type": "shell",
-			"command": "velocitas exec runtime-local ensure-dapr",
+			"command": "velocitas exec runtime-local up",
 			"group": "none",
 			"presentation": {
-				"close": true
+				"reveal": "always",
+				"panel": "dedicated"
 			},
 			"problemMatcher": []
 		},
 		{
-			"label": "Local - Mosquitto",
-			"detail": "Runs Mosquitto MQTT Broker in a container (with docker run) with exposed port 1883.",
+			"label": "Local Runtime - Run VehicleApp",
+			"detail": "Starts the VehicleApp under development (including Dapr sidecar if middleware type is Dapr)",
 			"type": "shell",
-			"command": "velocitas exec runtime-local run-mosquitto",
-			"group": "none",
+			"command": [
+				"velocitas exec runtime-local run-vehicle-app --dapr-app-id vehicleapp --dapr-app-port 50008 python3 ${workspaceFolder}/app/src/main.py"
+			],
 			"presentation": {
-				"reveal": "always",
-				"panel": "dedicated"
+				"close": true,
+				"reveal": "never"
 			},
-			"isBackground": true,
-			"problemMatcher": {
-				"pattern": [
-					{
-						"regexp": ".",
-						"file": 1,
-						"location": 2,
-						"message": 4
-					}
-				],
-				"background": {
-					"activeOnStart": true,
-					"beginsPattern": "^\\d{10}: mosquitto version \\d{1}\\.\\d{1}\\.\\d{1} starting$",
-					"endsPattern": "^\\d{10}: Opening ipv6 listen socket on port \\d{3,5}\\.$"
-				}
-			}
+			"problemMatcher": []
 		},
 		{
-			"label": "Local - VehicleDataBroker",
-			"detail": "Runs the VehicleDataBroker as background task.",
-			"type": "shell",
-			"command": "velocitas exec runtime-local run-vehicledatabroker",
-			"group": "none",
-			"presentation": {
-				"reveal": "always",
-				"panel": "dedicated"
-			},
-			"isBackground": true,
-			"problemMatcher": {
-				"pattern": [
-					{
-						"regexp": ".",
-						"file": 1,
-						"location": 2,
-						"message": 3
-					}
-				],
-				"background": {
-					"activeOnStart": true,
-					"beginsPattern": "^You're up and running! Dapr logs will appear here.",
-					"endsPattern": "."
-				}
-			}
-		},
-		{
-			"label": "Local - VehicleDataBroker CLI",
+			"label": "Local Runtime - VehicleDataBroker CLI",
 			"detail": "Starts the VehicleDataBroker CLI",
 			"type": "shell",
 			"command": "velocitas exec runtime-local run-vehicledatabroker-cli",
@@ -104,7 +77,7 @@
 			"problemMatcher": []
 		},
 		{
-			"label": "Local - Pre Commit Action",
+			"label": "Pre Commit Action",
 			"detail": "Perform checking/formating of the code",
 			"type": "shell",
 			"command": "pre-commit run --show-diff-on-failure --color=always --all-files",
@@ -113,108 +86,10 @@
 			"problemMatcher": []
 		},
 		{
-			"label": "Local - VehicleServices",
-			"detail": "Runs all configured VehicleServices as background task.",
+			"label": "K3D Runtime - Up",
+			"detail": "Starts up the K3D runtime.",
 			"type": "shell",
-			"command": "velocitas exec runtime-local run-vehicleservices",
-			"group": "none",
-			"presentation": {
-				"reveal": "always",
-				"panel": "dedicated"
-			},
-			"isBackground": true,
-			"problemMatcher": {
-				"pattern": [
-					{
-						"regexp": ".",
-						"file": 1,
-						"location": 2,
-						"message": 3
-					}
-				],
-				"background": {
-					"activeOnStart": true,
-					"beginsPattern": "^You're up and running! Dapr logs will appear here.",
-					"endsPattern": "."
-				}
-			}
-		},
-		{
-			"label": "Local - FeederCan",
-			"detail": "Runs FeederCan as background task.",
-			"type": "shell",
-			"command": "velocitas exec runtime-local run-feedercan",
-			"group": "none",
-			"presentation": {
-				"reveal": "always",
-				"panel": "dedicated"
-			},
-			"isBackground": true,
-			"problemMatcher": {
-				"pattern": [
-					{
-						"regexp": ".",
-						"file": 1,
-						"location": 2,
-						"message": 3
-					}
-				],
-				"background": {
-					"activeOnStart": true,
-					"beginsPattern": "^You're up and running! Dapr logs will appear here.",
-					"endsPattern": "."
-				}
-			}
-		},
-		{
-			"label": "Local - Start VehicleApp runtime",
-			"detail": "Runs all components of the VehicleApp runtime.",
-			"dependsOn": [
-				"Local - Ensure Dapr",
-				"Local - Mosquitto",
-				"Local - VehicleDataBroker",
-				"Local - VehicleServices",
-				"Local - FeederCan"
-			],
-			"dependsOrder": "sequence",
-			"problemMatcher": []
-		},
-		{
-			"label": "Local - VehicleApp (Dapr run)",
-			"detail": "Start VehicleApp with dapr run (p.e. for running integration tests locally).",
-			"type": "shell",
-			"command": [
-				"dapr run",
-				"--app-id vehicleapp",
-				"--app-protocol grpc",
-				"--app-port 50008",
-				"--config ./.dapr/config.yaml",
-				"--components-path ./.dapr/components",
-				"python3 ./app/src/main.py"
-			],
-			"group": "none",
-			"isBackground": true,
-			"problemMatcher": {
-				"pattern": [
-					{
-						"regexp": ".",
-						"file": 1,
-						"location": 2,
-						"message": 3
-					}
-				],
-				"background": {
-					"activeOnStart": true,
-					"beginsPattern": "^You're up and running! Both Dapr and your app logs will appear here.",
-					"endsPattern": "."
-				}
-			}
-		},
-		{
-			"label": "K3D - Configure control plane",
-			"detail": "Creates a local container registry used by K3D as well as an K3D cluster with Dapr enabled.",
-			"type": "shell",
-			"command": "velocitas exec runtime-k3d configure_controlplane",
+			"command": "velocitas exec runtime-k3d up",
 			"group": "none",
 			"presentation": {
 				"reveal": "always",
@@ -224,26 +99,23 @@
 			"problemMatcher": []
 		},
 		{
-			"label": "K3D - Deploy runtime",
-			"detail": "Deploys the runtime components (like Vehicle Data Broker, Seat Service, ...) within the K3D cluster.",
+			"label": "K3D Runtime - Down",
+			"detail": "Stops up the local runtime",
 			"type": "shell",
-			"command": "velocitas exec runtime-k3d deploy_runtime",
+			"command": "velocitas exec runtime-k3d down",
 			"group": "none",
 			"presentation": {
 				"reveal": "always",
 				"clear": true,
 				"close": false
 			},
-			"dependsOn": [
-				"K3D - Configure control plane"
-			],
 			"problemMatcher": []
 		},
 		{
-			"label": "K3D - Build VehicleApp",
+			"label": "K3D Runtime - Build VehicleApp",
 			"detail": "Builds the VehicleApp and pushes it to the local K3D registry.",
 			"type": "shell",
-			"command": "velocitas exec deployment-k3d build_vehicleapp",
+			"command": "velocitas exec deployment-k3d build-vehicleapp",
 			"group": "none",
 			"presentation": {
 				"reveal": "always",
@@ -254,10 +126,10 @@
 			"problemMatcher": []
 		},
 		{
-			"label": "K3D - Deploy VehicleApp",
+			"label": "K3D Runtime - Deploy VehicleApp",
 			"detail": "Builds and deploys the VehicleApp via Helm to the K3D cluster.",
 			"type": "shell",
-			"command": "velocitas exec deployment-k3d deploy_vehicleapp",
+			"command": "velocitas exec deployment-k3d deploy-vehicleapp",
 			"group": "none",
 			"presentation": {
 				"reveal": "always",
@@ -266,16 +138,16 @@
 				"close": false
 			},
 			"dependsOn": [
-				"K3D - Deploy runtime",
-				"K3D - Build VehicleApp"
+				"K3D Runtime - Deploy runtime",
+				"K3D Runtime - Build VehicleApp"
 			],
 			"problemMatcher": []
 		},
 		{
-			"label": "K3D - Deploy VehicleApp (without rebuild)",
+			"label": "K3D Runtime - Deploy VehicleApp (without rebuild)",
 			"detail": "Deploys the VehicleApp via Helm to the K3D cluster (without rebuilding it)",
 			"type": "shell",
-			"command": "velocitas exec deployment-k3d deploy_vehicleapp",
+			"command": "velocitas exec deployment-k3d deploy-vehicleapp",
 			"group": "none",
 			"presentation": {
 				"reveal": "always",
@@ -284,39 +156,8 @@
 				"close": false
 			},
 			"dependsOn": [
-				"K3D - Deploy runtime"
+				"K3D Runtime - Deploy runtime"
 			],
-			"problemMatcher": []
-		},
-		{
-			"label": "K3D - Uninstall runtime",
-			"detail": "Uninstalls the runtime components from the K3D cluster (without deleting the cluster).",
-			"type": "shell",
-			"command": "velocitas exec runtime-k3d uninstall_runtime",
-			"group": "none",
-			"presentation": {
-				"reveal": "always",
-				"panel": "dedicated",
-				"clear": true,
-				"close": false
-			},
-			"dependsOn": [
-				"K3D - Configure control plane"
-			],
-			"problemMatcher": []
-		},
-		{
-			"label": "K3D - Reset control plane",
-			"detail": "Deletes the K3D cluster with all deployed pods/services.",
-			"type": "shell",
-			"command": "velocitas exec runtime-k3d reset_controlplane",
-			"group": "none",
-			"presentation": {
-				"reveal": "always",
-				"panel": "dedicated",
-				"clear": true,
-				"close": false
-			},
 			"problemMatcher": []
 		},
 		{

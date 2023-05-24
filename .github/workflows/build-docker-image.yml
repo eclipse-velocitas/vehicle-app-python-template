@@ -36,7 +36,7 @@ on:
 
 jobs:
   build-image:
-    name: "Building image (${{ matrix.component.Name }})"
+    name: "Building image (${{ matrix.component.name }})"
     runs-on: ubuntu-latest
     container: ghcr.io/eclipse-velocitas/devcontainer-base-images/python:v0.1.0
     strategy:
@@ -98,15 +98,15 @@ jobs:
           fi
         shell: bash
 
-      - name: "${{ matrix.component.Name }} -- Build image"
+      - name: "${{ matrix.component.name }} -- Build image"
         id: image_build
         uses: docker/build-push-action@v3.2.0
         with:
           pull: true
           push: false
           outputs: |
-            type=oci,dest=./${{ matrix.component.Name }}.tar
-          file: ${{ matrix.component.Dockerfile }}
+            type=oci,dest=./${{ matrix.component.name }}.tar
+          file: ./app/Dockerfile
           context: .
           platforms: ${{ steps.set_platforms.outputs.platforms }}
           secrets: |
@@ -120,16 +120,16 @@ jobs:
           sudo apt-get update
           sudo apt-get -y install skopeo
 
-      - name: "${{ matrix.component.Name }} -- Inspect tar image with skopeo"
+      - name: "${{ matrix.component.name }} -- Inspect tar image with skopeo"
         run: |
-          skopeo inspect --raw oci-archive:${{ matrix.component.Name }}.tar | jq
-          skopeo inspect oci-archive:${{ matrix.component.Name }}.tar
-          skopeo copy oci-archive:${{ matrix.component.Name }}.tar docker-archive:${{ matrix.component.Name }}-arch.tar
+          skopeo inspect --raw oci-archive:${{ matrix.component.name }}.tar | jq
+          skopeo inspect oci-archive:${{ matrix.component.name }}.tar
+          skopeo copy oci-archive:${{ matrix.component.name }}.tar docker-archive:${{ matrix.component.name }}-arch.tar
 
-      - name: "${{ matrix.component.Name }} -- Scan docker image for vulnerabilities"
+      - name: "${{ matrix.component.name }} -- Scan docker image for vulnerabilities"
         uses: aquasecurity/trivy-action@0.8.0
         with:
-          input: ${{ matrix.component.Name }}-arch.tar
+          input: ${{ matrix.component.name }}-arch.tar
           exit-code: "0"
           ignore-unfixed: true
           severity: "CRITICAL,HIGH"
@@ -137,20 +137,20 @@ jobs:
           template: "@.github/scripts/junit.tpl"
           output: "junit.xml"
 
-      - name: "${{ matrix.component.Name }} -- Show scan results"
+      - name: "${{ matrix.component.name }} -- Show scan results"
         if: ${{ always() }}
         run: cat ./junit.xml
 
-      - name: "${{ matrix.component.Name }} -- Package vulnerability scan files"
+      - name: "${{ matrix.component.name }} -- Package vulnerability scan files"
         uses: ./.github/actions/package
         with:
-          name: "VulnerabilityScan-${{ matrix.component.Name }}"
+          name: "VulnerabilityScan-${{ matrix.component.name }}"
           type: "VulnerabilityScan"
           schema: "JUnit"
           sourcePath: ./junit.xml
           packagePath: results/Documentation/renderer
 
-      - name: "${{ matrix.component.Name }} -- Upload trivy report as artifacts"
+      - name: "${{ matrix.component.name }} -- Upload trivy report as artifacts"
         if: ${{ always() && steps.image_build.outcome == 'success' }}
         uses: actions/upload-artifact@v3
         with:
@@ -158,29 +158,53 @@ jobs:
           path: |
             results/Documentation/renderer/*
 
-      - name: "${{ matrix.component.Name }} -- Publish Trivy Scan Results"
+      - name: "${{ matrix.component.name }} -- Publish Trivy Scan Results"
         uses: EnricoMi/publish-unit-test-result-action@v2
         if: ${{ always() && steps.image_build.outcome == 'success' }}
         with:
-          check_name: Trivy Scan Results (${{ matrix.component.Name }})
-          comment_title: Trivy Scan Results (${{ matrix.component.Name }})
+          check_name: Trivy Scan Results (${{ matrix.component.name }})
+          comment_title: Trivy Scan Results (${{ matrix.component.name }})
           fail_on: "errors"
           junit_files: ./junit.xml
 
-      - name: "${{ matrix.component.Name }} -- Upload image to artifacts"
+      - name: "${{ matrix.component.name }} -- Upload image to artifacts"
         if: ${{ steps.image_build.outcome == 'success' }}
         uses: actions/upload-artifact@v3
         env:
-          VAPP_IMAGE: ${{ matrix.component.Name }}-${{ inputs.platform }}
+          VAPP_IMAGE: ${{ matrix.component.name }}-${{ inputs.platform }}
         with:
           name: ${{ env.VAPP_IMAGE }}
-          path: ./${{ matrix.component.Name }}.tar
+          path: ./${{ matrix.component.name }}.tar
           if-no-files-found: error
 
-      - name: "${{ matrix.component.Name }} -- Upload AppManifest.json to artifacts"
+      - name: "${{ matrix.component.name }} -- Upload AppManifest.json to artifacts"
         if: ${{ steps.image_build.outcome == 'success' }}
         uses: actions/upload-artifact@v3
         with:
           name: AppManifest
           path: ./app/AppManifest.json
+          if-no-files-found: error
+
+      - name: Generate podspec.yaml
+        run: |
+          velocitas exec runtime-k3d generate-podspec
+
+      - name: "${{ matrix.component.name }} -- Upload generated podspec.yaml"
+        if: ${{ steps.image_build.outcome == 'success' }}
+        uses: actions/upload-artifact@v3
+        with:
+          name: Podspec
+          path: ./podspec.yaml
+          if-no-files-found: error
+
+      - name: Generate helm chart
+        run: |
+          velocitas exec runtime-k3d generate-helm
+
+      - name: "${{ matrix.component.name }} -- Upload generated helm chart"
+        if: ${{ steps.image_build.outcome == 'success' }}
+        uses: actions/upload-artifact@v3
+        with:
+          name: HelmChart
+          path: ./helm
           if-no-files-found: error

@@ -1,48 +1,21 @@
 [
     {
-        "Name": "sampleapp",
-        "Port": 50008,
-        "DAPR_GRPC_PORT": 50001,
-        "Dockerfile": "./app/Dockerfile",
-        "VehicleModel": {
-            "src": "https://github.com/COVESA/vehicle_signal_specification/releases/download/v3.0/vss_rel_3.0.json"
+        "name": "SampleApp",
+        "vehicleModel": {
+            "src": "https://github.com/COVESA/vehicle_signal_specification/releases/download/v3.0/vss_rel_3.0.json",
+            "datapoints": [
+                {
+                    "path": "Vehicle.Speed",
+                    "required": "true",
+                    "access": "read"
+                }
+            ]
         },
-        "dependencies": {
-            "services": [
-                {
-                    "name": "seatservice",
-                    "image": "ghcr.io/eclipse/kuksa.val.services/seat_service",
-                    "version": "v0.2.0"
-                }
-            ],
-            "runtime": [
-                {
-                    "name": "mosquitto",
-                    "image": "eclipse-mosquitto",
-                    "version": "2.0.14"
-                },
-                {
-                    "name": "databroker",
-                    "image": "ghcr.io/eclipse/kuksa.val/databroker",
-                    "version": "0.3.0"
-                },
-                {
-                    "name": "feedercan",
-                    "image": "ghcr.io/eclipse/kuksa.val.feeders/dbc2val",
-                    "version": "v0.1.1"
-                }
-            ],
-            "python": {
-                "version": "3.10"
-            },
-            "dapr": {
-                "cli": {
-                    "version": "1.10.0"
-                },
-                "runtime": {
-                    "version": "1.10.2"
-                }
-            }
-        }
+        "runtime": [
+            "grpc://sdv.databroker.v1.Broker/GetDatapoints",
+            "grpc://sdv.databroker.v1.Broker/Subscribe",
+            "grpc://sdv.databroker.v1.Broker/SetDatapoints",
+            "mqtt"
+        ]
     }
 ]
