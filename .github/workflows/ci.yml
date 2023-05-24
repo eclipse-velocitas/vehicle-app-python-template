@@ -263,6 +263,4 @@ jobs:
       - name: Build and run dev container task
         uses: devcontainers/ci@v0.3
         with:
-          imageName: "ghcr.io/eclipse-velocitas/devcontainer-image/python"
           runCmd: velocitas upgrade --dry-run
-          platform: linux/amd64
