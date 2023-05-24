@@ -14,8 +14,6 @@
 #
 # SPDX-License-Identifier: Apache-2.0
 
-exit 1
-
 echo "#######################################################"
 echo "### Run VADF Lifecycle Management                   ###"
 echo "#######################################################"
