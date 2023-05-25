@@ -71,6 +71,7 @@
 |battila7/get-version-action|v2|MIT License|
 |dawidd6/action-download-artifact|v2|MIT License|
 |de-vri-es/setup-git-credentials|v2|BSD 2-Clause "Simplified" License|
+|devcontainers/ci|v0.3|MIT License|
 |docker/build-push-action|v3.2.0|Apache License 2.0|
 |docker/login-action|v2|Apache License 2.0|
 |docker/setup-buildx-action|v2|Apache License 2.0|
