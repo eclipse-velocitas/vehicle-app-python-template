@@ -138,7 +138,8 @@
 				"close": false
 			},
 			"dependsOn": [
-				"K3D Runtime - Deploy runtime",
+				"K3D Runtime - Up",
+				// not neccessary but is executed in parallel to Runtime - Up
 				"K3D Runtime - Build VehicleApp"
 			],
 			"problemMatcher": []
@@ -156,7 +157,7 @@
 				"close": false
 			},
 			"dependsOn": [
-				"K3D Runtime - Deploy runtime"
+				"K3D Runtime - Up"
 			],
 			"problemMatcher": []
 		},
