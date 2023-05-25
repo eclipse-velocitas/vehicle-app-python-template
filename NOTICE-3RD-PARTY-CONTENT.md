@@ -76,11 +76,11 @@
 |docker/login-action|v2|Apache License 2.0|
 |docker/setup-buildx-action|v2|Apache License 2.0|
 |docker/setup-qemu-action|v2|Apache License 2.0|
-|EnricoMi/publish-unit-test-result-action|v2|Apache License 2.0|
 |fountainhead/action-wait-for-check|v1.1.0|MIT License|
 |haya14busa/action-cond|v1|MIT License|
 |Homebrew/actions|master|BSD 2-Clause "Simplified" License|
 |johanvanhelden/gha-clover-test-coverage-check|v1|MIT License|
+|mikepenz/action-junit-report|v3|Apache License 2.0|
 |peaceiris/actions-gh-pages|v3|MIT License|
 |peaceiris/actions-hugo|v2|MIT License|
 |softprops/action-gh-release|v1|MIT License|
