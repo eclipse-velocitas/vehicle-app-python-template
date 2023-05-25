@@ -74,11 +74,14 @@ jobs:
           coverage2clover -i results/CodeCoverage/cobertura-coverage.xml -o results/CodeCoverage/clover.xml
           coveragepy-lcov --data_file_path ./.coverage --output_file_path results/CodeCoverage/lcov.info
 
-      - name: Publish Unit Test Results
-        uses: EnricoMi/publish-unit-test-result-action@v2
+      - name: Publish Test Report
+        uses: mikepenz/action-junit-report@v3
         if: always()
         with:
-          junit_files: ./results/UnitTest/junit.xml
+          report_paths: ./results/UnitTest/junit.xml
+          summary: true
+          update_check: true
+          annotate_only: true
 
       #########################################################
       # This step was disabled temporarily due to the required
@@ -224,11 +227,14 @@ jobs:
           pip install -r app/tests/requirements.txt
           pytest ./app/tests/integration --override-ini junit_family=xunit1 --junit-xml=./results/IntTest/junit.xml
 
-      - name: Publish integration test results
-        uses: EnricoMi/publish-unit-test-result-action@v2
+      - name: Publish Test Report
+        uses: mikepenz/action-junit-report@v3
         if: always()
         with:
-          junit_files: ./results/IntTest/junit.xml
+          report_paths: ./results/IntTest/junit.xml
+          summary: true
+          update_check: true
+          annotate_only: true
 
       - name: Clone release documentation action repository
         uses: actions/checkout@v3
