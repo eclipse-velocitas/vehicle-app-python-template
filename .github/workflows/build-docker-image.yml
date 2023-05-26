@@ -159,13 +159,14 @@ jobs:
             results/Documentation/renderer/*
 
       - name: "${{ matrix.component.name }} -- Publish Trivy Scan Results"
-        uses: EnricoMi/publish-unit-test-result-action@v2
+        uses: mikepenz/action-junit-report@v3
         if: ${{ always() && steps.image_build.outcome == 'success' }}
         with:
           check_name: Trivy Scan Results (${{ matrix.component.name }})
-          comment_title: Trivy Scan Results (${{ matrix.component.name }})
-          fail_on: "errors"
-          junit_files: ./junit.xml
+          report_paths: ./junit.xml
+          summary: true
+          update_check: true
+          annotate_only: true
 
       - name: "${{ matrix.component.name }} -- Upload image to artifacts"
         if: ${{ steps.image_build.outcome == 'success' }}
