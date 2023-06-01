@@ -60,7 +60,7 @@ jobs:
         shell: bash
         continue-on-error: true
         run: |
-          wget -O dash.jar "https://github.com/eclipse/dash-licenses/releases/download/1.0.0M1/org.eclipse.dash.licenses-0.0.1-SNAPSHOT.jar"
+          wget -O dash.jar "https://repo.eclipse.org/content/repositories/dash-licenses/org/eclipse/dash/org.eclipse.dash.licenses/1.0.2/org.eclipse.dash.licenses-1.0.2.jar"
           java -jar dash.jar clearlydefined.input -summary DEPENDENCIES
 
       - name: Upload dash input/output as artifacts
