@@ -70,9 +70,13 @@ jobs:
       - name: unit test
         shell: bash
         run: |
-          pytest --rootdir=./app/tests/unit --override-ini junit_family=xunit1 --junit-xml=./results/UnitTest/junit.xml --cov ./app/tests/unit --cov-report=xml:results/CodeCoverage/cobertura-coverage.xml --cov-branch ./app/tests/unit --cov-config=setup.cfg
-          coverage2clover -i results/CodeCoverage/cobertura-coverage.xml -o results/CodeCoverage/clover.xml
-          coveragepy-lcov --data_file_path ./.coverage --output_file_path results/CodeCoverage/lcov.info
+          pytest --rootdir=./app/tests/unit \
+          --override-ini junit_family=xunit1 \
+          --junit-xml=./results/UnitTest/junit.xml \
+          --cov ./app/tests/unit \
+          --cov-report=xml:results/CodeCoverage/cobertura-coverage.xml \
+          --cov-branch ./app/tests/unit \
+          --cov-config=setup.cfg
 
       - name: Publish Test Report
         uses: mikepenz/action-junit-report@v3
@@ -83,17 +87,13 @@ jobs:
           update_check: true
           annotate_only: true
 
-      #########################################################
-      # This step was disabled temporarily due to the required
-      # write access rights of the PRs for external contributors.
-      #########################################################
-      #- name: Add code coverage comment to pr
-      #  uses: romeovs/lcov-reporter-action@v0.3.1
-      #  with:
-      #    github-token: ${{ secrets.GITHUB_TOKEN }}
-      #    lcov-file: results/CodeCoverage/lcov.info
-      #    delete-old-comments: true
-      #  if: github.event_name == 'pull_request'
+      - uses: 5monkeys/cobertura-action@master
+        with:
+          path: results/CodeCoverage/cobertura-coverage.xml
+          minimum_coverage: 80
+          show_line: true
+          show_branch: true
+          fail_below_threshold: false
 
       - name: Package unit test files
         uses: ./.github/release-documentation/actions/package
@@ -120,13 +120,6 @@ jobs:
           name: "test-results"
           path: |
             results/Documentation/renderer/*
-
-      - name: Checking unit test code coverage
-        id: test-coverage
-        uses: johanvanhelden/gha-clover-test-coverage-check@v1
-        with:
-          percentage: "20"
-          filename: "results/CodeCoverage/clover.xml"
 
   initialize-matrix:
     runs-on: ubuntu-latest

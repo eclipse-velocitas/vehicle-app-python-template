@@ -164,25 +164,6 @@ jobs:
           outboxPath: .vehicleApp/Documentation/Outbox
           templatePath: ./.github/actions/templates
 
-      - name: Upload generated documentation as an artifacts
-        uses: actions/upload-artifact@v3
-        if: always()
-        with:
-          name: generated-documentation
-          path: |
-            .vehicleApp/Documentation/Outbox/
-      - name: zip
-        run: |
-          zip -r .vehicleApp/Documentation/release-documentation-md.zip .vehicleApp/Documentation/Outbox
-      - name: Upload assets
-        uses: softprops/action-gh-release@v1
-        if: startsWith(github.ref, 'refs/tags/')
-        with:
-          files: |
-            .vehicleApp/Documentation/release-documentation-md.zip
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
       - name: Setup Hugo
         uses: peaceiris/actions-hugo@v2
         with:
@@ -215,7 +196,6 @@ jobs:
 
           cp .vehicleApp/Documentation/Outbox/* ./hugo/content/reports
 
-          sed -i '1,13d' hugo/content/reports/*.md
           sed -i '1s/^/---\ntitle: "Code Coverage Test"\ndraft: false\n---\n/'  hugo/content/reports/CodeCoverage-*.md
           sed -i '1s/^/---\ntitle: "Unit Test Results"\ndraft: false\n---\n/'  hugo/content/reports/UnitTest-*.md
           cat hugo/content/reports/VulnerabilityScan-*.md >  hugo/content/reports/vulnerability-scan-results.md
@@ -250,6 +230,20 @@ jobs:
           curl -L https://github.com/thegeeklab/hugo-geekdoc/releases/download/v${GEEKDOC_THEME_VERSION}/hugo-geekdoc.tar.gz | tar -xz -C themes/hugo-geekdoc/ --strip-components=1
           echo "Build release documentation for GitHub Pages"
           hugo -d ./public --environment=pages
+
+      - name: zip
+        run: |
+          zip -r .vehicleApp/Documentation/release-documentation.zip ${{github.workspace}}/hugo/public
+
+      - name: Upload assets
+        uses: softprops/action-gh-release@v1
+        if: startsWith(github.ref, 'refs/tags/')
+        with:
+          files: |
+            .vehicleApp/Documentation/release-documentation.zip
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
       - name: Publish to GH Pages
         uses: peaceiris/actions-gh-pages@v3
         with:

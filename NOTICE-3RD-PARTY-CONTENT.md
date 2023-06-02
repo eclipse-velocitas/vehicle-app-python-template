@@ -60,6 +60,7 @@
 ## Workflows
 | Dependency | Version | License |
 |:-----------|:-------:|--------:|
+|5monkeys/cobertura-action|master|MIT License|
 |actions/checkout|v3|MIT License|
 |actions/download-artifact|v3|MIT License|
 |actions/setup-java|v1.4.4|MIT License|
@@ -79,7 +80,6 @@
 |fountainhead/action-wait-for-check|v1.1.0|MIT License|
 |haya14busa/action-cond|v1|MIT License|
 |Homebrew/actions|master|BSD 2-Clause "Simplified" License|
-|johanvanhelden/gha-clover-test-coverage-check|v1|MIT License|
 |mikepenz/action-junit-report|v3|Apache License 2.0|
 |peaceiris/actions-gh-pages|v3|MIT License|
 |peaceiris/actions-hugo|v2|MIT License|
