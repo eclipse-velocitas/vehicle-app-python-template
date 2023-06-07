@@ -1,0 +1,4 @@
+local runtime not working in parallel due to ports
+
+containerd is already installed
+kanto needs mosquitto

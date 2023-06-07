@@ -1,0 +1,20 @@
+{
+    "manager": {
+        "home_dir": "/data/container-management"
+    },
+    "log": {
+        "log_file": "container-management.log",
+        "log_level": "DEBUG"
+    },
+    "containers": {
+        "address_path": "/run/docker/containerd/containerd.sock",
+        "home_dir": "/data/container-management"
+    },
+    "network": {
+        "home_dir": "/data/container-management"
+    },
+    "things": {
+        "enable": false,
+        "home_dir": "/data/container-management"
+    }
+}
