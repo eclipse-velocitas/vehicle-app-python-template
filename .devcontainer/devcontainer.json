@@ -15,22 +15,63 @@
 		"vscode": {
 			// Set *default* container specific settings.json values on container create.
 			"settings": {
-				"python.pythonPath": "/usr/bin/python3",
 				"python.defaultInterpreterPath": "/usr/bin/python3",
+				"python.analysis.typeCheckingMode": "basic",
+				// Strong Type Checker
+				"python.linting.mypyEnabled": true,
+				"mypy.runUsingActiveInterpreter": true,
+				"python.linting.mypyArgs": [],
+				"mypy.targets": [
+					"app"
+				],
+				// Security Linter
+				"python.linting.banditEnabled": true,
+				"python.linting.banditArgs": [
+					"-c setup.cfg"
+				],
 				// Only Flake8 is used as linter and static code analyzer, as faster tool
 				"python.linting.enabled": true,
 				"python.linting.flake8Enabled": true,
+				// Style Checker for Python Docs
+				"python.linting.pydocstyleEnabled": true,
+				"python.analysis.extraPaths": [
+					"./proto",
+					"./src/vehicle_model"
+				],
+				"python.testing.unittestEnabled": false,
+				"python.testing.pytestEnabled": true,
 				// Style Formatter
 				"python.formatting.provider": "black",
-				// Security Linter
-				"python.linting.banditEnabled": true,
-				"python.disableInstallationCheck": true,
+				"vs-kubernetes": {
+					"vscode-kubernetes.kubectl-path.linux": "/usr/bin/kubectl",
+					"vscode-kubernetes.helm-path.linux": "/usr/local/bin/helm"
+				},
 				"terminal.integrated.defaultProfile.linux": "zsh",
 				"terminal.integrated.profiles.linux": {
 					"zsh": {
 						"path": "/usr/bin/zsh"
 					}
-				}
+				},
+				"vsmqtt.brokerProfiles": [
+					{
+						"name": "mosquitto (local)",
+						"host": "localhost",
+						"port": 1883,
+						"clientId": "vsmqtt_client"
+					},
+					{
+						"name": "mosquitto (k3d)",
+						"host": "localhost",
+						"port": 31883,
+						"clientId": "vsmqtt_client"
+					},
+					{
+						"name": "mosquitto (kanto)",
+						"host": "localhost",
+						"port": 1883,
+						"clientId": "vsmqtt_client"
+					}
+				]
 			},
 			// Add the IDs of extensions you want installed when the container is created.
 			"extensions": [
