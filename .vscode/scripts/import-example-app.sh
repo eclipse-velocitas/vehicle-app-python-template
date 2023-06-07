@@ -36,6 +36,9 @@ else
     pip install -r ./app/tests/requirements.txt
   fi
 
+  # Generate model referenced by imported example
+  velocitas exec vehicle-model-lifecycle generate-model
+
   echo "#######################################################"
   echo "Successfully imported $@"
   echo "#######################################################"

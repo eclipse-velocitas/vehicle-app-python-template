@@ -163,9 +163,10 @@
 		},
 		{
 			"label": "Import example app from SDK",
-			"detail": "Import example app from SDK",
+			"detail": "Replace the app implementation in the app folder by an example app chosen from SDK repository",
 			"type": "shell",
-			"command": "./.vscode/scripts/import-example-app.sh ${input:exampleApp}"
+			"command": "./.vscode/scripts/import-example-app.sh ${input:exampleApp}",
+			"problemMatcher": []
 		},
 		{
 			"label": "(Re-)generate vehicle model",
