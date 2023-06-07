@@ -15,7 +15,7 @@
 
 SDV_EXAMPLES_PATH="$(python -c 'import os,inspect,sdv; print(os.path.dirname(inspect.getfile(sdv)))')_examples"
 
-if [[ `git status --porcelain` ]]; then
+if [[ `git status --porcelain app/` ]]; then
   echo "####################### WARNING #######################"
   echo "####  Please commit or stash your changes before   ####"
   echo "####  importing the example app.                   ####"
