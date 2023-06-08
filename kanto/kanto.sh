@@ -13,7 +13,7 @@ then
      fi
      sudo apt install ./kanto_0.1.0-M3_linux_arm64.deb
 
-     if ! [-f eclipse-leda-kantui_0.0.2.0.00680_arm64.deb]; then
+     if ! [ -f eclipse-leda-kantui_0.0.2.0.00680_arm64.deb ]; then
           wget https://github.com/eclipse-leda/leda-utils/releases/download/v0.0.2/eclipse-leda-kantui_0.0.2.0.00680_arm64.deb
      fi
      sudo apt install ./eclipse-leda-kantui_0.0.2.0.00680_arm64.deb

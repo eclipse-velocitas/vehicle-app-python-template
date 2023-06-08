@@ -1,4 +1,6 @@
-local runtime not working in parallel due to ports
+local runtime not working in parallel due to ports, same for k3d -> need to properly cleanup always
 
 containerd is already installed
-kanto needs mosquitto
+kanto needs mosquitto installed
+
+kanto quits if the same terminal is used for another command -> close terminal window to avoid issues
