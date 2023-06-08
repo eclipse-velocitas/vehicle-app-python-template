@@ -24,7 +24,6 @@ if [[ `git status --porcelain app/` ]]; then
   echo "######################## WARNING #########################"
 else
   rm -rf app/
-  #mkdir app/
   cp -a $SDV_EXAMPLES_PATH/$@/. app/
 
   if [[ -f "./app/requirements.txt" ]]; then
