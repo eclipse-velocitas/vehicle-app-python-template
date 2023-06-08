@@ -16,12 +16,15 @@
 SDV_EXAMPLES_PATH="$(python -c 'import os,inspect,sdv; print(os.path.dirname(inspect.getfile(sdv)))')_examples"
 
 if [[ `git status --porcelain app/` ]]; then
-  echo "####################### WARNING #######################"
-  echo "####  Please commit or stash your changes before   ####"
-  echo "####  importing the example app.                   ####"
-  echo "####  Otherwise all changes will be discarded!     ####"
-  echo "####################### WARNING #######################"
+  echo "######################## WARNING #########################"
+  echo "####  Please commit or stash your changes in the app  ####"
+  echo "####  directory before an import is possible:         ####"
+  echo "####  The content of the app directory needs being    ####"
+  echo "####  completely replaced by the example code!        ####"
+  echo "######################## WARNING #########################"
 else
+  rm -rf app/
+  #mkdir app/
   cp -a $SDV_EXAMPLES_PATH/$@/. app/
 
   if [[ -f "./app/requirements.txt" ]]; then
