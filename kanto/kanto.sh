@@ -6,6 +6,8 @@ then
      sudo apt install -y mosquitto
 fi
 
+mosquitto &
+
 if ! hash container-management &> /dev/null
 then
      if ! [ -f kanto_0.1.0-M3_linux_arm64.deb ]; then

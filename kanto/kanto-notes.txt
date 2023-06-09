@@ -1,0 +1,20 @@
+!! currently only native runtime was used !!
+
+dapr was not tested, but also not used on HW
+
+local runtime not working in parallel due to ports, same for k3d -> need to properly cleanup always -> use cleanup.sh
+
+containerd is already installed -> socket needs to be redirected (see config.json)
+kanto needs mosquitto installed -> will be installed and started by kanto.sh
+ip-settings need to be disabled in config.json, otherwise k3d won't work afterwards
+
+kanto quits if the same terminal is used for another command -> might be solved if executed as task or via cli
+
+kanto.sh must be started inside kanto-folder -> cd kanto && ./kanto.sh
+deploy_runtime.sh needs to be run from root to find velocitas.json (maybe devenv-runtimes needs a fix?) -> ./kanto/deploy_runtime.sh
+deploy_runtime.sh needs some checks if containers are already there
+
+if kanto is already stopped, cleanup.sh will show some timeouts because it can't delete the containers -> the will be there if kanto is restarted
+--> need to check/decide if we should also cleanup /data/container-management/
+
+kantui is similar to k9s for monitoring containers -> sudo kantui

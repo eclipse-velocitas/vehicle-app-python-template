@@ -11,7 +11,19 @@
         "home_dir": "/data/container-management"
     },
     "network": {
-        "home_dir": "/data/container-management"
+        "home_dir": "/data/container-management",
+        "default_bridge": {
+            "name": "kanto-cm0",
+            "ip4": "",
+            "fcidr4": "",
+            "enable_ip6": false,
+            "mtu": 1500,
+            "icc": true,
+            "ip_tables": false,
+            "ip_forward": false,
+            "ip_masq": false,
+            "userland_proxy": false
+        }
     },
     "things": {
         "enable": false,
