@@ -14,6 +14,7 @@
 # SPDX-License-Identifier: Apache-2.0
 
 SDV_EXAMPLES_PATH="$(python -c 'import os,inspect,sdv; print(os.path.dirname(inspect.getfile(sdv)))')_examples"
+CHOSEN_EXAMPLE=$@
 
 if [[ `git status --porcelain app/` ]]; then
   echo "######################## WARNING #########################"
@@ -24,7 +25,7 @@ if [[ `git status --porcelain app/` ]]; then
   echo "######################## WARNING #########################"
 else
   rm -rf app/
-  cp -a $SDV_EXAMPLES_PATH/$@/. app/
+  cp -a $SDV_EXAMPLES_PATH/$CHOSEN_EXAMPLE/. app/
 
   if [[ -f "./app/requirements.txt" ]]; then
     pip install -r ./app/requirements.txt
