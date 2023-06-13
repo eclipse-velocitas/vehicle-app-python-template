@@ -14,15 +14,18 @@
 # SPDX-License-Identifier: Apache-2.0
 
 SDV_EXAMPLES_PATH="$(python -c 'import os,inspect,sdv; print(os.path.dirname(inspect.getfile(sdv)))')_examples"
+CHOSEN_EXAMPLE=$@
 
-if [[ `git status --porcelain` ]]; then
-  echo "####################### WARNING #######################"
-  echo "####  Please commit or stash your changes before   ####"
-  echo "####  importing the example app.                   ####"
-  echo "####  Otherwise all changes will be discarded!     ####"
-  echo "####################### WARNING #######################"
+if [[ `git status --porcelain app/` ]]; then
+  echo "######################## WARNING #########################"
+  echo "####  Please commit or stash your changes in the app  ####"
+  echo "####  directory before an import is possible:         ####"
+  echo "####  The content of the app directory needs being    ####"
+  echo "####  completely replaced by the example code!        ####"
+  echo "######################## WARNING #########################"
 else
-  cp -a $SDV_EXAMPLES_PATH/$@/. app/
+  rm -rf app/
+  cp -a $SDV_EXAMPLES_PATH/$CHOSEN_EXAMPLE/. app/
 
   if [[ -f "./app/requirements.txt" ]]; then
     pip install -r ./app/requirements.txt
@@ -35,6 +38,9 @@ else
   if [[ -f "./app/tests/requirements.txt" ]]; then
     pip install -r ./app/tests/requirements.txt
   fi
+
+  # Generate model referenced by imported example
+  velocitas exec vehicle-model-lifecycle generate-model
 
   echo "#######################################################"
   echo "Successfully imported $@"

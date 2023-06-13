@@ -1,5 +1,5 @@
 > Note:
-This is a template repository to kickstart the creation of a Python Vehicle App. Please create your own repository from this template repository by clicking the green button `Use this template`.
+This is a template repository to kickstart the creation of a Python Vehicle App. Please create your own repository from this template repository by clicking the green button [`Use this template`](https://github.com/eclipse-velocitas/vehicle-app-python-template).
 
 # Vehicle App Development using Python
 
