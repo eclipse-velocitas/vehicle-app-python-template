@@ -6,7 +6,7 @@
         },
         {
             "name": "devenv-github-workflows",
-            "version": "v2.0.8"
+            "version": "v2.0.9"
         },
         {
             "name": "devenv-github-templates",
@@ -14,7 +14,7 @@
         },
         {
             "name": "devenv-devcontainer-setup",
-            "version": "v1.1.8"
+            "version": "v1.1.9"
         }
     ],
     "variables": {
