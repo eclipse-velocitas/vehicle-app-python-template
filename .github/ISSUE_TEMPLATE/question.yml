@@ -1,0 +1,18 @@
+# This file is maintained by velocitas CLI, do not modify manually. Change settings in .velocitas.json
+name: ❓ Question or general issue
+description: Approach us with a question
+title: "[Q]: "
+labels:
+  - question
+body:
+  - type: markdown
+    attributes:
+      value: |
+        **We are happy that you have a question to ask!**
+  - type: textarea
+    validations:
+      required: true
+    attributes:
+      label: Question
+      description: Feel free to ask us if you need assistance
+      placeholder: How can I create a repository based on your template?

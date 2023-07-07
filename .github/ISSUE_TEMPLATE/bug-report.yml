@@ -1,0 +1,84 @@
+# This file is maintained by velocitas CLI, do not modify manually. Change settings in .velocitas.json
+name: 🐞 Bug Report
+description: Provide a general summary of the bug in the title below.
+title: "[Bug]: "
+labels:
+  - bug
+body:
+  - type: markdown
+    attributes:
+      value: |
+        **Thank you :heart: for taking the time to fill out this bug report!**
+  - type: dropdown
+    id: severity
+    validations:
+      required: true
+    attributes:
+      label: Severity
+      description: How severe is the bug in your opinion?
+      multiple: false
+      options:
+        - "Trivial"
+        - "Medium"
+        - "High"
+        - "Critical"
+        - "Blocker"
+  - type: input
+    id: version
+    validations:
+      required: true
+    attributes:
+      label: What release version, tag or commit-hash did you use?
+      description: Please include a link if possible.
+      placeholder: v0.1.0 or 06f432a00e4c66804202c91bdfb9c9b12823928b
+  - type: textarea
+    id: current-behavior
+    validations:
+      required: true
+    attributes:
+      label: Current Behavior
+      description: Tell us what happened instead of the expected behavior.
+      placeholder: Error message appeared when I cloned a repository...
+  - type: textarea
+    id: steps-to-reproduce
+    validations:
+      required: true
+    attributes:
+      label: Steps to Reproduce
+      description: Provide a link to a live example, or an unambiguous set of steps to reproduce this bug. Include code to reproduce, if relevant
+      placeholder: |
+        1. ...
+        2. ...
+        3. ...
+  - type: textarea
+    id: expected-behavior
+    validations:
+      required: true
+    attributes:
+      label: Expected Behavior
+      description: Tell us what should happen
+      placeholder: Clone of repository shall be prune of errors.
+  - type: textarea
+    id: possible-solution
+    validations:
+      required: false
+    attributes:
+      label: Possible Solution
+      description: Fix/reason of the bug suggestion
+      placeholder: A possible solution or fix is...
+  - type: textarea
+    id: additional-information
+    validations:
+      required: false
+    attributes:
+      label: Additional Information
+      description: Provide an additional detailed description / screenshots / evidences of the bug
+      placeholder: I would like to add...
+  - type: checkboxes
+    id: code-of-conduct
+    attributes:
+      label: Code of Conduct
+      description: By submitting this issue, you agree to follow our "Code of Conduct".
+      options:
+        - label: I agree to follow this project's "Code of Conduct".
+          required: true
