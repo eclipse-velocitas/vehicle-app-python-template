@@ -100,7 +100,7 @@
 		},
 		{
 			"label": "K3D Runtime - Down",
-			"detail": "Stops up the local runtime",
+			"detail": "Stops the K3D runtime",
 			"type": "shell",
 			"command": "velocitas exec runtime-k3d down",
 			"group": "none",
@@ -181,7 +181,97 @@
 				"close": false
 			},
 			"problemMatcher": []
-		}
+		},
+		{
+			"label": "Kanto Runtime - Up",
+			"detail": "Starts up the Kanto runtime.",
+			"type": "shell",
+			"command": "velocitas exec runtime-kanto up",
+			"group": "none",
+			"isBackground": true,
+			"presentation": {
+				"reveal": "always",
+				"clear": true,
+				"close": false
+			},
+			"problemMatcher": {
+				"pattern": [
+					{
+						"regexp": ".",
+						"file": 1,
+						"location": 2,
+						"message": 3
+					}
+				],
+				"background": {
+					"activeOnStart": true,
+					"beginsPattern": "Hint:",
+					"endsPattern": "^✅ Kanto is ready to use!.*"
+				}
+			}
+		},
+		{
+			"label": "Kanto Runtime - Down",
+			"detail": "Stops the Kanto runtime",
+			"type": "shell",
+			"command": "velocitas exec runtime-kanto down",
+			"group": "none",
+			"presentation": {
+				"reveal": "always",
+				"clear": true,
+				"close": false
+			},
+			"problemMatcher": []
+		},
+		{
+			"label": "Kanto Runtime - Build VehicleApp",
+			"detail": "Builds the VehicleApp.",
+			"type": "shell",
+			"command": "velocitas exec deployment-kanto build-vehicleapp",
+			"group": "none",
+			"presentation": {
+				"reveal": "always",
+				"panel": "dedicated",
+				"clear": true,
+				"close": false
+			},
+			"problemMatcher": []
+		},
+		{
+			"label": "Kanto Runtime - Deploy VehicleApp",
+			"detail": "Builds and deploys the VehicleApp via Kanto-cm",
+			"type": "shell",
+			"command": "velocitas exec deployment-kanto deploy-vehicleapp",
+			"group": "none",
+			"presentation": {
+				"reveal": "always",
+				"panel": "dedicated",
+				"clear": true,
+				"close": false
+			},
+			"dependsOn": [
+				"Kanto Runtime - Up",
+				"Kanto Runtime - Build VehicleApp"
+			],
+			"problemMatcher": []
+		},
+		{
+			"label": "Kanto Runtime - Deploy VehicleApp (without rebuild)",
+			"detail": "Deploys the VehicleApp via Kanto-cm (without rebuilding it)",
+			"type": "shell",
+			"command": "velocitas exec deployment-kanto deploy-vehicleapp",
+			"group": "none",
+			"presentation": {
+				"reveal": "always",
+				"panel": "dedicated",
+				"clear": true,
+				"close": false
+			},
+			"dependsOn": [
+				"Kanto Runtime - Up"
+			],
+			"problemMatcher": []
+		},
 	],
 	"inputs": [
 		{
