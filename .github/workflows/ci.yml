@@ -73,10 +73,9 @@ jobs:
           pytest --rootdir=./app/tests/unit \
           --override-ini junit_family=xunit1 \
           --junit-xml=./results/UnitTest/junit.xml \
-          --cov ./app/tests/unit \
+          --cov ./app/src \
           --cov-report=xml:results/CodeCoverage/cobertura-coverage.xml \
-          --cov-branch ./app/tests/unit \
-          --cov-config=setup.cfg
+          --cov-branch ./app/tests/unit
 
       - name: Publish Test Report
         uses: mikepenz/action-junit-report@v3
