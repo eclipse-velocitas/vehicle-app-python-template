@@ -86,19 +86,17 @@ jobs:
           update_check: true
           annotate_only: true
 
-      - name: ReportGenerator
-        uses: danielpalme/ReportGenerator-GitHub-Action@5.1.23
+      - uses: irongut/CodeCoverageSummary@v1.3.0
         with:
-          reports: "./results/CodeCoverage/cobertura-coverage.xml" # REQUIRED # The coverage reports that should be parsed (separated by semicolon). Globbing is supported.
-          targetdir: "." # REQUIRED # The directory where the generated report should be saved.
-          reporttypes: "MarkdownSummaryGithub" # The output formats and scope (separated by semicolon) Values: Badges, Clover, Cobertura, OpenCover, CsvSummary, Html, Html_Dark, Html_Light, Html_BlueRed, HtmlChart, HtmlInline, HtmlInline_AzurePipelines, HtmlInline_AzurePipelines_Dark, HtmlInline_AzurePipelines_Light, HtmlSummary, JsonSummary, Latex, LatexSummary, lcov, MarkdownSummary, MarkdownSummaryGithub, MarkdownDeltaSummary, MHtml, PngChart, SonarQube, TeamCitySummary, TextSummary, TextDeltaSummary, Xml, XmlSummary
-          sourcedirs: "./sdv" # Optional directories which contain the corresponding source code (separated by semicolon). The source directories are used if coverage report contains classes without path information.
-          verbosity: "Info" # The verbosity level of the log messages. Values: Verbose, Info, Warning, Error, Off
-          title: "Coverage" # Optional title.
-          tag: "${{ github.run_number }}_${{ github.run_id }}" # Optional tag or build version.
+          filename: results/CodeCoverage/cobertura-coverage.xml
+          badge: true
+          format: markdown
+          hide_complexity: true
+          indicators: true
+          output: both
 
-      - run: |
-          cat SummaryGithub.md >> $GITHUB_STEP_SUMMARY
+      -  run: |
+          cat code-coverage-results.md >> $GITHUB_STEP_SUMMARY
 
       - name: Package unit test files
         uses: ./.github/release-documentation/actions/package
