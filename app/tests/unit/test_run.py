@@ -39,7 +39,7 @@ async def test_for_get_speed():
         print(f"Received speed: {current_speed}")
         # Uncomment to test the behaviour of the SampleApp as provided by
         #     the template repository:
-        # assert current_speed == MOCKED_SPEED
+        assert current_speed == MOCKED_SPEED
 
 
 @pytest.mark.asyncio
@@ -54,7 +54,7 @@ async def test_for_publish_to_topic():
         print(f"Received response: {response}")
         # Uncomment to test the behaviour of the SampleApp as provided by
         #     the template repository:
-        # assert response == -1
+        assert response == -1
 
 
 def get_sample_response_data():
