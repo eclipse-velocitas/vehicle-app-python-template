@@ -27,7 +27,7 @@ HELM_CONFIG_DIR="$HOME/.velocitas/packages/devenv-runtimes/$RUNTIME_VERSION/runt
 local_tag="$APP_REGISTRY/$APP_NAME_LOWERCASE:local"
 echo "Local URL: $local_tag"
 
-docker load -i "$APP_ARTIFACT_NAME.tar" | sed -n 's/^Loaded image ID: sha256:\([0-9a-f]*\).*/\1/p' | xargs -i docker tag {} $local_tag
+docker load -i "$APP_ARTIFACT_NAME.tar" | sed -n 's/^Loaded image: \([0-9a-f]*\).*/\1/p' | xargs -i docker tag {} $local_tag
 docker push $local_tag
 
 helm install vapp-chart $HELM_CONFIG_DIR \
