@@ -11,6 +11,9 @@
 	"containerEnv": {
 		"GITHUB_API_TOKEN": "${localEnv:GITHUB_API_TOKEN}"
 	},
+	"features": {
+		"ghcr.io/devcontainers/features/docker-in-docker:2.3.0": {}
+	  },
 	"customizations": {
 		"vscode": {
 			// Set *default* container specific settings.json values on container create.
