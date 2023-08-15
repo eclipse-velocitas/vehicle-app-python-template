@@ -95,7 +95,7 @@ jobs:
           indicators: true
           output: both
 
-      -  run: |
+      - run: |
           cat code-coverage-results.md >> $GITHUB_STEP_SUMMARY
 
       - name: Package unit test files
@@ -163,7 +163,7 @@ jobs:
 
       - uses: actions/setup-python@v4
         with:
-          python-version: '3.10'
+          python-version: "3.10"
 
       - uses: de-vri-es/setup-git-credentials@v2
         with:
@@ -191,7 +191,8 @@ jobs:
           pip install -r ./app/requirements.txt
           pip install -r ./app/requirements-links.txt
           pip install -r ./app/tests/requirements.txt
-          brew install k3d kubernetes-cli helm dapr/tap/dapr-cli
+          brew install k3d kubernetes-cli helm
+          sudo wget -q https://raw.githubusercontent.com/dapr/cli/master/install/install.sh -O - | /bin/bash -s 1.10.0
 
       - name: Configure K3D cluster and install runtime containers in K3D cluster
         run: velocitas exec runtime-k3d up
@@ -256,14 +257,14 @@ jobs:
             results/Documentation/renderer/*
 
   devcontainer-check:
-      runs-on: ubuntu-22.04
+    runs-on: ubuntu-22.04
 
-      steps:
-        - name: Checkout repository
-          uses: actions/checkout@v3
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
 
-        - name: Build and run dev container task
-          uses: devcontainers/ci@v0.3
-          with:
-            runCmd: velocitas upgrade --dry-run
-            push: never
+      - name: Build and run dev container task
+        uses: devcontainers/ci@v0.3
+        with:
+          runCmd: velocitas upgrade --dry-run
+          push: never
