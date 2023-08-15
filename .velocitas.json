@@ -6,7 +6,7 @@
         },
         {
             "name": "devenv-github-workflows",
-            "version": "fix/python-int-tests"
+            "version": "v2.0.14"
         },
         {
             "name": "devenv-github-templates",
