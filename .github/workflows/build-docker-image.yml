@@ -84,8 +84,8 @@ jobs:
           git config --global user.email "github-automation@users.noreply.github.com"
           git config --global user.name "Github Automation"
 
-      - name: Set Platform(s) String
-        id: set_platforms
+      - name: Set Arguments for next step
+        id: set_args
         run: |
           if [ ${{ inputs.multiarch }} == true ]; then
             echo "Build Multiarch"
@@ -102,14 +102,13 @@ jobs:
         id: image_build
         uses: docker/build-push-action@v4
         with:
-          # provenance: true
           pull: true
           push: false
           outputs: |
-            type=${{ steps.set_platforms.outputs.type }}
+            type=${{ steps.set_args.outputs.type }}
           file: ./app/Dockerfile
           context: .
-          platforms: ${{ steps.set_platforms.outputs.platforms }}
+          platforms: ${{ steps.set_args.outputs.platforms }}
           secrets: |
             "github_token=user:${{ secrets.GITHUB_TOKEN }}"
           tags: ${{ github.sha }}
