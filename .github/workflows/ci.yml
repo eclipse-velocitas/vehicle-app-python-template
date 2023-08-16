@@ -266,5 +266,5 @@ jobs:
       - name: Build and run dev container task
         uses: devcontainers/ci@v0.3
         with:
-          runCmd: velocitas upgrade --dry-run
+          runCmd: velocitas init ; velocitas exec runtime-k3 up
           push: never
