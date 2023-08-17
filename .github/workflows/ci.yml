@@ -173,7 +173,7 @@ jobs:
         run: |
           sudo curl -L https://github.com/eclipse-velocitas/cli/releases/latest/download/velocitas-linux-x64 -o /usr/bin/velocitas
           sudo chmod +x /usr/bin/velocitas
-          velocitas init
+          velocitas init -v
 
       - name: Login to GitHub Container Registry
         uses: docker/login-action@v2
