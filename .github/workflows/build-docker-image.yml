@@ -102,6 +102,7 @@ jobs:
         id: image_build
         uses: docker/build-push-action@v4
         with:
+          provenance: false
           pull: true
           push: false
           outputs: |
