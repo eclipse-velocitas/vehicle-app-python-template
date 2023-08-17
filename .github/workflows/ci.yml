@@ -171,7 +171,7 @@ jobs:
 
       - name: Init velocitas project
         run: |
-          sudo curl -L https://github.com/eclipse-velocitas/cli/releases/latest/download/velocitas-linux-x64 -o /usr/bin/velocitas
+          sudo curl -L https://github.com/eclipse-velocitas/cli/releases/download/v0.5.3/velocitas-linux-x64 -o /usr/bin/velocitas
           sudo chmod +x /usr/bin/velocitas
           velocitas init -v
 
