@@ -22,7 +22,7 @@ on:
 jobs:
 
   get-app-name:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     name: Get App-Name
     outputs:
       app_name: ${{ steps.export-app-name.outputs.app_name }}
@@ -111,12 +111,10 @@ jobs:
 
   release-documentation:
     name: Generate release documentation
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     needs: get-app-name
-    strategy:
-      matrix:
-        component: ${{ fromJson(needs.initialize-matrix.outputs.deployment-matrix) }}
     env:
+      APP_NAME: ${{ needs.get-app-name.outputs.app_name }}
       TEST_RESULT_FOLDER_NAME: test-results
     steps:
       - uses: actions/checkout@v3

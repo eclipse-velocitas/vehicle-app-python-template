@@ -29,7 +29,7 @@ on:
 
 jobs:
   check-licenses:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     name: Check Software Licenses
 
     steps:

@@ -28,7 +28,7 @@ on:
 jobs:
   build-image:
     name: "Building image (${{ inputs.app_name }})"
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     container: ghcr.io/eclipse-velocitas/devcontainer-base-images/python:v0.1
     env:
       APP_NAME: ${{ inputs.app_name }}

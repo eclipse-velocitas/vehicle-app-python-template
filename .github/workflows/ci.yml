@@ -125,7 +125,7 @@ jobs:
             results/Documentation/renderer/*
 
   get-app-name:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     name: Get App-Name
     outputs:
       app_name: ${{ steps.export-app-name.outputs.app_name }}
