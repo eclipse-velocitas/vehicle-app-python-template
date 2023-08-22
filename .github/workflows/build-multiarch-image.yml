@@ -25,7 +25,7 @@ on:
 jobs:
   get-app-name:
     runs-on: ubuntu-latest
-    name: Setting up build matrix
+    name: Get App-Name
     outputs:
       app_name: ${{ steps.export-app-name.outputs.app_name }}
 
@@ -41,7 +41,7 @@ jobs:
 
   build-image-multiarch:
     uses: ./.github/workflows/build-docker-image.yml
-    needs: get-app-name
+    needs: [get-app-name]
     with:
       platform: multiarch
       app_name: ${{ needs.get-app-name.outputs.app_name }}

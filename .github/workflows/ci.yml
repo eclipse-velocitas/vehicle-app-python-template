@@ -126,7 +126,7 @@ jobs:
 
   get-app-name:
     runs-on: ubuntu-latest
-    name: Setting up build matrix
+    name: Get App-Name
     outputs:
       app_name: ${{ steps.export-app-name.outputs.app_name }}
 
