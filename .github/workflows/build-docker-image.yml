@@ -74,7 +74,7 @@ jobs:
       - name: Set Arguments for next step
         id: set_args
         run: |
-          if [ ${{ inputs.multiarch }} == true ]; then
+          if [ ${{ inputs.platform }} = "multiarch" ]; then
             echo "Build Multiarch"
             echo "platforms=linux/amd64, linux/arm64" >> $GITHUB_OUTPUT
             echo "type=oci,dest=./${{ env.APP_NAME }}.tar" >> $GITHUB_OUTPUT
