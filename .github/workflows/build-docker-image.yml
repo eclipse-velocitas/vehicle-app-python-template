@@ -24,27 +24,14 @@ on:
       deployment-matrix-str:
         required: true
         type: string
-      multiarch:
-        required: false
-        type: boolean
-        default: false
-    outputs:
-      imageid:
-        value: ${{ jobs.build-image.outputs.imageid }}
-      imagedigest:
-        value: ${{ jobs.build-image.outputs.digest }}
 
 jobs:
   build-image:
-    name: "Building image (${{ matrix.component.name }})"
+    name: "Building image (${{ inputs.deployment-matrix-str }})"
     runs-on: ubuntu-latest
     container: ghcr.io/eclipse-velocitas/devcontainer-base-images/python:v0.1
-    strategy:
-      matrix:
-        component: ${{ fromJson(inputs.deployment-matrix-str) }}
-    outputs:
-      imageid: ${{ steps.image_build.outputs.imageid }}
-      imagedigest: ${{ steps.image_build.outputs.imagedigest }}
+    env:
+      APP_NAME: ${{ inputs.deployment-matrix-str }}
 
     steps:
       - name: Checkout repository
@@ -90,15 +77,15 @@ jobs:
           if [ ${{ inputs.multiarch }} == true ]; then
             echo "Build Multiarch"
             echo "platforms=linux/amd64, linux/arm64" >> $GITHUB_OUTPUT
-            echo "type=oci,dest=./${{ matrix.component.name }}.tar" >> $GITHUB_OUTPUT
+            echo "type=oci,dest=./${{ env.APP_NAME }}.tar" >> $GITHUB_OUTPUT
           else
             echo "Build ${{inputs.platform}}"
             echo "platforms=linux/${{ inputs.platform }}" >> $GITHUB_OUTPUT
-            echo "type=docker,dest=./${{ matrix.component.name }}.tar" >> $GITHUB_OUTPUT
+            echo "type=docker,dest=./${{ env.APP_NAME }}.tar" >> $GITHUB_OUTPUT
           fi
         shell: bash
 
-      - name: "${{ matrix.component.name }} -- Build image"
+      - name: "${{ env.APP_NAME }} -- Build image"
         id: image_build
         uses: docker/build-push-action@v4
         with:
@@ -121,16 +108,16 @@ jobs:
           sudo apt-get update
           sudo apt-get -y install skopeo
 
-      - name: "${{ matrix.component.name }} -- Inspect tar image with skopeo"
+      - name: "${{ env.APP_NAME }} -- Inspect tar image with skopeo"
         run: |
-          skopeo inspect --raw oci-archive:${{ matrix.component.name }}.tar | jq
-          skopeo inspect oci-archive:${{ matrix.component.name }}.tar
-          skopeo copy oci-archive:${{ matrix.component.name }}.tar docker-archive:${{ matrix.component.name }}-arch.tar
+          skopeo inspect --raw oci-archive:${{ env.APP_NAME }}.tar | jq
+          skopeo inspect oci-archive:${{ env.APP_NAME }}.tar
+          skopeo copy oci-archive:${{ env.APP_NAME }}.tar docker-archive:${{ env.APP_NAME }}-arch.tar
 
-      - name: "${{ matrix.component.name }} -- Scan docker image for vulnerabilities"
+      - name: "${{ env.APP_NAME }} -- Scan docker image for vulnerabilities"
         uses: aquasecurity/trivy-action@0.8.0
         with:
-          input: ${{ matrix.component.name }}-arch.tar
+          input: ${{ env.APP_NAME }}-arch.tar
           exit-code: "0"
           ignore-unfixed: true
           severity: "CRITICAL,HIGH"
@@ -138,20 +125,20 @@ jobs:
           template: "@.github/scripts/junit.tpl"
           output: "junit.xml"
 
-      - name: "${{ matrix.component.name }} -- Show scan results"
+      - name: "${{ env.APP_NAME }} -- Show scan results"
         if: ${{ always() }}
         run: cat ./junit.xml
 
-      - name: "${{ matrix.component.name }} -- Package vulnerability scan files"
+      - name: "${{ env.APP_NAME }} -- Package vulnerability scan files"
         uses: ./.github/actions/package
         with:
-          name: "VulnerabilityScan-${{ matrix.component.name }}"
+          name: "VulnerabilityScan-${{ env.APP_NAME }}"
           type: "VulnerabilityScan"
           schema: "JUnit"
           sourcePath: ./junit.xml
           packagePath: results/Documentation/renderer
 
-      - name: "${{ matrix.component.name }} -- Upload trivy report as artifacts"
+      - name: "${{ env.APP_NAME }} -- Upload trivy report as artifacts"
         if: ${{ always() && steps.image_build.outcome == 'success' }}
         uses: actions/upload-artifact@v3
         with:
@@ -159,27 +146,27 @@ jobs:
           path: |
             results/Documentation/renderer/*
 
-      - name: "${{ matrix.component.name }} -- Publish Trivy Scan Results"
+      - name: "${{ env.APP_NAME }} -- Publish Trivy Scan Results"
         uses: mikepenz/action-junit-report@v3
         if: ${{ always() && steps.image_build.outcome == 'success' }}
         with:
-          check_name: Trivy Scan Results (${{ matrix.component.name }})
+          check_name: Trivy Scan Results (${{ env.APP_NAME }})
           report_paths: ./junit.xml
           summary: true
           update_check: true
           annotate_only: true
 
-      - name: "${{ matrix.component.name }} -- Upload image to artifacts"
+      - name: "${{ env.APP_NAME }} -- Upload image to artifacts"
         if: ${{ steps.image_build.outcome == 'success' }}
         uses: actions/upload-artifact@v3
         env:
-          VAPP_IMAGE: ${{ matrix.component.name }}-${{ inputs.platform }}
+          VAPP_IMAGE: ${{ env.APP_NAME }}-${{ inputs.platform }}
         with:
           name: ${{ env.VAPP_IMAGE }}
-          path: ./${{ matrix.component.name }}.tar
+          path: ./${{ env.APP_NAME }}.tar
           if-no-files-found: error
 
-      - name: "${{ matrix.component.name }} -- Upload AppManifest.json to artifacts"
+      - name: "${{ env.APP_NAME }} -- Upload AppManifest.json to artifacts"
         if: ${{ steps.image_build.outcome == 'success' }}
         uses: actions/upload-artifact@v3
         with:
@@ -191,7 +178,7 @@ jobs:
         run: |
           velocitas exec runtime-k3d generate-podspec
 
-      - name: "${{ matrix.component.name }} -- Upload generated podspec.yaml"
+      - name: "${{ env.APP_NAME }} -- Upload generated podspec.yaml"
         if: ${{ steps.image_build.outcome == 'success' }}
         uses: actions/upload-artifact@v3
         with:
@@ -203,7 +190,7 @@ jobs:
         run: |
           velocitas exec runtime-k3d generate-helm
 
-      - name: "${{ matrix.component.name }} -- Upload generated helm chart"
+      - name: "${{ env.APP_NAME }} -- Upload generated helm chart"
         if: ${{ steps.image_build.outcome == 'success' }}
         uses: actions/upload-artifact@v3
         with:

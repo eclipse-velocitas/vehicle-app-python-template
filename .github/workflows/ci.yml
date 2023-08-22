@@ -137,9 +137,7 @@ jobs:
       - name: Get matrix data
         id: export-deployment-matrix
         run: |
-          SITE_PACKAGES=$(python -m site --user-site)
-          sed -i "s|SITE_PACKAGES|$SITE_PACKAGES|g" ./app/AppManifest.json
-          MATRIX=$(cat ./app/AppManifest.json | tr '\n' ' ')
+          MATRIX=$(cat ./app/AppManifest.json | jq -r '.name')
 
           echo "deployment-matrix=$MATRIX" >> $GITHUB_OUTPUT
 
@@ -151,12 +149,11 @@ jobs:
       deployment-matrix-str: ${{ needs.initialize-matrix.outputs.deployment-matrix }}
 
   run-integration-tests:
-    name: Run Integration Tests (${{ matrix.component.name }})
+    name: Run Integration Tests (${{ needs.initialize-matrix.outputs.deployment-matrix }})
     runs-on: ubuntu-22.04
     needs: [initialize-matrix, build-image-amd64]
-    strategy:
-      matrix:
-        component: ${{ fromJson(needs.initialize-matrix.outputs.deployment-matrix) }}
+    env:
+      APP_NAME: ${{ needs.initialize-matrix.outputs.deployment-matrix }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
@@ -206,7 +203,7 @@ jobs:
       - name: Download stored image from artifacts
         uses: actions/download-artifact@v3
         env:
-          VAPP_IMAGE: ${{ matrix.component.name }}-amd64
+          VAPP_IMAGE: ${{ env.APP_NAME }}-amd64
         with:
           name: ${{ env.VAPP_IMAGE }}
           path: ./.github/scripts/
