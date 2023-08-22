@@ -6,7 +6,7 @@
         },
         {
             "name": "devenv-github-workflows",
-            "version": "v2.0.15"
+            "version": "appManifest_v3"
         },
         {
             "name": "devenv-github-templates",

@@ -113,8 +113,10 @@ jobs:
     name: Generate release documentation
     runs-on: ubuntu-latest
     needs: get-app-name
+    strategy:
+      matrix:
+        component: ${{ fromJson(needs.initialize-matrix.outputs.deployment-matrix) }}
     env:
-      APP_NAME: ${{ needs.get-app-name.outputs.app_name }}
       TEST_RESULT_FOLDER_NAME: test-results
     steps:
       - uses: actions/checkout@v3
