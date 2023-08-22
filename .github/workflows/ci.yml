@@ -124,36 +124,35 @@ jobs:
           path: |
             results/Documentation/renderer/*
 
-  initialize-matrix:
+  get-app-name:
     runs-on: ubuntu-latest
     name: Setting up build matrix
     outputs:
-      deployment-matrix: ${{ steps.export-deployment-matrix.outputs.deployment-matrix }}
+      app_name: ${{ steps.export-app-name.outputs.app_name }}
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Get matrix data
-        id: export-deployment-matrix
+      - name: Get app-name
+        id: export-app-name
         run: |
-          MATRIX=$(cat ./app/AppManifest.json | jq -r '.name')
-
-          echo "deployment-matrix=$MATRIX" >> $GITHUB_OUTPUT
+          NAME=$(cat ./app/AppManifest.json | jq -r '.name')
+          echo "app_name=$NAME" >> $GITHUB_OUTPUT
 
   build-image-amd64:
     uses: ./.github/workflows/build-docker-image.yml
-    needs: [initialize-matrix]
+    needs: [get-app-name]
     with:
       platform: amd64
-      deployment-matrix-str: ${{ needs.initialize-matrix.outputs.deployment-matrix }}
+      app_name: ${{ needs.get-app-name.outputs.app_name }}
 
   run-integration-tests:
-    name: Run Integration Tests (${{ needs.initialize-matrix.outputs.deployment-matrix }})
+    name: Run Integration Tests (${{ needs.get-app-name.outputs.app_name }})
     runs-on: ubuntu-22.04
-    needs: [initialize-matrix, build-image-amd64]
+    needs: [get-app-name, build-image-amd64]
     env:
-      APP_NAME: ${{ needs.initialize-matrix.outputs.deployment-matrix }}
+      APP_NAME: ${{ needs.get-app-name.outputs.app_name }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
