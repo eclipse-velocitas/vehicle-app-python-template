@@ -17,7 +17,7 @@
 set -e
 
 ROOT_DIRECTORY=$( realpath "$( cd -- "$(dirname "$0")" >/dev/null 2>&1 ; pwd -P )/../.." )
-APP_ARTIFACT_NAME=$(cat $ROOT_DIRECTORY/app/AppManifest.json | jq .[].name | tr -d '"')
+APP_ARTIFACT_NAME=$(cat $ROOT_DIRECTORY/app/AppManifest.json | jq -r .name | tr -d '"')
 APP_NAME_LOWERCASE=$(echo $APP_ARTIFACT_NAME | tr '[:upper:]' '[:lower:]')
 APP_PORT=50008
 APP_REGISTRY="k3d-registry.localhost:12345"
