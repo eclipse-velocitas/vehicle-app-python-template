@@ -5,4 +5,4 @@ package_version=$(jq ".packages[0].version" .velocitas.json | sed -e 's/^"//' -e
 
 cp /workspaces/vehicle-app-python-template/.velocitas.json "/home/vscode/.velocitas/packages/$package_name/$package_version/.velocitas.json"
 velocitas exec runtime-kanto test
-# velocitas exec runtime-kanto down
+velocitas exec runtime-kanto down
