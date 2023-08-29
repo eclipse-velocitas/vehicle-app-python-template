@@ -262,5 +262,5 @@ jobs:
       - name: Build and run dev container task
         uses: devcontainers/ci@v0.3
         with:
-          runCmd: ./tests/automation_tests/runtime_tests/local_runtime_tests.sh
+          runCmd: ./tests/automation_tests/test.sh
           push: never
