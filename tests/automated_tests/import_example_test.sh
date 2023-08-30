@@ -27,21 +27,21 @@
 #
 # SPDX-License-Identifier: Apache-2.0
 
-./.vscode/scripts/import-example-app.sh seat-adjuster
-
-if [ $? -ne 0 ]
-then
-    exit $?
-fi
-
-for runtime in runtime-k3d runtime-kanto runtime-local
-do
-   ./tests/automation_tests/runtime_tests.sh $runtime
-
+exit_if_not_sucessfull() {
    if [ $? -ne 0 ]
    then
       exit $?
    fi
+}
+
+./.vscode/scripts/import-example-app.sh seat-adjuster
+exit_if_not_sucessfull
+
+for runtime in runtime-k3d runtime-kanto runtime-local
+do
+   ./tests/automated_tests/runtime_tests.sh $runtime
+   exit_if_not_sucessfull
 done
 
-pytest tests/automation_tests/requirements_tests.py
+pytest tests/automated_tests/requirements_tests.py
+exit_if_not_sucessfull
