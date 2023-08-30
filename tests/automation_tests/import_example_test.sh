@@ -27,6 +27,12 @@
 #
 # SPDX-License-Identifier: Apache-2.0
 
+./.vscode/scripts/import-example-app.sh seat-adjuster
+
+if [ $? -ne 0 ]
+then
+    exit $?
+fi
 
 for runtime in runtime-k3d runtime-kanto runtime-local
 do
@@ -39,5 +45,3 @@ do
 done
 
 pytest tests/automation_tests/requirements_tests.py
-
-echo -e "\033[0;32m Test passed !!!\033[0m"
