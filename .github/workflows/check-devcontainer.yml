@@ -40,4 +40,4 @@ jobs:
       - name: Build devcontainer and run automated tests
         uses: devcontainers/ci@v0.3
         with:
-          runCmd: pytest tests/automated_tests
+          runCmd: pytest tests
