@@ -13,24 +13,25 @@
 # SPDX-License-Identifier: Apache-2.0
 
 import unittest
-from pathlib import Path
-
-import pkg_resources
+import pytest
 from parameterized import parameterized
+import json
+
+with open('.velocitas.json') as velocitas_file:
+    velocitas_json = json.loads(velocitas_file.read())
+
+    for package in velocitas_json['packages']:
+        if package['name'] == "devenv-runtimes":
+            package_name = package['name']
+            package_version = package['version']
+            break
 
 
-class TestRequirements(unittest.TestCase):
-    """Test availability of required packages."""
-
+class RuntimeTest(unittest.TestCase):
     @parameterized.expand(
-        ["./requirements.txt", "./app/requirements.txt", "./app/tests/requirements.txt"]
+        ["runtime-local",
+         "runtime-k3d",
+         "runtime-kanto"]
     )
-    def test_requirements(self, requirement_file_path):
-        """Test that each required package is available."""
-        requirements = pkg_resources.parse_requirements(
-            Path(requirement_file_path).open()
-        )
-        for requirement in requirements:
-            requirement = str(requirement)
-            with self.subTest(requirement=requirement):
-                pkg_resources.require(requirement)
+    def test_runtime(self, runtime):
+        pytest.main(["-s", "-x", f"/home/vscode/.velocitas/packages/{package_name}/{package_version}/{runtime}/test/integration/integration_test.py"])

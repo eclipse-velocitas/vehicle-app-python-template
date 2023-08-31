@@ -37,7 +37,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Build and run dev container task
+      - name: Build devcontainer and run automated tests
         uses: devcontainers/ci@v0.3
         with:
-          runCmd: ./tests/automated_tests/test.sh
+          runCmd: pytest tests

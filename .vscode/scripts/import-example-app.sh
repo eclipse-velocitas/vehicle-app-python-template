@@ -26,10 +26,6 @@ if [[ `git status --porcelain app/` ]]; then
 else
   rm -rf app/
   cp -a $SDV_EXAMPLES_PATH/$CHOSEN_EXAMPLE/. app/
-  if [ $? -ne 0 ]
-  then
-      exit $?
-  fi
 
   if [[ -f "./app/requirements.txt" ]]; then
     pip install -r ./app/requirements.txt
