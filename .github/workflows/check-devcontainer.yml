@@ -30,14 +30,14 @@ on:
 
 
 jobs:
-  automated-tests:
+  devcontainer-check:
     runs-on: ubuntu-22.04
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Build devcontainer and run automated tests
+      - name: Build and run dev container task
         uses: devcontainers/ci@v0.3
         with:
-          runCmd: pytest tests
+          runCmd: ./tests/automated_tests/test.sh
