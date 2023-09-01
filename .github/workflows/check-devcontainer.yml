@@ -1,6 +1,5 @@
 # This file is maintained by velocitas CLI, do not modify manually. Change settings in .velocitas.json
-# This file is maintained by velocitas CLI, do not modify manually. Change settings in .velocitas.json
-# Copyright (c) 2022 Robert Bosch GmbH and Microsoft Corporation
+# Copyright (c) 2023 Robert Bosch GmbH and Microsoft Corporation
 #
 # This program and the accompanying materials are made available under the
 # terms of the Apache License, Version 2.0 which is available at
@@ -30,14 +29,14 @@ on:
 
 
 jobs:
-  devcontainer-check:
+  automated-tests:
     runs-on: ubuntu-22.04
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Build and run dev container task
+      - name: Build devcontainer and run automated tests
         uses: devcontainers/ci@v0.3
         with:
-          runCmd: ./tests/automated_tests/test.sh
+          runCmd: pytest tests
