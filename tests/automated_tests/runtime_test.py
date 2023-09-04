@@ -13,9 +13,9 @@
 # SPDX-License-Identifier: Apache-2.0
 
 import json
+import subprocess
 import unittest
 
-import pytest
 from parameterized import parameterized
 
 with open(".velocitas.json") as velocitas_file:
@@ -31,8 +31,9 @@ with open(".velocitas.json") as velocitas_file:
 class RuntimeTest(unittest.TestCase):
     @parameterized.expand(["runtime-local", "runtime-k3d", "runtime-kanto"])
     def test_runtime(self, runtime):
-        pytest.main(
+        subprocess.run(
             [
+                "pytest",
                 "-s",
                 "-x",
                 (
