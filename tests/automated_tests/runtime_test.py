@@ -29,7 +29,7 @@ with open(".velocitas.json") as velocitas_file:
 
 
 class RuntimeTest(unittest.TestCase):
-    @parameterized.expand(["runtime-k3d", "runtime-kanto", "runtime-local"])
+    @parameterized.expand(["runtime-local", "runtime-k3d", "runtime-kanto"])
     def test_runtime(self, runtime):
         subprocess.check_call(
             [
