@@ -2,7 +2,7 @@
     "packages": [
         {
             "name": "devenv-runtimes",
-            "version": "automated-tests"
+            "version": "v2.0.2"
         },
         {
             "name": "devenv-github-workflows",
