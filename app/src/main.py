@@ -76,7 +76,7 @@ class SampleApp(VehicleApp):
         # Do anything with the received value.
         # Example:
         # - Publishes current speed to MQTT Topic (i.e. DATABROKER_SUBSCRIPTION_TOPIC).
-        await self.publish_mqtt_event(
+        await self.publish_event(
             DATABROKER_SUBSCRIPTION_TOPIC,
             json.dumps({"speed": vehicle_speed}),
         )
@@ -99,8 +99,8 @@ class SampleApp(VehicleApp):
 
         # Do anything with the speed value.
         # Example:
-        # - Publishe the vehicle speed to MQTT topic (i.e. GET_SPEED_RESPONSE_TOPIC).
-        await self.publish_mqtt_event(
+        # - Publishes the vehicle speed to MQTT topic (i.e. GET_SPEED_RESPONSE_TOPIC).
+        await self.publish_event(
             GET_SPEED_RESPONSE_TOPIC,
             json.dumps(
                 {

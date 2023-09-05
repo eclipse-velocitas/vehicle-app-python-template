@@ -14,7 +14,7 @@
         },
         {
             "name": "devenv-devcontainer-setup",
-            "version": "v1.2.1"
+            "version": "grpc-interface-support"
         }
     ],
     "variables": {
