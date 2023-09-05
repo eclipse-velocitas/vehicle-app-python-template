@@ -32,7 +32,7 @@ on:
 jobs:
   unit-tests:
     runs-on: ubuntu-22.04
-    container: ghcr.io/eclipse-velocitas/devcontainer-base-images/python:v0.1
+    container: ghcr.io/eclipse-velocitas/devcontainer-base-images/python:v0.2
     name: Run unit tests and linters
 
     steps:

@@ -15,12 +15,17 @@
 # syntax=docker/dockerfile:1.2
 
 # Build stage, to create the executable
-FROM --platform=$TARGETPLATFORM python:3.10-slim-bullseye@sha256:1ee6094f44c67781fa9533a4215f44f80dd3f43a68751ad2c855712116c03b05 as builder
+FROM --platform=$TARGETPLATFORM ghcr.io/eclipse-velocitas/devcontainer-base-images/python:v0.1 as builder
+ARG TARGETARCH
 
-RUN apt-get update && apt-get install -y binutils
+RUN apt-get update && apt-get install -y python3-dev
 
-COPY ./app /app
-COPY ./gen/vehicle_model /vehicle_model
+COPY ./.velocitas.json /workspace/.velocitas_org.json
+COPY ./app /workspace/app
+
+# FIXME: For build tooling we only need "devenv-devcontainer-setup", we should be able to
+# filter this without manual jq intervention...
+RUN cat ./workspace/.velocitas_org.json | jq 'del(.packages[] | select(.name != "devenv-devcontainer-setup"))' > ./workspace/.velocitas.json
 
 # Remove this installation for Arm64 once staticx has a prebuilt wheel for Arm64
 RUN /bin/bash -c 'set -ex && \
@@ -31,26 +36,28 @@ RUN /bin/bash -c 'set -ex && \
     pip3 install --no-cache-dir scons; \
     fi'
 
-RUN apt-get install -y git
 RUN pip3 install --no-cache-dir pyinstaller==5.9.0 \
     && pip3 install --no-cache-dir patchelf==0.17.0.0 \
     && pip3 install --no-cache-dir staticx \
-    && pip3 install --no-cache-dir -r ./app/requirements.txt \
-    && pip3 install --no-cache-dir -r ./app/requirements-links.txt \
-    && pip3 install --no-cache-dir /vehicle_model
+    && pip3 install --no-cache-dir -r ./workspace/app/requirements.txt \
+    && pip3 install --no-cache-dir -r ./workspace/app/requirements-links.txt
 
-WORKDIR /app
+WORKDIR /workspace
+
+RUN velocitas init
+
+WORKDIR /workspace/app
 
 RUN pyinstaller --clean -F -s src/main.py
 
-WORKDIR /app/dist
+WORKDIR /workspace/app/dist
 
 RUN staticx main run-exe
 
 # Runner stage, to copy the executable
 FROM scratch
 
-COPY --from=builder ./app/dist/run-exe /dist/
+COPY --from=builder ./workspace/app/dist/run-exe /dist/
 
 WORKDIR /tmp
 WORKDIR /dist

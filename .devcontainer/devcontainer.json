@@ -18,9 +18,8 @@
 				"python.defaultInterpreterPath": "/usr/bin/python3",
 				"python.analysis.typeCheckingMode": "basic",
 				// Strong Type Checker
-				"python.linting.mypyEnabled": true,
+				"mypy.enabled": true,
 				"mypy.runUsingActiveInterpreter": true,
-				"python.linting.mypyArgs": [],
 				"mypy.targets": [
 					"app"
 				],
@@ -29,9 +28,6 @@
 				"python.linting.banditArgs": [
 					"-c setup.cfg"
 				],
-				// Only Flake8 is used as linter and static code analyzer, as faster tool
-				"python.linting.enabled": true,
-				"python.linting.flake8Enabled": true,
 				// Style Checker for Python Docs
 				"python.linting.pydocstyleEnabled": true,
 				"python.analysis.extraPaths": [
@@ -40,10 +36,12 @@
 				],
 				"python.testing.unittestEnabled": false,
 				"python.testing.pytestEnabled": true,
-				// Style Formatter
-				"python.formatting.provider": "black",
+				"[python]": {
+					// Style Formatter
+					"editor.defaultFormatter": "ms-python.black-formatter"
+				},
 				"vs-kubernetes": {
-					"vscode-kubernetes.kubectl-path.linux": "/usr/bin/kubectl",
+					"vscode-kubernetes.kubectl-path.linux": "/usr/local/bin/kubectl",
 					"vscode-kubernetes.helm-path.linux": "/usr/local/bin/helm"
 				},
 				"terminal.integrated.defaultProfile.linux": "zsh",
@@ -86,7 +84,9 @@
 				"matangover.mypy",
 				"augustocdias.tasks-shell-input",
 				"ms-python.isort",
-				"ms-python.flake8"
+				"ms-python.flake8",
+				"ms-python.black-formatter",
+				"ms-python.mypy-type-checker"
 			]
 		}
 	},
