@@ -83,7 +83,7 @@ The process to manage the dependencies of this project can be summarized as foll
    pip3 install -r <<path-to-requirements.txt>>
    ```
 
-If there are any other `none public python dependencies` (E.g. GitHub links), they shall not be added to the requirement files directly. Instead, they must be added to the [requirements-links.txt](./app/requirements-links.txt).
+If there are any other `non public python dependencies` (E.g. GitHub links), they shall not be added to the requirement files directly. Instead, they must be added to the [requirements-links.txt](./app/requirements-links.txt).
 
 > **_NOTE:_** `Please don't try to update the versions of the dependencies manually.`
 
