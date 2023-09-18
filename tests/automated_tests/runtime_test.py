@@ -17,9 +17,11 @@ import unittest
 
 from parameterized import parameterized
 
-devenv_runtimes_path = subprocess.check_output(
-    ["velocitas", "package", "-p", "devenv-runtimes"]
-).decode('utf-8').strip('\n')
+devenv_runtimes_path = (
+    subprocess.check_output(["velocitas", "package", "-p", "devenv-runtimes"])
+    .decode("utf-8")
+    .strip("\n")
+)
 
 print(type(devenv_runtimes_path))
 
