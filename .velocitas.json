@@ -6,7 +6,7 @@
         },
         {
             "name": "devenv-github-workflows",
-            "version": "v3.1.0"
+            "version": "v4.0.0"
         },
         {
             "name": "devenv-github-templates",
@@ -14,7 +14,7 @@
         },
         {
             "name": "devenv-devcontainer-setup",
-            "version": "v1.2.1"
+            "version": "v1.4.0"
         }
     ],
     "variables": {
@@ -23,6 +23,5 @@
         "appManifestPath": "app/AppManifest.json",
         "githubRepoId": "eclipse-velocitas/vehicle-app-python-template",
         "generatedModelPath": "./gen/vehicle_model"
-    },
-    "cliVersion": "v0.5.5"
+    }
 }
