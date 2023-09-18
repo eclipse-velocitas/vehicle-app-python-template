@@ -22,7 +22,7 @@ APP_NAME_LOWERCASE=$(echo $APP_ARTIFACT_NAME | tr '[:upper:]' '[:lower:]')
 APP_PORT=50008
 APP_REGISTRY="k3d-registry.localhost:12345"
 RUNTIME_VERSION=$(cat $ROOT_DIRECTORY/.velocitas.json | jq -r '.packages[]| select(.name=="devenv-runtimes")'.version)
-HELM_CONFIG_DIR="$HOME/.velocitas/packages/devenv-runtimes/$RUNTIME_VERSION/runtime-k3d/src/app_deployment/config/helm"
+HELM_CONFIG_DIR="$HOME/.velocitas/packages/devenv-runtimes/$RUNTIME_VERSION/runtime_k3d/src/app_deployment/config/helm"
 
 local_tag="$APP_REGISTRY/$APP_NAME_LOWERCASE:local"
 echo "Local URL: $local_tag"
