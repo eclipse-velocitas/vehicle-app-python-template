@@ -12,20 +12,16 @@
 
 # SPDX-License-Identifier: Apache-2.0
 
-import json
 import subprocess
 import unittest
 
 from parameterized import parameterized
 
-with open(".velocitas.json") as velocitas_file:
-    velocitas_json = json.loads(velocitas_file.read())
+devenv_runtimes_path = subprocess.check_output(
+    ["velocitas", "package", "-p", "devenv-runtimes"]
+).decode('utf-8').strip('\n')
 
-    for package in velocitas_json["packages"]:
-        if package["name"] == "devenv-runtimes":
-            package_name = package["name"]
-            package_version = package["version"]
-            break
+print(type(devenv_runtimes_path))
 
 
 class RuntimeTest(unittest.TestCase):
@@ -37,8 +33,7 @@ class RuntimeTest(unittest.TestCase):
                 "-s",
                 "-x",
                 (
-                    f"/home/vscode/.velocitas/packages/{package_name}/"
-                    f"{package_version}/{runtime}/test/integration/"
+                    f"{devenv_runtimes_path}/{runtime}/test/integration/"
                     f"integration_test.py"
                 ),
             ]
