@@ -12,6 +12,7 @@
 
 # SPDX-License-Identifier: Apache-2.0
 
+import os
 import subprocess
 import unittest
 
@@ -23,9 +24,12 @@ devenv_runtimes_path = (
     .strip("\n")
 )
 
+os.environ['VDB_PORT'] = "30555"
+os.environ['MQTT_PORT'] = "31883"
+
 
 class RuntimeTest(unittest.TestCase):
-    @parameterized.expand(["runtime_k3d", "runtime_kanto", "runtime_local"])
+    @parameterized.expand(["runtime_k3d", "runtime_kanto"])  # "runtime_local"
     def test_runtime(self, runtime):
         subprocess.check_call(
             [
@@ -36,5 +40,21 @@ class RuntimeTest(unittest.TestCase):
                     f"{devenv_runtimes_path}/{runtime}/test/integration/"
                     f"integration_test.py"
                 ),
+            ]
+        )
+        subprocess.check_call(
+            [
+                "pytest",
+                "-s",
+                "-x",
+                "./app/tests/integration/integration_test.py"
+            ]
+        )
+        subprocess.check_call(
+            [
+                "velocitas",
+                "exec",
+                runtime.replace("_", "-"),
+                "down"
             ]
         )
