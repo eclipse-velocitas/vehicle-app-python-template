@@ -25,7 +25,7 @@ devenv_runtimes_path = (
 
 
 class RuntimeTest(unittest.TestCase):
-    @parameterized.expand(["runtime-k3d", "runtime-kanto", "runtime-local"])
+    @parameterized.expand(["runtime_k3d", "runtime_kanto", "runtime_local"])
     def test_runtime(self, runtime):
         subprocess.check_call(
             [
