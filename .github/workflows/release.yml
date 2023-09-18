@@ -37,6 +37,12 @@ jobs:
           NAME=$(cat ./app/AppManifest.json | jq -r '.name')
           echo "app_name=$NAME" >> $GITHUB_OUTPUT
 
+  gen-desired-state:
+    uses: ./.github/workflows/gen-desired-state.yml
+    needs: [get-app-name]
+    with:
+      app_name: ${{ needs.get-app-name.outputs.app_name }}
+
   upload-images:
     name: "Upload image  (${{ needs.get-app-name.outputs.app_name }})"
     runs-on: ubuntu-22.04
