@@ -23,8 +23,6 @@ devenv_runtimes_path = (
     .strip("\n")
 )
 
-print(type(devenv_runtimes_path))
-
 
 class RuntimeTest(unittest.TestCase):
     @parameterized.expand(["runtime-k3d", "runtime-kanto", "runtime-local"])
