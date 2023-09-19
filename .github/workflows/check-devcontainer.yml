@@ -39,4 +39,6 @@ jobs:
       - name: Build devcontainer and run automated tests
         uses: devcontainers/ci@v0.3
         with:
-          runCmd: pytest -sx tests
+          runCmd: |
+            pip3 install -r ./tests/automated_tests/requirements.txt
+            pytest -sx tests

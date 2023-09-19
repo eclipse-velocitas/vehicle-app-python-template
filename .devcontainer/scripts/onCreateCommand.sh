@@ -47,12 +47,6 @@ if [ -f $REQUIREMENTS ]; then
     pip3 install -r $REQUIREMENTS
 fi
 
-# Dependencies for automated tests
-REQUIREMENTS="./tests/automated_tests/requirements.txt"
-if [ -f $REQUIREMENTS ]; then
-    pip3 install -r $REQUIREMENTS
-fi
-
 # add repo to git safe.directory
 REPO=$(pwd)
 git config --global --add safe.directory $REPO
