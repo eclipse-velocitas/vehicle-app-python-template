@@ -1,1 +1,1 @@
-git+https://github.com/eclipse-velocitas/vehicle-app-python-sdk.git@v0.11.0
+# velocitas SDK now installed via 'sdk-installer' Velocitas component.
