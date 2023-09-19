@@ -14,6 +14,8 @@
 #
 # SPDX-License-Identifier: Apache-2.0
 
+set -e
+
 ROOT_DIRECTORY=$( realpath "$( cd -- "$(dirname "$0")" >/dev/null 2>&1 ; pwd -P )/../.." )
 APP_ARTIFACT_NAME=$(cat $ROOT_DIRECTORY/app/AppManifest.json | jq -r .name | tr -d '"')
 APP_NAME_LOWERCASE=$(echo $APP_ARTIFACT_NAME | tr '[:upper:]' '[:lower:]')
