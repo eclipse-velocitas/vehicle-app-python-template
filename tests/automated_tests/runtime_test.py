@@ -13,25 +13,25 @@
 # SPDX-License-Identifier: Apache-2.0
 
 import os
-import subprocess
+import subprocess  # nosec
 import unittest
 
 from parameterized import parameterized
 
 devenv_runtimes_path = (
-    subprocess.check_output(["velocitas", "package", "-p", "devenv-runtimes"])
+    subprocess.check_output(["velocitas", "package", "-p", "devenv-runtimes"])  # nosec
     .decode("utf-8")
     .strip("\n")
 )
 
-os.environ['VDB_PORT'] = "30555"
-os.environ['MQTT_PORT'] = "31883"
+os.environ["VDB_PORT"] = "30555"
+os.environ["MQTT_PORT"] = "31883"
 
 
 class RuntimeTest(unittest.TestCase):
-    @parameterized.expand(["runtime_k3d", "runtime_kanto"])  # "runtime_local"
+    @parameterized.expand(["runtime_k3d", "runtime_kanto", "runtime_local"])
     def test_runtime(self, runtime):
-        subprocess.check_call(
+        subprocess.check_call(  # nosec
             [
                 "pytest",
                 "-s",
@@ -42,19 +42,10 @@ class RuntimeTest(unittest.TestCase):
                 ),
             ]
         )
-        subprocess.check_call(
-            [
-                "pytest",
-                "-s",
-                "-x",
-                "./app/tests/integration/integration_test.py"
-            ]
+        subprocess.check_call(  # nosec
+            ["pytest", "-s", "-x", "./app/tests/integration/integration_test.py"]
         )
-        subprocess.check_call(
-            [
-                "velocitas",
-                "exec",
-                runtime.replace("_", "-"),
-                "down"
-            ]
-        )
+        if runtime != "runtime_local":
+            subprocess.check_call(  # nosec
+                ["velocitas", "exec", runtime.replace("_", "-"), "down"]
+            )

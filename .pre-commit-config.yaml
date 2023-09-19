@@ -59,7 +59,6 @@ repos:
     rev: 1.7.4
     hooks:
       - id: bandit
-        exclude: tests
         args: ["--skip=B101"]
         types_or: [python]
 
