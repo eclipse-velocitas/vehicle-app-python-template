@@ -183,6 +183,20 @@
 			"problemMatcher": []
 		},
 		{
+			"label": "(Re-)generate gRPC SDKs",
+			"detail": "(Re-)generates all auto-generated gRPC SDKs used by the app",
+			"type": "shell",
+			"command": "velocitas exec grpc-interface-support generate-sdk",
+			"group": "none",
+			"presentation": {
+				"reveal": "always",
+				"panel": "dedicated",
+				"clear": true,
+				"close": false
+			},
+			"problemMatcher": [ ]
+		},
+		{
 			"label": "Kanto Runtime - Up",
 			"detail": "Starts up the Kanto runtime.",
 			"type": "shell",

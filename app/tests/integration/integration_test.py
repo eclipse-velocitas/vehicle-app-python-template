@@ -15,8 +15,8 @@
 import json
 
 import pytest
-from sdv.test.inttesthelper import IntTestHelper
-from sdv.test.mqtt_util import MqttClient
+from velocitas_sdk.test.inttesthelper import IntTestHelper
+from velocitas_sdk.test.mqtt_util import MqttClient
 
 # GET_SPEED_REQUEST_TOPIC = "sampleapp/getSpeed"
 # GET_SPEED_RESPONSE_TOPIC = "sampleapp/getSpeed/response"

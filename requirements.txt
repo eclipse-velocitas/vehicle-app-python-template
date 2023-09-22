@@ -23,6 +23,7 @@ distlib==0.3.7
     #   virtualenv
 filelock==3.12.3
     # via
+    #   -c app/requirements.txt
     #   -c app/tests/requirements.txt
     #   virtualenv
 flake8==6.1.0
