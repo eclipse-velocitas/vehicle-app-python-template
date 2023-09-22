@@ -2,11 +2,11 @@
     "packages": [
         {
             "name": "devenv-runtimes",
-            "version": "automated-tests"
+            "version": "v2.2.0"
         },
         {
             "name": "devenv-github-workflows",
-            "version": "automated-tests"
+            "version": "v4.1.0"
         },
         {
             "name": "devenv-github-templates",
@@ -14,7 +14,7 @@
         },
         {
             "name": "devenv-devcontainer-setup",
-            "version": "automated-tests"
+            "version": "v1.4.0"
         }
     ],
     "variables": {
