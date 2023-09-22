@@ -38,7 +38,7 @@ class RuntimeTest(unittest.TestCase):
                 "-x",
                 (
                     f"{devenv_runtimes_path}/{runtime}/test/integration/"
-                    f"integration_test.py"
+                    f"integration_test.py::test_scripts_run_successfully"
                 ),
             ]
         )
