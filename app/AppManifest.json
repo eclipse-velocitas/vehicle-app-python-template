@@ -1,6 +1,6 @@
 {
     "manifestVersion": "v3",
-    "name": "SampleApp",
+    "name": "AppWithAnotherName",
     "interfaces": [
         {
             "type": "vehicle-signal-interface",
