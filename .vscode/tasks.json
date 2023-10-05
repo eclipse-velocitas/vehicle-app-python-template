@@ -49,8 +49,8 @@
 			"command": "velocitas exec runtime-local up",
 			"group": "none",
 			"presentation": {
-				"reveal": "always",
-				"panel": "dedicated"
+				"panel": "dedicated",
+				"clear": true,
 			},
 			"problemMatcher": []
 		},
@@ -62,8 +62,8 @@
 				"velocitas exec runtime-local run-vehicle-app --dapr-app-id vehicleapp --dapr-app-port 50008 python3 ${workspaceFolder}/app/src/main.py"
 			],
 			"presentation": {
-				"close": true,
-				"reveal": "never"
+				"panel": "dedicated",
+				"clear": true,
 			},
 			"problemMatcher": []
 		},
@@ -72,8 +72,11 @@
 			"detail": "Starts the VehicleDataBroker CLI",
 			"type": "shell",
 			"command": "velocitas exec runtime-local run-vehicledatabroker-cli",
+			"presentation": {
+				"panel": "dedicated",
+				"clear": true,
+			},
 			"group": "none",
-			"isBackground": false,
 			"problemMatcher": []
 		},
 		{
@@ -82,7 +85,6 @@
 			"type": "shell",
 			"command": "pre-commit run --show-diff-on-failure --color=always --all-files",
 			"group": "none",
-			"isBackground": false,
 			"problemMatcher": []
 		},
 		{
