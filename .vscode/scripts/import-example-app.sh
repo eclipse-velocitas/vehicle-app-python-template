@@ -13,7 +13,7 @@
 #
 # SPDX-License-Identifier: Apache-2.0
 
-SDV_EXAMPLES_PATH="$(python -c 'import velocitas_examples; print(velocitas_examples.__path__[0])')"
+VELOCITAS_EXAMPLES_PATH="$(python -c 'import velocitas_examples; print(velocitas_examples.__path__[0])')"
 CHOSEN_EXAMPLE=$@
 
 if [[ `git status --porcelain app/` ]]; then
@@ -25,7 +25,7 @@ if [[ `git status --porcelain app/` ]]; then
   echo "######################## WARNING #########################"
 else
   rm -rf app/
-  cp -a $SDV_EXAMPLES_PATH/$CHOSEN_EXAMPLE/. app/
+  cp -a $VELOCITAS_EXAMPLES_PATH/$CHOSEN_EXAMPLE/. app/
 
   if [[ -f "./app/requirements.txt" ]]; then
     pip install -r ./app/requirements.txt
