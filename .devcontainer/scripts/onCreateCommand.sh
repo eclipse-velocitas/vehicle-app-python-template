@@ -35,17 +35,6 @@ REQUIREMENTS="./app/requirements-links.txt"
 if [ -f $REQUIREMENTS ]; then
     pip3 install -r $REQUIREMENTS
 fi
-# Dependencies for the app
-REQUIREMENTS="./app/requirements.txt"
-if [ -f $REQUIREMENTS ]; then
-    pip3 install -r $REQUIREMENTS
-fi
-
-# Dependencies for unit and integration tests
-REQUIREMENTS="./app/tests/requirements.txt"
-if [ -f $REQUIREMENTS ]; then
-    pip3 install -r $REQUIREMENTS
-fi
 
 # add repo to git safe.directory
 REPO=$(pwd)
