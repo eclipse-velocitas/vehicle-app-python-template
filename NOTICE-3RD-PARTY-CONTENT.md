@@ -10,13 +10,20 @@
 |bandit|1.7.5|Apache 2.0|
 |black|23.7.0|MIT|
 |build|0.10.0|MIT|
+|cachetools|5.3.1|MIT|
 |cfgv|3.4.0|MIT|
+|chardet|5.2.0|LGPL|
 |charset-normalizer|3.2.0|MIT|
 |click|8.1.7|New BSD|
 |cloudevents|1.9.0|Apache 2.0|
+|colorama|0.4.6|BSD|
+|coverage|7.3.0|Apache 2.0|
+|coverage2clover|4.0.0|unknown|
+|coveragepy-lcov|0.1.2|Apache 2.0|
 |dapr|1.10.0|Apache 2.0|
 |deprecation|2.1.0|Apache 2.0|
 |distlib|0.3.7|Python Software Foundation License|
+|exceptiongroup|1.1.3|MIT|
 |filelock|3.12.3|The Unlicense (Unlicense)|
 |flake8|6.1.0|MIT|
 |frozenlist|1.4.0|Apache 2.0|
@@ -27,6 +34,7 @@
 |grpcio-tools|1.57.0|Apache 2.0|
 |identify|2.5.27|MIT|
 |idna|3.4|BSD|
+|iniconfig|2.0.0|MIT|
 |markdown-it-py|3.0.0|MIT|
 |mccabe|0.7.0|MIT|
 |mdurl|0.1.2|MIT|
@@ -36,17 +44,25 @@
 |mypy-protobuf|3.4.0|Apache 2.0|
 |nodeenv|1.8.0|BSD|
 |packaging|23.1|Apache 2.0<br/>BSD|
+|parameterized|0.9.0|Simplified BSD|
 |pathspec|0.11.2|Mozilla Public License 2.0 (MPL 2.0)|
 |pbr|5.11.1|Apache 2.0|
 |pip|23.2.1|MIT|
 |pip-tools|7.3.0|BSD|
 |platformdirs|3.10.0|MIT|
+|pluggy|1.3.0|MIT|
 |pre-commit|3.3.3|MIT|
 |protobuf|4.21.12|Google License|
 |pycodestyle|2.11.0|MIT|
 |pyflakes|3.1.0|MIT|
 |Pygments|2.16.1|Simplified BSD|
+|pygount|1.2.4|BSD|
+|pyproject-api|1.6.1|MIT|
 |pyproject-hooks|1.0.0|MIT|
+|pytest|7.4.0|MIT|
+|pytest-asyncio|0.21.1|Apache 2.0|
+|pytest-cov|4.1.0|MIT|
+|pytest-ordering|0.6|MIT|
 |python-dateutil|2.8.2|Apache 2.0<br/>BSD|
 |PyYAML|6.0.1|MIT|
 |rich|13.5.2|MIT|
@@ -55,6 +71,8 @@
 |smmap|5.0.0|BSD|
 |stevedore|5.1.0|Apache 2.0|
 |tomli|2.0.1|MIT|
+|tox|4.11.0|MIT|
+|types-mock|5.1.0.1|Apache 2.0|
 |types-protobuf|4.24.0.1|Apache 2.0|
 |typing-extensions|4.7.1|Python Software Foundation License|
 |virtualenv|20.24.4|MIT|
