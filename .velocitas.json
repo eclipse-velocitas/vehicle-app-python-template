@@ -14,7 +14,7 @@
         },
         {
             "name": "devenv-devcontainer-setup",
-            "version": "v1.4.0"
+            "version": "fix-requirements-install"
         }
     ],
     "variables": {
