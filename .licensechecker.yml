@@ -18,4 +18,7 @@ scan-dirs:
     python-version: 3
     python-pip-included-requirement-files:
       - requirements.txt
+      - .devcontainer/tests/automated_tests/requirements.txt
       - app/requirements.txt
+      - app/tests/requirements.txt
+
