@@ -27,20 +27,8 @@ else
   rm -rf app/
   cp -a $VELOCITAS_EXAMPLES_PATH/$CHOSEN_EXAMPLE/. app/
 
-  pip-compile ./app/requirements.txt
-  pip-sync ./app/requirements.txt
-
-  if [[ -f "./app/requirements.txt" ]]; then
-    pip install -r ./app/requirements.txt
-  fi
-
-  if [[ -f "./app/requirements-links.txt" ]]; then
-    pip install -r ./app/requirements-links.txt
-  fi
-
-  if [[ -f "./app/tests/requirements.txt" ]]; then
-    pip install -r ./app/tests/requirements.txt
-  fi
+  pip-compile -r ./requirements.in
+  pip-sync ./requirements.txt ./app/requirements.txt ./app/tests/requirements.txt
 
   # Generate model referenced by imported example
   velocitas exec vehicle-model-lifecycle generate-model
