@@ -27,7 +27,7 @@ else
   rm -rf app/
   cp -a $VELOCITAS_EXAMPLES_PATH/$CHOSEN_EXAMPLE/. app/
 
-  pip-compile -r ./requirements.in
+  pip-compile -r -q ./requirements.in
   pip-sync ./requirements.txt ./app/requirements.txt ./app/tests/requirements.txt
 
   # Generate model referenced by imported example
