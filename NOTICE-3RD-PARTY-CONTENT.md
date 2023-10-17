@@ -38,7 +38,7 @@
 |packaging|23.1|Apache 2.0<br/>BSD|
 |pathspec|0.11.2|Mozilla Public License 2.0 (MPL 2.0)|
 |pbr|5.11.1|Apache 2.0|
-|pip|23.2.1|MIT|
+|pip|23.3|MIT|
 |pip-tools|7.3.0|BSD|
 |platformdirs|3.10.0|MIT|
 |pre-commit|3.3.3|MIT|
