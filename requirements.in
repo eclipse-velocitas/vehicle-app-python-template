@@ -20,8 +20,6 @@
 ##########################################
 # Development Tools Packages
 ##########################################
-grpcio-tools==1.57.0
-grpc-stubs==1.53.0.2
 mypy-protobuf==3.5.0
 pre-commit==3.3.3
 black==23.7.0
