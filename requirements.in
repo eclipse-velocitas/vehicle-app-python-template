@@ -1,4 +1,4 @@
-# Copyright (c) 2022 Robert Bosch GmbH and Microsoft Corporation
+# Copyright (c) 2022-2023 Robert Bosch GmbH and Microsoft Corporation
 #
 # This program and the accompanying materials are made available under the
 # terms of the Apache License, Version 2.0 which is available at
@@ -20,9 +20,7 @@
 ##########################################
 # Development Tools Packages
 ##########################################
-grpcio-tools==1.57.0
-grpc-stubs==1.53.0.2
-mypy-protobuf==3.4.0
+mypy-protobuf==3.5.0
 pre-commit==3.3.3
 black==23.7.0
 mypy==1.5.1
