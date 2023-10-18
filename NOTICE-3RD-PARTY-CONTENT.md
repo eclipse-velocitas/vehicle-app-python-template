@@ -24,9 +24,7 @@
 |frozenlist|1.4.0|Apache 2.0|
 |gitdb|4.0.10|BSD|
 |GitPython|3.1.37|BSD|
-|grpc-stubs|1.53.0.2|MIT|
 |grpcio|1.59.0|Apache 2.0|
-|grpcio-tools|1.57.0|Apache 2.0|
 |identify|2.5.30|MIT|
 |idna|3.4|BSD|
 |iniconfig|2.0.0|MIT|
