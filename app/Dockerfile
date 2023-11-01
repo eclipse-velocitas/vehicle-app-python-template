@@ -25,7 +25,7 @@ COPY ./app /workspace/app
 
 # FIXME: For build tooling we only need "devenv-devcontainer-setup", we should be able to
 # filter this without manual jq intervention...
-RUN cat ./workspace/.velocitas_org.json | jq 'del(.packages[] | select(.name != "devenv-devcontainer-setup"))' > ./workspace/.velocitas.json
+RUN cat ./workspace/.velocitas_org.json | jq 'del(.packages[] | select(.name|test(".*devenv-devcontainer-setup.*")|not))' > ./workspace/.velocitas.json
 
 # Remove this installation for Arm64 once staticx has a prebuilt wheel for Arm64
 RUN /bin/bash -c 'set -ex && \
@@ -48,7 +48,7 @@ RUN velocitas init
 
 WORKDIR /workspace/app
 
-RUN pyinstaller --clean -F -s src/main.py
+RUN pyinstaller --clean -F -s -p src src/main.py
 
 WORKDIR /workspace/app/dist
 

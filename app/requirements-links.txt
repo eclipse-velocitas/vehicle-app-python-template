@@ -1,1 +1,0 @@
-# velocitas SDK now installed via 'sdk-installer' Velocitas component.

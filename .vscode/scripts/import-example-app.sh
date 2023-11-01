@@ -30,6 +30,9 @@ else
   pip-compile -r -q ./requirements.in
   pip-sync ./requirements.txt ./app/requirements.txt ./app/tests/requirements.txt
 
+  # Re-init velocitas to make sure velocitas-sdk reinstalled. Workaround.
+  
+
   # Generate model referenced by imported example
   velocitas exec vehicle-model-lifecycle generate-model
 

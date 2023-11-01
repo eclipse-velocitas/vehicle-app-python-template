@@ -1,4 +1,4 @@
-# Copyright (c) 2022 Robert Bosch GmbH and Microsoft Corporation
+# Copyright (c) 2022-2023 Robert Bosch GmbH and Microsoft Corporation
 #
 # This program and the accompanying materials are made available under the
 # terms of the Apache License, Version 2.0 which is available at
@@ -18,39 +18,137 @@ import pytest
 from velocitas_sdk.test.inttesthelper import IntTestHelper
 from velocitas_sdk.test.mqtt_util import MqttClient
 
-# GET_SPEED_REQUEST_TOPIC = "sampleapp/getSpeed"
-# GET_SPEED_RESPONSE_TOPIC = "sampleapp/getSpeed/response"
+REQUEST_TOPIC = "seatadjuster/setPosition/request"
+RESPONSE_TOPIC = "seatadjuster/setPosition/response"
 
 
 @pytest.mark.asyncio
-async def test_get_current_speed():
+async def test_set_position_not_allowed():
     mqtt_client = MqttClient()
     inttesthelper = IntTestHelper()
-    print(f"{mqtt_client} can be used when your app compiles succesfully!")
-    print(f"{inttesthelper} can be used when your app compiles succesfully!")
+    request_id = 123
 
-    # When your app compiles succesfully use the inttesthelper to get viable responses
-    response = "{}"
-    # response = await inttesthelper.set_float_datapoint(
-    #     name="Vehicle.Speed", value=0
-    # )
+    payload = {"position": 300, "requestId": request_id}
+    speed_value = 50
+    response = await inttesthelper.set_float_datapoint(
+        name="Vehicle.Speed", value=speed_value
+    )
 
-    # assert len(response.errors) == 0
+    assert len(response.errors) == 0
 
-    # response = mqtt_client.publish_and_wait_for_response(
-    #     request_topic=GET_SPEED_REQUEST_TOPIC,
-    #     response_topic=GET_SPEED_RESPONSE_TOPIC,
-    #     payload={},
-    # )
+    response = mqtt_client.publish_and_wait_for_response(
+        request_topic=REQUEST_TOPIC, response_topic=RESPONSE_TOPIC, payload=payload
+    )
+
+    assert response != ""
 
     body = json.loads(response)
-    # add expected message to get it assert
-    expected_message = "Current Speed = 0.0"
+    error_msg = f"""Not allowed to move seat because vehicle speed
+                is {float(speed_value)} and not 0"""
+    assert body["requestId"] == request_id
+    assert body["result"]["status"] == 1
+    assert body["result"]["message"] == error_msg
 
-    print(f"Received response: {body}")
-    print(f"Expected message: {expected_message}")
 
-    # Uncomment to test the behaviour of the SampleApp as provided by
-    #     the template repository:
-    # assert body["result"]["status"] == 0
-    # assert body["result"]["message"] == expected_message
+# If you want to run the following integration tests,
+# make sure the feedercan is not running in your runtime.
+
+# @pytest.mark.asyncio
+# async def test_set_position_allowed():
+#     mqtt_client = MqttClient()
+#     inttesthelper = IntTestHelper()
+#     request_id = 123
+
+#     payload = {"position": 0, "requestId": request_id}
+
+#     response = await inttesthelper.set_float_datapoint(name="Vehicle.Speed", value=0)
+
+#     assert len(response.errors) == 0
+
+#     response = mqtt_client.publish_and_wait_for_response(
+#         request_topic=REQUEST_TOPIC,
+#         response_topic=RESPONSE_TOPIC,
+#         payload=payload,
+#     )
+
+#     body = json.loads(response)
+#     assert body["result"]["status"] == 0
+
+#     await sleep(1)
+
+#     position = 200
+#     payload = {"position": position, "requestId": request_id}
+
+#     response = mqtt_client.publish_and_wait_for_property(
+#         request_topic=REQUEST_TOPIC,
+#         response_topic="seatadjuster/currentPosition",
+#         payload=payload,
+#         path=["position"],
+#         value=position,
+#     )
+
+#     assert response != ""
+
+#     body = json.loads(response)
+#     assert body["position"] == position
+
+
+# @pytest.mark.asyncio
+# async def test_set_position_lt_0():
+#     mqtt_client = MqttClient()
+#     inttesthelper = IntTestHelper()
+#     request_id = 123
+#     seat_position = -1
+#     payload = {"position": seat_position, "requestId": request_id}
+
+#     response = await inttesthelper.set_float_datapoint(name="Vehicle.Speed", value=0)
+
+#     assert len(response.errors) == 0
+
+#     response = mqtt_client.publish_and_wait_for_response(
+#         request_topic=REQUEST_TOPIC,
+#         response_topic=RESPONSE_TOPIC,
+#         payload=payload,
+#     )
+
+#     assert response != ""
+
+#     body = json.loads(response)
+#     error_msg = (
+#         f"Failed to set the position {seat_position}, "
+#         f"error: Value out of range: {seat_position}"
+#     )
+#     assert body["requestId"] == request_id
+#     assert body["result"]["status"] == 1
+#     assert body["result"]["message"] == error_msg
+
+
+# @pytest.mark.asyncio
+# async def test_set_position__gt_1000():
+#     mqtt_client = MqttClient()
+#     inttesthelper = IntTestHelper()
+#     request_id = 123
+#     seat_position = 10000000001
+#     payload = {"position": seat_position, "requestId": request_id}
+
+#     response = await inttesthelper.set_float_datapoint(name="Vehicle.Speed", value=0)
+
+#     assert len(response.errors) == 0
+
+#     response = mqtt_client.publish_and_wait_for_response(
+#         request_topic=REQUEST_TOPIC,
+#         response_topic=RESPONSE_TOPIC,
+#         payload=payload,
+#     )
+
+#     assert response != ""
+
+#     body = json.loads(response)
+#     error_msg = (
+#         f"Failed to set the position {seat_position}, "
+#         f"error: Value out of range: {seat_position}"
+#     )
+
+#     assert body["requestId"] == request_id
+#     assert body["result"]["status"] == 1
+#     assert body["result"]["message"] == error_msg
