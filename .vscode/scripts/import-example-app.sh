@@ -33,6 +33,10 @@ else
   # Generate model referenced by imported example
   velocitas exec vehicle-model-lifecycle generate-model
 
+  # Install velocitas sdk installer
+  velocitas exec sdk-installer install-deps
+  velocitas exec sdk-installer run
+
   echo "#######################################################"
   echo "Successfully imported $@"
   echo "#######################################################"
