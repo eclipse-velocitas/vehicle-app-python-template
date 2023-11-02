@@ -9,7 +9,9 @@
 		"--privileged"
 	],
 	"containerEnv": {
-		"GITHUB_API_TOKEN": "${localEnv:GITHUB_API_TOKEN}"
+		"GITHUB_API_TOKEN": "${localEnv:GITHUB_API_TOKEN}",
+		"GIT_CONFIG_NAME": "${localEnv:GIT_CONFIG_NAME}",
+		"GIT_CONFIG_EMAIL": "${localEnv:GIT_CONFIG_EMAIL}"
 	},
 	"customizations": {
 		"vscode": {
