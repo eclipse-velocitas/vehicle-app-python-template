@@ -30,12 +30,18 @@ else
   pip-compile -r -q ./requirements.in
   pip-sync ./requirements.txt ./app/requirements.txt ./app/tests/requirements.txt
 
-  # Generate model referenced by imported example
-  velocitas exec vehicle-model-lifecycle generate-model
+  # Workaround to restore dependency on velocitas-sdk and generate new vehicle model
+  sudo rm -rf ~/.velocitas
+  velocitas init
+  velocitas sync
 
-  # Install velocitas sdk installer
-  velocitas exec sdk-installer install-deps
-  velocitas exec sdk-installer run
+  # Generate model referenced by imported example
+  # velocitas exec vehicle-model-lifecycle generate-model
+
+  # Install velocitas-sdk
+  # velocitas exec sdk-installer install-deps
+  # velocitas exec sdk-installer run
+
 
   echo "#######################################################"
   echo "Successfully imported $@"
