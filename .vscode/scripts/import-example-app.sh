@@ -29,7 +29,9 @@ else
   rm -rf app/
   cp -a $VELOCITAS_EXAMPLES_PATH/$CHOSEN_EXAMPLE/. app/
 
+  # Re-compile requirements*.txt (including app and tests one)
   pip-compile -r -q ./requirements.in
+  # Re-intstall necessary packages in DevContainer
   for file in ./requirements.txt ./app/requirements.txt ./app/tests/requirements.txt
   do
       if [ -f $file ]; then
