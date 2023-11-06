@@ -54,9 +54,16 @@ if [ -f $REQUIREMENTS ]; then
     pip3 install -r $REQUIREMENTS
 fi
 
-# add repo to git safe.directory
+# Add repo to git safe.directory
 REPO=$(pwd)
 git config --global --add safe.directory $REPO
+
+# Add git name and email from env variables
+if [[ -n "${GIT_CONFIG_NAME}" && -n "${GIT_CONFIG_EMAIL}" ]]; then
+    git config --global user.name $GIT_CONFIG_NAME
+    git config --global user.email $GIT_CONFIG_EMAIL
+fi
+
 
 echo "#######################################################"
 echo "### VADF package status                             ###"

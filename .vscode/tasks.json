@@ -288,6 +288,20 @@
 			],
 			"problemMatcher": []
 		},
+		{
+			"label": "Kanto Runtime - Show kantUI Dashboard",
+			"detail": "Show dashboard of Kanto Runtime",
+			"type": "shell",
+			"command": "sudo kantui",
+			"group": "none",
+			"presentation": {
+				"reveal": "always",
+				"panel": "dedicated",
+				"clear": true,
+				"close": false
+			},
+			"problemMatcher": []
+		},
 	],
 	"inputs": [
 		{
