@@ -13,6 +13,8 @@
 #
 # SPDX-License-Identifier: Apache-2.0
 
+set -e
+
 VELOCITAS_EXAMPLES_PATH="$(python -c 'import velocitas_examples; print(velocitas_examples.__path__[0])')"
 CHOSEN_EXAMPLE=$@
 
@@ -28,20 +30,16 @@ else
   cp -a $VELOCITAS_EXAMPLES_PATH/$CHOSEN_EXAMPLE/. app/
 
   pip-compile -r -q ./requirements.in
-  pip-sync ./requirements.txt ./app/requirements.txt ./app/tests/requirements.txt
-
-  # Workaround to restore dependency on velocitas-sdk and generate new vehicle model
-  sudo rm -rf ~/.velocitas
-  velocitas init
-  velocitas sync
+  for file in ./requirements.txt ./app/requirements.txt ./app/tests/requirements.txt
+  do
+      if [ -f $file ]; then
+          pip3 install -r $file
+      fi
+  done
 
   # Generate model referenced by imported example
-  # velocitas exec vehicle-model-lifecycle generate-model
-
-  # Install velocitas-sdk
-  # velocitas exec sdk-installer install-deps
-  # velocitas exec sdk-installer run
-
+  velocitas exec vehicle-model-lifecycle download-vspec
+  velocitas exec vehicle-model-lifecycle generate-model
 
   echo "#######################################################"
   echo "Successfully imported $@"
