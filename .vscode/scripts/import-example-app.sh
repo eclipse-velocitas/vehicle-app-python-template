@@ -27,7 +27,7 @@ if [[ `git status --porcelain app/` ]]; then
   echo "######################## WARNING #########################"
 else
   rm -rf app/
-  cp -a $VELOCITAS_EXAMPLES_PATH/$CHOSEN_EXAMPLE/. app/
+  cp -r $VELOCITAS_EXAMPLES_PATH/$CHOSEN_EXAMPLE/. app/
 
   # Re-compile requirements*.txt (including app and tests one)
   pip-compile -r -q ./requirements.in
