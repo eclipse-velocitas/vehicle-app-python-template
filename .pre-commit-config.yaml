@@ -1,4 +1,4 @@
-# Copyright (c) 2022-2023 Robert Bosch GmbH and Microsoft Corporation
+# Copyright (c) 2022-2024 Contributors to the Eclipse Foundation
 #
 # This program and the accompanying materials are made available under the
 # terms of the Apache License, Version 2.0 which is available at
@@ -80,30 +80,38 @@ repos:
     hooks:
       - id: helmlint
 
-# Commented out due to insufficient handling of year range in coyright statements
-#  - repo: https://github.com/Lucas-C/pre-commit-hooks
-#    rev: v1.5.4
-#    hooks:
-#      - id: insert-license
-#        files: '.*\.(py|pyi|yaml|yml|sh|helmignore|dockerignore|gitignore)$'
-#        exclude: .devcontainer/tests
-#        args:
-#          - --license-filepath
-#          - license_header.txt
-#          - --comment-style
-#          - "#"
-#          - --skip-license-insertion-comment=This file is maintained by velocitas CLI, do not modify manually.
-#      - id: insert-license
-#        files: '.*\.(proto)$'
-#        args:
-#          - --license-filepath
-#          - license_header.txt
-#          - --comment-style
-#          - //
-#      - id: insert-license
-#        files: "Dockerfile.*"
-#        args:
-#          - --license-filepath
-#          - license_header.txt
-#          - --comment-style
-#          - "#"
+  - repo: https://github.com/Lucas-C/pre-commit-hooks
+    rev: v1.5.4
+    hooks:
+      - id: insert-license
+        files: '.*\.(py|pyi|yaml|yml|sh|in)$'
+        exclude: .devcontainer/tests
+        args:
+          - --license-filepath
+          - license_header.txt
+          - --comment-style
+          - "#"
+          - --use-current-year
+          - --allow-past-years
+          - --skip-license-insertion-comment=This file is maintained by velocitas CLI, do not modify manually.
+      - id: insert-license
+        files: '.*\.(proto)$'
+        args:
+          - --license-filepath
+          - license_header.txt
+          - --comment-style
+          - //
+          - --use-current-year
+          - --allow-past-years
+          - --skip-license-insertion-comment=This file is maintained by velocitas CLI, do not modify manually.
+          - --skip-license-insertion-comment=!/bin/bash
+      - id: insert-license
+        files: "Dockerfile.*"
+        args:
+          - --license-filepath
+          - license_header.txt
+          - --comment-style
+          - "#"
+          - --use-current-year
+          - --allow-past-years
+          - --skip-license-insertion-comment=This file is maintained by velocitas CLI, do not modify manually.
