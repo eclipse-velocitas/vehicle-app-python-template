@@ -21,12 +21,15 @@ SPDX-License-Identifier: Apache-2.0
 | Kubectl             | https://github.com/kubernetes/kubectl/blob/master/LICENSE                                                        |
 | K9S                 | https://github.com/derailed/k9s/blob/master/LICENSE                                                              |
 | Redis               | https://redis.com/legal/licenses/                                                                                |
-| Mosquitto           | https://github.com/eclipse/mosquitto/blob/master/LICENSE.txt                                                                                                                 |
+| Mosquitto           | https://github.com/eclipse/mosquitto/blob/master/LICENSE.txt                                                     |
 
 ### Development
-| Software |                               License                                |
-| :------: | :------------------------------------------------------------------: |
-|   GRPC   |           https://github.com/grpc/grpc/blob/master/LICENSE           |
+| Software   |                               License                                |
+| :------:   | :------------------------------------------------------------------: |
+|   GRPC     |           https://github.com/grpc/grpc/blob/master/LICENSE           |
+| Pre-Commit | https://github.com/pre-commit/pre-commit/blob/main/LICENSE           |
+| Mypy       | https://github.com/python/mypy/blob/master/LICENSE                   |
+| Ruff       | https://raw.githubusercontent.com/astral-sh/ruff/main/LICENSE        |
 
 ### Further 3rd party licenses used in project
 * [Auto-generated 3rd party licenses](./NOTICE-3RD-PARTY-CONTENT.md)
