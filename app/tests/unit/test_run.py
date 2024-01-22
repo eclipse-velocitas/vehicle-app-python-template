@@ -48,7 +48,8 @@ async def test_for_publish_to_topic():
         VehicleApp, "publish_mqtt_event", new_callable=mock.AsyncMock, return_value=-1
     ):
         response = await VehicleApp.publish_mqtt_event(
-            str("sampleTopic"), get_sample_response_data()  # type: ignore
+            str("sampleTopic"),  # type: ignore
+            get_sample_response_data(),
         )
 
         print(f"Received response: {response}")

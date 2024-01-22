@@ -25,13 +25,6 @@
 				"mypy.targets": [
 					"app"
 				],
-				// Security Linter
-				"python.linting.banditEnabled": true,
-				"python.linting.banditArgs": [
-					"-c setup.cfg"
-				],
-				// Style Checker for Python Docs
-				"python.linting.pydocstyleEnabled": true,
 				"python.analysis.extraPaths": [
 					"./proto",
 					"./src/vehicle_model"
@@ -39,8 +32,12 @@
 				"python.testing.unittestEnabled": false,
 				"python.testing.pytestEnabled": true,
 				"[python]": {
-					// Style Formatter
-					"editor.defaultFormatter": "ms-python.black-formatter"
+					"editor.formatOnSave": true,
+					"editor.codeActionsOnSave": {
+						"source.fixAll": true,
+						"source.organizeImports": true
+					},
+					"editor.defaultFormatter": "charliermarsh.ruff"
 				},
 				"vs-kubernetes": {
 					"vscode-kubernetes.kubectl-path.linux": "/usr/local/bin/kubectl",
@@ -85,10 +82,8 @@
 				"ms-kubernetes-tools.vscode-kubernetes-tools",
 				"matangover.mypy",
 				"augustocdias.tasks-shell-input",
-				"ms-python.isort",
-				"ms-python.flake8",
-				"ms-python.black-formatter",
-				"ms-python.mypy-type-checker"
+				"ms-python.mypy-type-checker",
+				"charliermarsh.ruff"
 			]
 		}
 	},
