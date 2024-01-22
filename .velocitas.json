@@ -14,7 +14,7 @@
         },
         {
             "name": "devenv-devcontainer-setup",
-            "version": "fix/python-linter"
+            "version": "v1.4.6"
         }
     ],
     "variables": {

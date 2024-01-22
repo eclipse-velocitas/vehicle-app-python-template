@@ -26,7 +26,7 @@ SPDX-License-Identifier: Apache-2.0
 ### Development
 | Software   |                               License                                |
 | :------:   | :------------------------------------------------------------------: |
-|   GRPC     |           https://github.com/grpc/grpc/blob/master/LICENSE           |
+| GRPC       |           https://github.com/grpc/grpc/blob/master/LICENSE           |
 | Pre-Commit | https://github.com/pre-commit/pre-commit/blob/main/LICENSE           |
 | Mypy       | https://github.com/python/mypy/blob/master/LICENSE                   |
 | Ruff       | https://raw.githubusercontent.com/astral-sh/ruff/main/LICENSE        |
