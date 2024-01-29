@@ -3,13 +3,12 @@
 ## Python
 | Dependency | Version | License |
 |:-----------|:-------:|--------:|
-|aiohttp|3.8.6|Apache 2.0|
+|aiohttp|3.9.2|Apache 2.0|
 |aiosignal|1.3.1|Apache 2.0|
 |async-timeout|4.0.3|Apache 2.0|
 |attrs|23.1.0|MIT|
 |build|1.0.3|MIT|
 |cfgv|3.4.0|MIT|
-|charset-normalizer|3.3.0|MIT|
 |click|8.1.7|New BSD|
 |cloudevents|1.10.0|Apache 2.0|
 |coverage|7.3.2|Apache 2.0|
