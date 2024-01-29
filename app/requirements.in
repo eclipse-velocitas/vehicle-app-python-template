@@ -16,3 +16,4 @@ grpcio==1.59.0
 protobuf==4.24.4
 dapr==1.11.0
 cloudevents==1.10.0
+aiohttp == 3.9.0
