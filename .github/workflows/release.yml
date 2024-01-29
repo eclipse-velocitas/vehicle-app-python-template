@@ -29,7 +29,7 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v3
 
       - name: Get app-name
         id: export-app-name
@@ -52,7 +52,7 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v3
 
       - id: get_version
         uses: battila7/get-version-action@v2
@@ -60,7 +60,7 @@ jobs:
       - run: echo "Using VehicleApp version ${{ steps.get_version.outputs.version-without-v }} from tag"
 
       - name: Login to GitHub Container Registry
-        uses: docker/login-action@v3
+        uses: docker/login-action@v2
         with:
           registry: ghcr.io
           username: ${{ github.repository_owner }}
@@ -68,7 +68,7 @@ jobs:
 
       - id: github-repository-name-case-adjusted
         name: Prepare repository name in lower case for docker upload.
-        uses: ASzc/change-string-case-action@v6
+        uses: ASzc/change-string-case-action@v5
         with:
           string: ${{ github.repository }}
 
@@ -123,10 +123,10 @@ jobs:
       APP_NAME: ${{ needs.get-app-name.outputs.app_name }}
       TEST_RESULT_FOLDER_NAME: test-results
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v3
 
       - name: Clone Release Documentation Action repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v3
         with:
           repository: eclipse-velocitas/release-documentation-action
           path: "./.github/actions"

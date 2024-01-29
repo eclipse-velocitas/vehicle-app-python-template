@@ -34,10 +34,10 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v3
 
       - name: Clone License Check Repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v3
         with:
           repository: eclipse-velocitas/license-check
           ref: v1.2.3
@@ -64,7 +64,7 @@ jobs:
           java -jar dash.jar clearlydefined.input -summary DEPENDENCIES
 
       - name: Upload dash input/output as artifacts
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v3
         if: always()
         with:
           name: "dash-artifacts"

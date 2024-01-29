@@ -29,9 +29,9 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v3
 
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@v4
         with:
           python-version: "3.10"
 
@@ -46,7 +46,7 @@ jobs:
 
       - id: github-repository-name-case-adjusted
         name: Prepare repository name in lower case for docker upload.
-        uses: ASzc/change-string-case-action@v6
+        uses: ASzc/change-string-case-action@v5
         with:
           string: ${{ github.repository }}
 
