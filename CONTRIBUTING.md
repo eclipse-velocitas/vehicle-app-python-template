@@ -22,12 +22,8 @@ For more information, please see the Eclipse Committer Handbook:
 https://www.eclipse.org/projects/handbook/#resources-commit
 
 ## Code Style Guide
-* Use [Black](https://black.readthedocs.io/) to format your code.
-* Use [isort](https://isort.readthedocs.io/) to sort imports.
-* Use [pydocstyle](https://pydocstyle.readthedocs.io/) to check for PEP-8 style issues.
-* Use [bandit](https://pypi.org/project/bandit/) to check security issues.
+* Use [Ruff](https://docs.astral.sh/ruff/) to format your code.
 * Use [mypy](https://mypy.readthedocs.io/) to check for type errors.
-* Use [flake8](https://flake8.readthedocs.io/) to check for style issues.
 * Above and other tools will run automatically if you install
  [pre-commit](https://pre-commit.com/) using the instructions below.
 

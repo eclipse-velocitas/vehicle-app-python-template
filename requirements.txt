@@ -4,42 +4,22 @@
 #
 #    pip-compile
 #
-bandit==1.7.5
-    # via -r requirements.in
-black==23.7.0
-    # via -r requirements.in
 build==1.0.3
     # via pip-tools
 cfgv==3.4.0
     # via pre-commit
 click==8.1.7
-    # via
-    #   black
-    #   pip-tools
+    # via pip-tools
 distlib==0.3.7
     # via virtualenv
 filelock==3.12.4
     # via virtualenv
-flake8==6.1.0
-    # via -r requirements.in
-gitdb==4.0.10
-    # via gitpython
-gitpython==3.1.37
-    # via bandit
 identify==2.5.30
     # via pre-commit
-markdown-it-py==3.0.0
-    # via rich
-mccabe==0.7.0
-    # via flake8
-mdurl==0.1.2
-    # via markdown-it-py
 mypy==1.5.1
     # via -r requirements.in
 mypy-extensions==1.0.0
-    # via
-    #   black
-    #   mypy
+    # via mypy
 mypy-protobuf==3.5.0
     # via -r requirements.in
 nodeenv==1.8.0
@@ -48,46 +28,24 @@ packaging==23.2
     # via
     #   -c app/requirements.txt
     #   -c app/tests/requirements.txt
-    #   black
     #   build
-pathspec==0.11.2
-    # via black
-pbr==5.11.1
-    # via stevedore
 pip-tools==7.3.0
     # via -r requirements.in
 platformdirs==3.11.0
-    # via
-    #   black
-    #   virtualenv
+    # via virtualenv
 pre-commit==3.3.3
     # via -r requirements.in
 protobuf==4.24.4
     # via
     #   -c app/requirements.txt
     #   mypy-protobuf
-pycodestyle==2.11.0
-    # via flake8
-pyflakes==3.1.0
-    # via flake8
-pygments==2.16.1
-    # via rich
 pyproject-hooks==1.0.0
     # via build
 pyyaml==6.0.1
-    # via
-    #   bandit
-    #   pre-commit
-rich==13.6.0
-    # via bandit
-smmap==5.0.1
-    # via gitdb
-stevedore==5.1.0
-    # via bandit
+    # via pre-commit
 tomli==2.0.1
     # via
     #   -c app/tests/requirements.txt
-    #   black
     #   build
     #   mypy
     #   pip-tools
