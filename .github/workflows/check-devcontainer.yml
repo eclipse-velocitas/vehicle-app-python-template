@@ -1,5 +1,5 @@
 # This file is maintained by velocitas CLI, do not modify manually. Change settings in .velocitas.json
-# Copyright (c) 2023 Robert Bosch GmbH
+# Copyright (c) 2023-2024 Contributors to the Eclipse Foundation
 #
 # This program and the accompanying materials are made available under the
 # terms of the Apache License, Version 2.0 which is available at
@@ -27,14 +27,13 @@ on:
   schedule:
     - cron: "0 4 * * *"
 
-
 jobs:
   automated-tests:
     runs-on: ubuntu-22.04
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Build devcontainer and run automated tests
         uses: devcontainers/ci@v0.3
@@ -44,7 +43,7 @@ jobs:
             pytest -sx .devcontainer/tests
 
       - name: Upload logs
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         if: always()
         with:
           name: logs
