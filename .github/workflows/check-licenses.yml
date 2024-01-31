@@ -54,6 +54,7 @@ jobs:
       - name: Setup Java JDK
         uses: actions/setup-java@v4
         with:
+          distribution: 'temurin'
           java-version: 11.0.19
 
       - name: Run dash
