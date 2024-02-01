@@ -55,6 +55,18 @@
 			"problemMatcher": []
 		},
 		{
+			"label": "Local Runtime - Down",
+			"detail": "Stops the local runtime",
+			"type": "shell",
+			"command": "velocitas exec runtime-local down",
+			"group": "none",
+			"presentation": {
+				"panel": "dedicated",
+				"clear": true,
+			},
+			"problemMatcher": []
+		},
+		{
 			"label": "Local Runtime - Run VehicleApp",
 			"detail": "Starts the VehicleApp under development (including Dapr sidecar if middleware type is Dapr)",
 			"type": "shell",
