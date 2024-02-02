@@ -2,7 +2,7 @@
     "packages": [
         {
             "name": "devenv-runtimes",
-            "version": "fix/local-runtime"
+            "version": "v2.2.6"
         },
         {
             "name": "devenv-github-workflows",
