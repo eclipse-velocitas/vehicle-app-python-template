@@ -6,7 +6,7 @@
         },
         {
             "name": "devenv-github-workflows",
-            "version": "hotfix/ci"
+            "version": "v4.1.4"
         },
         {
             "name": "devenv-github-templates",
