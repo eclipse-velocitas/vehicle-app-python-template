@@ -29,7 +29,7 @@
 |nodeenv|1.8.0|BSD|
 |packaging|23.2|Apache 2.0<br/>BSD|
 |parameterized|0.9.0|Simplified BSD|
-|pip|23.3.2|MIT|
+|pip|24.0|MIT|
 |pip-tools|7.3.0|BSD|
 |platformdirs|3.11.0|MIT|
 |pluggy|1.3.0|MIT|
@@ -77,4 +77,5 @@
 |mikepenz/action-junit-report|v4|Apache License 2.0|
 |peaceiris/actions-gh-pages|v3|MIT License|
 |peaceiris/actions-hugo|v2|MIT License|
+|pre-commit/action|v3.0.0|MIT License|
 |softprops/action-gh-release|v1|MIT License|
