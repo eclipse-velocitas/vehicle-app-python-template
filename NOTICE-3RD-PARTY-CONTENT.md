@@ -3,7 +3,7 @@
 ## Python
 | Dependency | Version | License |
 |:-----------|:-------:|--------:|
-|aiohttp|3.9.2|Apache 2.0|
+|aiohttp|3.9.3|Apache 2.0|
 |aiosignal|1.3.1|Apache 2.0|
 |async-timeout|4.0.3|Apache 2.0|
 |attrs|23.1.0|MIT|
