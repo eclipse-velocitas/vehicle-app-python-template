@@ -40,8 +40,8 @@ else
   done
 
   # Generate model referenced by imported example
-  velocitas exec vehicle-model-lifecycle download-vspec
-  velocitas exec vehicle-model-lifecycle generate-model
+  velocitas exec vehicle-signal-interface download-vspec
+  velocitas exec vehicle-signal-interface generate-model
 
   echo "#######################################################"
   echo "Successfully imported $@"

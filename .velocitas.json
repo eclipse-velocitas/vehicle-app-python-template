@@ -14,7 +14,7 @@
         },
         {
             "name": "devenv-devcontainer-setup",
-            "version": "v1.4.7"
+            "version": "v1.5.1"
         }
     ],
     "variables": {
