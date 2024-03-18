@@ -9,7 +9,18 @@
             "type": "python",
             "justMyCode": false,
             "request": "launch",
-            "name": "VehicleApp",
+            "name": "VehicleApp (native middleware)",
+            "program": "${workspaceFolder}/app/src/main.py",
+            "console": "integratedTerminal",
+            "env": {
+                "SDV_MIDDLEWARE_TYPE": "native"
+            }
+        },
+        {
+            "type": "python",
+            "justMyCode": false,
+            "request": "launch",
+            "name": "VehicleApp (Dapr middleware)",
             "program": "${workspaceFolder}/app/src/main.py",
             "console": "integratedTerminal",
             "preLaunchTask": "dapr-sidecar-start",

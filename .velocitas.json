@@ -2,7 +2,7 @@
     "packages": [
         {
             "name": "devenv-runtimes",
-            "version": "v2.2.6"
+            "version": "use_native_mw"
         },
         {
             "name": "devenv-github-workflows",
