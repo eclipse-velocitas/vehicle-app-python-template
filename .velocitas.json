@@ -2,7 +2,7 @@
     "packages": [
         {
             "name": "devenv-runtimes",
-            "version": "use_native_mw"
+            "version": "remove_k3d_and_dapr"
         },
         {
             "name": "devenv-github-workflows",
@@ -14,7 +14,7 @@
         },
         {
             "name": "devenv-devcontainer-setup",
-            "version": "v1.5.1"
+            "version": "remove_k3d_and_dapr"
         }
     ],
     "variables": {
