@@ -6,7 +6,7 @@
         },
         {
             "name": "devenv-github-workflows",
-            "version": "v4.1.4"
+            "version": "remove_k3d_and_dapr"
         },
         {
             "name": "devenv-github-templates",

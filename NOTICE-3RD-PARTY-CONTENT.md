@@ -72,7 +72,6 @@
 |docker/setup-qemu-action|v3|Apache License 2.0|
 |fountainhead/action-wait-for-check|v1.1.0|MIT License|
 |haya14busa/action-cond|v1|MIT License|
-|Homebrew/actions|master|BSD 2-Clause "Simplified" License|
 |irongut/CodeCoverageSummary|v1.3.0|MIT License|
 |mikepenz/action-junit-report|v4|Apache License 2.0|
 |peaceiris/actions-gh-pages|v3|MIT License|

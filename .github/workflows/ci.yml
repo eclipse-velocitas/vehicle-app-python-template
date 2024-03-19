@@ -196,7 +196,7 @@ jobs:
           name: ${{ env.VAPP_IMAGE }}
           path: ./.github/scripts/
 
-      - name: Deploy images
+      - name: Deploy image
         working-directory: ./.github/scripts
         run: ./deploy_image_from_artifact.sh
 
