@@ -173,27 +173,3 @@ jobs:
           name: AppManifest
           path: ./app/AppManifest.json
           if-no-files-found: error
-
-      - name: Generate podspec.yaml
-        run: |
-          velocitas exec runtime-k3d generate-podspec
-
-      - name: "${{ env.APP_NAME }} -- Upload generated podspec.yaml"
-        if: ${{ steps.image_build.outcome == 'success' }}
-        uses: actions/upload-artifact@v4
-        with:
-          name: Podspec
-          path: ./podspec.yaml
-          if-no-files-found: error
-
-      - name: Generate helm chart
-        run: |
-          velocitas exec runtime-k3d generate-helm
-
-      - name: "${{ env.APP_NAME }} -- Upload generated helm chart"
-        if: ${{ steps.image_build.outcome == 'success' }}
-        uses: actions/upload-artifact@v4
-        with:
-          name: HelmChart
-          path: ./helm
-          if-no-files-found: error
