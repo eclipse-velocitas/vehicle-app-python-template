@@ -10,7 +10,7 @@
         },
         {
             "name": "devenv-github-templates",
-            "version": "v1.0.3"
+            "version": "remove_k3d_and_dapr"
         },
         {
             "name": "devenv-devcontainer-setup",
