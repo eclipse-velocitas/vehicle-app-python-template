@@ -6,7 +6,9 @@
             "type": "vehicle-signal-interface",
             "config": {
                 "src": "https://github.com/COVESA/vehicle_signal_specification/releases/download/v3.0/vss_rel_3.0.json",
-                "unit_src": "https://github.com/COVESA/vehicle_signal_specification/blob/v4.0/spec/units.yaml",
+                "unit_src": [
+                    "https://github.com/COVESA/vehicle_signal_specification/blob/v4.0/spec/units.yaml"
+                ]
                 "datapoints": {
                     "required": [
                         {
