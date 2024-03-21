@@ -12,7 +12,6 @@
 |click|8.1.7|New BSD|
 |cloudevents|1.10.0|Apache 2.0|
 |coverage|7.3.2|Apache 2.0|
-|dapr|1.11.0|Apache 2.0|
 |deprecation|2.1.0|Apache 2.0|
 |distlib|0.3.7|Python Software Foundation License|
 |exceptiongroup|1.1.3|MIT|
@@ -40,10 +39,8 @@
 |pytest-asyncio|0.21.1|Apache 2.0|
 |pytest-cov|4.1.0|MIT|
 |pytest-ordering|0.6|MIT|
-|python-dateutil|2.8.2|Apache 2.0<br/>BSD|
 |PyYAML|6.0.1|MIT|
 |setuptools|58.1.0|MIT|
-|six|1.16.0|MIT|
 |tomli|2.0.1|MIT|
 |types-mock|5.1.0.2|Apache 2.0|
 |types-protobuf|4.24.0.2|Apache 2.0|
