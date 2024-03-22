@@ -15,17 +15,13 @@
 # syntax=docker/dockerfile:1.2
 
 # Build stage, to create the executable
-FROM --platform=$TARGETPLATFORM ghcr.io/eclipse-velocitas/devcontainer-base-images/python:v0.2 as builder
+FROM --platform=$TARGETPLATFORM ghcr.io/eclipse-velocitas/devcontainer-base-images/python:v0.3 as builder
 ARG TARGETARCH
 
 RUN apt-get update && apt-get install -y python3-dev
 
-COPY ./.velocitas.json /workspace/.velocitas_org.json
+COPY ./.velocitas.json /workspace/.velocitas.json
 COPY ./app /workspace/app
-
-# FIXME: For build tooling we only need "devenv-devcontainer-setup", we should be able to
-# filter this without manual jq intervention...
-RUN cat ./workspace/.velocitas_org.json | jq 'del(.packages[] | select(.name != "devenv-devcontainer-setup"))' > ./workspace/.velocitas.json
 
 # Remove this installation for Arm64 once staticx has a prebuilt wheel for Arm64
 RUN /bin/bash -c 'set -ex && \
