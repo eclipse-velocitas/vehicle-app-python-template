@@ -18,6 +18,10 @@
 MOCKED_SPEED = 0.0
 
 
+def test_dummy():
+    pass
+
+
 # @pytest.mark.asyncio
 # async def test_for_get_speed():
 #     result = TypedDataPointResult("foo", MOCKED_SPEED, Timestamp(seconds=10, nanos=0))
