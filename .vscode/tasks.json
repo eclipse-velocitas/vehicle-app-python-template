@@ -2,47 +2,6 @@
 	"version": "2.0.0",
 	"tasks": [
 		{
-			"label": "dapr-sidecar-start",
-			"detail": "Start Dapr sidecar (with dapr run) to be present for debugging the VehicleApp (used by launch config).",
-			"type": "shell",
-			"command": "velocitas exec runtime-local run-dapr-sidecar vehicleapp --app-port 50008 --dapr-grpc-port 50001 --dapr-http-port 3500",
-			"group": "none",
-			"isBackground": true,
-			"presentation": {
-				"close": true,
-				"reveal": "never"
-			},
-			"problemMatcher": {
-				"pattern": [
-					{
-						"regexp": ".",
-						"file": 1,
-						"location": 2,
-						"message": 3
-					}
-				],
-				"background": {
-					"activeOnStart": true,
-					"beginsPattern": "^You're up and running! Dapr logs will appear here.",
-					"endsPattern": "."
-				}
-			},
-			"hide": true
-		},
-		{
-			"label": "dapr-sidecar-stop",
-			"detail": "Stop Dapr sidecar after finish debugging the VehicleApp (used by launch config).",
-			"type": "shell",
-			"command": [
-				"dapr stop --app-id vehicleapp"
-			],
-			"presentation": {
-				"close": true,
-				"reveal": "never"
-			},
-			"hide": true
-		},
-		{
 			"label": "Local Runtime - Up",
 			"detail": "Starts up the local runtime",
 			"type": "shell",
@@ -68,14 +27,15 @@
 		},
 		{
 			"label": "Local Runtime - Run VehicleApp",
-			"detail": "Starts the VehicleApp under development (including Dapr sidecar if middleware type is Dapr)",
+			"detail": "Starts the VehicleApp under development",
 			"type": "shell",
 			"command": [
-				"velocitas exec runtime-local run-vehicle-app --dapr-app-id vehicleapp --dapr-app-port 50008 python3 ${workspaceFolder}/app/src/main.py"
+				"velocitas exec runtime-local run-vehicle-app python3 ${workspaceFolder}/app/src/main.py"
 			],
 			"presentation": {
 				"panel": "dedicated",
-				"clear": true,
+				"close": false,
+				"reveal": "always"
 			},
 			"problemMatcher": []
 		},
@@ -97,82 +57,6 @@
 			"type": "shell",
 			"command": "pre-commit run --show-diff-on-failure --color=always --all-files",
 			"group": "none",
-			"problemMatcher": []
-		},
-		{
-			"label": "K3D Runtime - Up",
-			"detail": "Starts up the K3D runtime.",
-			"type": "shell",
-			"command": "velocitas exec runtime-k3d up",
-			"group": "none",
-			"presentation": {
-				"reveal": "always",
-				"clear": true,
-				"close": false
-			},
-			"problemMatcher": []
-		},
-		{
-			"label": "K3D Runtime - Down",
-			"detail": "Stops the K3D runtime",
-			"type": "shell",
-			"command": "velocitas exec runtime-k3d down",
-			"group": "none",
-			"presentation": {
-				"reveal": "always",
-				"clear": true,
-				"close": false
-			},
-			"problemMatcher": []
-		},
-		{
-			"label": "K3D Runtime - Build VehicleApp",
-			"detail": "Builds the VehicleApp and pushes it to the local K3D registry.",
-			"type": "shell",
-			"command": "velocitas exec deployment-k3d build-vehicleapp",
-			"group": "none",
-			"presentation": {
-				"reveal": "always",
-				"panel": "dedicated",
-				"clear": true,
-				"close": false
-			},
-			"problemMatcher": []
-		},
-		{
-			"label": "K3D Runtime - Deploy VehicleApp",
-			"detail": "Builds and deploys the VehicleApp via Helm to the K3D cluster.",
-			"type": "shell",
-			"command": "velocitas exec deployment-k3d deploy-vehicleapp",
-			"group": "none",
-			"presentation": {
-				"reveal": "always",
-				"panel": "dedicated",
-				"clear": true,
-				"close": false
-			},
-			"dependsOn": [
-				"K3D Runtime - Up",
-				// not neccessary but is executed in parallel to Runtime - Up
-				"K3D Runtime - Build VehicleApp"
-			],
-			"problemMatcher": []
-		},
-		{
-			"label": "K3D Runtime - Deploy VehicleApp (without rebuild)",
-			"detail": "Deploys the VehicleApp via Helm to the K3D cluster (without rebuilding it)",
-			"type": "shell",
-			"command": "velocitas exec deployment-k3d deploy-vehicleapp",
-			"group": "none",
-			"presentation": {
-				"reveal": "always",
-				"panel": "dedicated",
-				"clear": true,
-				"close": false
-			},
-			"dependsOn": [
-				"K3D Runtime - Up"
-			],
 			"problemMatcher": []
 		},
 		{

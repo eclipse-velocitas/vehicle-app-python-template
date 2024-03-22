@@ -354,9 +354,6 @@ MigrationBackup/
 # build results temp folder
 results/
 
-# get_helm.sh script
-get_helm.sh
-
 # Don't commit runtime binaries
 .vscode/**/assets
 
@@ -368,5 +365,3 @@ venv/
 
 # generated files
 gen/
-helm/
-podspec.yaml

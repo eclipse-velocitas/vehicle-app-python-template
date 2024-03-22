@@ -12,13 +12,10 @@
             "name": "VehicleApp",
             "program": "${workspaceFolder}/app/src/main.py",
             "console": "integratedTerminal",
-            "preLaunchTask": "dapr-sidecar-start",
-            "postDebugTask": "dapr-sidecar-stop",
             "env": {
-                "APP_PORT": "50008",
-                "DAPR_HTTP_PORT": "3500",
-                "DAPR_GRPC_PORT": "50001",
-                "VEHICLEDATABROKER_DAPR_APP_ID": "vehicledatabroker"
+                "SDV_MIDDLEWARE_TYPE": "native",
+                "SDV_VEHICLEDATABROKER_ADDRESS": "grpc://127.0.0.1:55555",
+                "SDV_MQTT_ADDRESS": "mqtt://127.0.0.1:1883"
             }
         }
     ]

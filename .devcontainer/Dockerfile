@@ -12,12 +12,7 @@
 #
 # SPDX-License-Identifier: Apache-2.0
 
-FROM ghcr.io/eclipse-velocitas/devcontainer-base-images/python:v0.2
-
-# Force dapr to use localhost traffic
-ENV DAPR_HOST_IP="127.0.0.1"
-# Add daprd to the path for the VS Code Dapr extension.
-ENV PATH=$PATH:/home/vscode/.dapr/bin
+FROM ghcr.io/eclipse-velocitas/devcontainer-base-images/python:v0.3
 
 ENV DOCKER_BUILDKIT=1
 

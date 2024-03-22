@@ -32,7 +32,7 @@ on:
 jobs:
   unit-tests:
     runs-on: ubuntu-22.04
-    container: ghcr.io/eclipse-velocitas/devcontainer-base-images/python:v0.2
+    container: ghcr.io/eclipse-velocitas/devcontainer-base-images/python:v0.3
     name: Run unit tests and linters
 
     steps:
@@ -150,6 +150,7 @@ jobs:
   run-integration-tests:
     name: Run Integration Tests (${{ needs.get-app-name.outputs.app_name }})
     runs-on: ubuntu-22.04
+    container: ghcr.io/eclipse-velocitas/devcontainer-base-images/python:v0.3
     needs: [get-app-name, build-image-amd64]
     env:
       APP_NAME: ${{ needs.get-app-name.outputs.app_name }}
@@ -157,18 +158,12 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - uses: actions/setup-python@v5
-        with:
-          python-version: "3.10"
-
       - uses: de-vri-es/setup-git-credentials@v2
         with:
           credentials: https://user:${{ secrets.GITHUB_TOKEN }}@github.com/
 
       - name: Init velocitas project
         run: |
-          sudo curl -L https://github.com/eclipse-velocitas/cli/releases/latest/download/velocitas-linux-x64 -o /usr/bin/velocitas
-          sudo chmod +x /usr/bin/velocitas
           velocitas init
 
       - name: Login to GitHub Container Registry
@@ -178,20 +173,14 @@ jobs:
           username: ${{ github.repository_owner }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Set up Homebrew
-        id: set-up-homebrew
-        uses: Homebrew/actions/setup-homebrew@master
-
       - name: Install required packages
         run: |
           pip install -r ./app/requirements.txt
           pip install -r ./app/requirements-links.txt
           pip install -r ./app/tests/requirements.txt
-          brew install k3d kubernetes-cli helm
-          sudo wget -q https://raw.githubusercontent.com/dapr/cli/master/install/install.sh -O - | /bin/bash -s 1.10.0
 
-      - name: Configure K3D cluster and install runtime containers in K3D cluster
-        run: velocitas exec runtime-k3d up
+      - name: Configure Kanto and start runtime containers
+        run: velocitas exec runtime-kanto up
 
       - id: github-repository-name-case-adjusted
         name: Prepare repository name in lower case for docker upload. This supports repository names in mixed case
@@ -207,15 +196,15 @@ jobs:
           name: ${{ env.VAPP_IMAGE }}
           path: ./.github/scripts/
 
-      - name: Deploy images
+      - name: Deploy image
         working-directory: ./.github/scripts
         run: ./deploy_image_from_artifact.sh
 
       - name: Run Python integration tests
         shell: bash
         env:
-          VDB_PORT: 30555
-          MQTT_PORT: 31883
+          VDB_PORT: 55555
+          MQTT_PORT: 1883
         run: |
           pip install -r app/tests/requirements.txt
           pytest ./app/tests/integration --override-ini junit_family=xunit1 --junit-xml=./results/IntTest/junit.xml

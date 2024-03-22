@@ -14,13 +14,7 @@ SPDX-License-Identifier: Apache-2.0
 
 | Software            | License                                                                                                          |
 | :------------------ | :--------------------------------------------------------------------------------------------------------------- |
-| Dapr                | https://github.com/dapr/dapr/blob/master/LICENSE                                                                 |
 | Python              | https://docs.python.org/3/license.html                                                                           |
-| Helm                | https://github.com/helm/helm/blob/main/LICENSE                                                                   |
-| K3d                 | https://github.com/rancher/k3d/blob/main/LICENSE                                                                 |
-| Kubectl             | https://github.com/kubernetes/kubectl/blob/master/LICENSE                                                        |
-| K9S                 | https://github.com/derailed/k9s/blob/master/LICENSE                                                              |
-| Redis               | https://redis.com/legal/licenses/                                                                                |
 | Mosquitto           | https://github.com/eclipse/mosquitto/blob/master/LICENSE.txt                                                     |
 
 ### Development

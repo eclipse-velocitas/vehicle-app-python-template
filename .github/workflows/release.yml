@@ -101,19 +101,12 @@ jobs:
           echo "Copy vApp image $VAPP_IMAGE to '$tag'"
           skopeo copy --all  oci-archive:$VAPP_IMAGE "$tag"
 
-      - name: zip HelmChart
-        run: |
-          cd ${{github.workspace}}/HelmChart
-          zip -r ${{github.workspace}}/HelmChart.zip .
-
       - name: ${{ env.APP_NAME }} -- Upload assets
         uses: softprops/action-gh-release@v1
         if: startsWith(github.ref, 'refs/tags/')
         with:
           files: |
             ${{github.workspace}}/AppManifest/AppManifest.json
-            ${{github.workspace}}/Podspec/podspec.yaml
-            ${{github.workspace}}/HelmChart.zip
 
   release-documentation:
     name: Generate release documentation
