@@ -2,7 +2,7 @@
     "packages": [
         {
             "repo": "devenv-runtimes",
-            "version": "v3.0.0"
+            "version": "update_kuksa"
         },
         {
             "repo": "devenv-github-workflows",
@@ -13,8 +13,8 @@
             "version": "v1.0.4"
         },
         {
-            "repo": "devenv-devcontainer-setup",
-            "version": "v2.0.0"
+            "repo": "https://github.com/SoftwareDefinedVehicle/devenv-devcontainer-setup.git",
+            "version": "update/vss_4"
         }
     ],
     "components": [
