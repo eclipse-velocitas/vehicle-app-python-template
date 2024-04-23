@@ -45,3 +45,15 @@ jobs:
     with:
       platform: multiarch
       app_name: ${{ needs.get-app-name.outputs.app_name }}
+
+  merge-test-results:
+    runs-on: ubuntu-latest
+    name: Merge Trivy results
+    needs: build-image-multiarch
+    steps:
+      - name: Merge Artifacts
+        uses: actions/upload-artifact/merge@v4
+        with:
+          delete-merged: true
+          name: test-results-trivy
+          pattern: test-results-*

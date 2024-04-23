@@ -13,7 +13,7 @@
 #
 # SPDX-License-Identifier: Apache-2.0
 
-name: Build Docker Image for single arch
+name: Generate desired state
 
 on:
   workflow_call:
@@ -26,6 +26,7 @@ jobs:
   gen-desired-state:
     name: "Generate desired state for ${{ inputs.app_name }}"
     runs-on: ubuntu-22.04
+    container: ghcr.io/eclipse-velocitas/devcontainer-base-images/python:v0.3
 
     steps:
       - name: Checkout repository
@@ -59,7 +60,7 @@ jobs:
           velocitas exec pantaris-integration generate-desired-state -s $(echo $REGISTRY/${{ inputs.app_name }}:$VAPP_VERSION | tr '[:upper:]' '[:lower:]')
 
       - name: Upload desired state manifest
-        uses: softprops/action-gh-release@v1
+        uses: softprops/action-gh-release@v2
         if: startsWith(github.ref, 'refs/tags/')
         with:
           files: |

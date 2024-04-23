@@ -57,7 +57,7 @@
 |actions/setup-node|v4|MIT License|
 |actions/setup-python|v5|MIT License|
 |actions/upload-artifact|v4|MIT License|
-|aquasecurity/trivy-action|0.11.2|Apache License 2.0|
+|aquasecurity/trivy-action|0.19.0|Apache License 2.0|
 |ASzc/change-string-case-action|v6|ISC License|
 |battila7/get-version-action|v2|MIT License|
 |dawidd6/action-download-artifact|v3|MIT License|
@@ -67,11 +67,11 @@
 |docker/login-action|v3|Apache License 2.0|
 |docker/setup-buildx-action|v3|Apache License 2.0|
 |docker/setup-qemu-action|v3|Apache License 2.0|
-|fountainhead/action-wait-for-check|v1.1.0|MIT License|
+|fountainhead/action-wait-for-check|v1.2.0|MIT License|
 |haya14busa/action-cond|v1|MIT License|
 |irongut/CodeCoverageSummary|v1.3.0|MIT License|
 |mikepenz/action-junit-report|v4|Apache License 2.0|
 |peaceiris/actions-gh-pages|v3|MIT License|
 |peaceiris/actions-hugo|v2|MIT License|
 |pre-commit/action|v3.0.0|MIT License|
-|softprops/action-gh-release|v1|MIT License|
+|softprops/action-gh-release|v2|MIT License|

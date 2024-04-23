@@ -30,6 +30,8 @@ jobs:
     name: "Building image (${{ inputs.app_name }})"
     runs-on: ubuntu-22.04
     container: ghcr.io/eclipse-velocitas/devcontainer-base-images/python:v0.3
+    outputs:
+      archs: ${{ steps.inspect_tar.outputs.archs }}
     env:
       APP_NAME: ${{ inputs.app_name }}
 
@@ -77,11 +79,11 @@ jobs:
           if [ ${{ inputs.platform }} = "multiarch" ]; then
             echo "Build Multiarch"
             echo "platforms=linux/amd64, linux/arm64" >> $GITHUB_OUTPUT
-            echo "type=oci,dest=./${{ env.APP_NAME }}.tar" >> $GITHUB_OUTPUT
+            echo "type=oci,dest=./${{ env.APP_NAME }}-${{inputs.platform}}.tar" >> $GITHUB_OUTPUT
           else
             echo "Build ${{inputs.platform}}"
             echo "platforms=linux/${{ inputs.platform }}" >> $GITHUB_OUTPUT
-            echo "type=docker,dest=./${{ env.APP_NAME }}.tar" >> $GITHUB_OUTPUT
+            echo "type=docker,dest=./${{ env.APP_NAME }}-${{inputs.platform}}.tar" >> $GITHUB_OUTPUT
           fi
         shell: bash
 
@@ -109,15 +111,91 @@ jobs:
           sudo apt-get -y install skopeo
 
       - name: "${{ env.APP_NAME }} -- Inspect tar image with skopeo"
+        id: inspect_tar
         run: |
-          skopeo inspect --raw oci-archive:${{ env.APP_NAME }}.tar | jq
-          skopeo inspect oci-archive:${{ env.APP_NAME }}.tar
-          skopeo copy oci-archive:${{ env.APP_NAME }}.tar docker-archive:${{ env.APP_NAME }}-arch.tar
+          skopeo inspect --raw oci-archive:${{ env.APP_NAME }}-${{inputs.platform}}.tar | jq
+          skopeo inspect oci-archive:${{ env.APP_NAME }}-${{inputs.platform}}.tar
+          archs_array=""
+          for arch in $(echo ${{ steps.set_args.outputs.platforms }} | tr -d "linux\/,"); do
+            skopeo copy --override-arch $arch oci-archive:${{ env.APP_NAME }}-${{inputs.platform}}.tar docker-archive:${{ env.APP_NAME }}_$arch.tar
+            archs_array="$archs_array $arch"
+          done
+          json_array=$(echo "$archs_array" | jq -R 'sub("^ "; "") | split(" ")' )
+          echo "archs=$(jq -cn --argjson archs "$json_array" '{arch: $archs}')" >> $GITHUB_OUTPUT
+
+      - name: "${{ env.APP_NAME }} -- Get Native Binaries from image"
+        run: |
+          for arch in $(echo ${{ steps.set_args.outputs.platforms }} | tr -d "linux\/,"); do
+            image=$(docker load -i ${{ env.APP_NAME }}_$arch.tar | cut -d ':' -f 3)
+            id=$(docker create $image --platform linux/$arch)
+            mkdir -p ./out
+            app_name=$(echo ${{ env.APP_NAME }}_$arch | tr '[:upper:]' '[:lower:]')
+            docker cp $id:/app ./out/$app_name
+          done
+
+      - name: "${{ env.APP_NAME }} -- Upload app"
+        uses: actions/upload-artifact@v4
+        with:
+          name: binaries
+          path: |
+            out/*
+
+      - name: "${{ env.APP_NAME }} -- Upload oci compliant image to artifacts"
+        if: ${{ steps.image_build.outcome == 'success' }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ env.APP_NAME }}-${{ inputs.platform }}-oci-archive
+          path: ./${{ env.APP_NAME }}-*.tar
+          if-no-files-found: error
+
+      - name: "${{ env.APP_NAME }} -- Upload docker image to artifacts"
+        if: ${{ steps.image_build.outcome == 'success' }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ env.APP_NAME }}-${{ inputs.platform }}-docker-archive
+          path: ./${{ env.APP_NAME }}_*.tar
+          if-no-files-found: error
+
+      - name: "${{ env.APP_NAME }} -- Upload AppManifest.json to artifacts"
+        if: ${{ steps.image_build.outcome == 'success' }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: AppManifest
+          path: ./app/AppManifest.json
+          if-no-files-found: error
+
+  scan-image:
+    name: "Scan image (${{ inputs.app_name }}-${{ matrix.arch }})"
+    runs-on: ubuntu-22.04
+    needs: build-image
+    strategy:
+      matrix: ${{fromJSON(needs.build-image.outputs.archs)}}
+    env:
+      APP_NAME: ${{ inputs.app_name }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          submodules: "recursive"
+
+      - name: Clone Release Documentation Action repository
+        uses: actions/checkout@v4
+        with:
+          repository: eclipse-velocitas/release-documentation-action
+          path: "./.github/actions"
+
+      - name: Download Artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: .
+          pattern: ${{ env.APP_NAME }}*-docker-archive
+          merge-multiple: true
 
       - name: "${{ env.APP_NAME }} -- Scan docker image for vulnerabilities"
-        uses: aquasecurity/trivy-action@0.11.2
+        uses: aquasecurity/trivy-action@0.19.0
         with:
-          input: ${{ env.APP_NAME }}-arch.tar
+          input: ${{ env.APP_NAME }}_${{ matrix.arch }}.tar
           exit-code: "0"
           ignore-unfixed: true
           severity: "CRITICAL,HIGH"
@@ -139,37 +217,17 @@ jobs:
           packagePath: results/Documentation/renderer
 
       - name: "${{ env.APP_NAME }} -- Upload trivy report as artifacts"
-        if: ${{ always() && steps.image_build.outcome == 'success' }}
         uses: actions/upload-artifact@v4
         with:
-          name: test-results-trivy
+          name: test-results-trivy-${{ matrix.arch }}
           path: |
             results/Documentation/renderer/*
 
       - name: "${{ env.APP_NAME }} -- Publish Trivy Scan Results"
         uses: mikepenz/action-junit-report@v4
-        if: ${{ always() && steps.image_build.outcome == 'success' }}
         with:
           check_name: Trivy Scan Results (${{ env.APP_NAME }})
           report_paths: ./junit.xml
           summary: true
           update_check: true
           annotate_only: true
-
-      - name: "${{ env.APP_NAME }} -- Upload image to artifacts"
-        if: ${{ steps.image_build.outcome == 'success' }}
-        uses: actions/upload-artifact@v4
-        env:
-          VAPP_IMAGE: ${{ env.APP_NAME }}-${{ inputs.platform }}
-        with:
-          name: ${{ env.VAPP_IMAGE }}
-          path: ./${{ env.APP_NAME }}.tar
-          if-no-files-found: error
-
-      - name: "${{ env.APP_NAME }} -- Upload AppManifest.json to artifacts"
-        if: ${{ steps.image_build.outcome == 'success' }}
-        uses: actions/upload-artifact@v4
-        with:
-          name: AppManifest
-          path: ./app/AppManifest.json
-          if-no-files-found: error

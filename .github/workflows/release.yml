@@ -73,9 +73,9 @@ jobs:
           string: ${{ github.repository }}
 
       - name: Wait for Multi-Arch build to succeed
-        uses: fountainhead/action-wait-for-check@v1.1.0
+        uses: fountainhead/action-wait-for-check@v1.2.0
         with:
-          checkName: build-image-multiarch / Building image (${{ env.APP_NAME }})
+          checkName: Merge Trivy results
           token: ${{ secrets.GITHUB_TOKEN }}
           timeoutSeconds: 1800
           intervalSeconds: 20
@@ -92,7 +92,7 @@ jobs:
       - name: "${{ env.APP_NAME }} -- Publish release image to GHCR"
         working-directory: ${{github.workspace}}
         env:
-          VAPP_IMAGE: ${{ env.APP_NAME }}-multiarch/${{ env.APP_NAME }}.tar
+          VAPP_IMAGE: ${{ env.APP_NAME }}-multiarch-oci-archive/${{ env.APP_NAME }}-multiarch.tar
           VAPP_NAME: ${{ env.APP_NAME }}
           VAPP_VERSION: ${{ steps.get_version.outputs.version-without-v }}
           REGISTRY: "ghcr.io/${{steps.github-repository-name-case-adjusted.outputs.lowercase}}"
@@ -102,11 +102,13 @@ jobs:
           skopeo copy --all  oci-archive:$VAPP_IMAGE "$tag"
 
       - name: ${{ env.APP_NAME }} -- Upload assets
-        uses: softprops/action-gh-release@v1
+        uses: softprops/action-gh-release@v2
         if: startsWith(github.ref, 'refs/tags/')
         with:
           files: |
             ${{github.workspace}}/AppManifest/AppManifest.json
+            ${{github.workspace}}/binaries/*
+            ${{github.workspace}}/${{ env.APP_NAME }}-multiarch-docker-archive/*
 
   release-documentation:
     name: Generate release documentation
@@ -138,7 +140,7 @@ jobs:
           if_false: ${{ github.sha }}
 
       - name: Wait for CI workflow to succeed
-        uses: fountainhead/action-wait-for-check@v1.1.0
+        uses: fountainhead/action-wait-for-check@v1.2.0
         with:
           checkName: Run Integration Tests (${{ env.APP_NAME }})
           token: ${{ secrets.GITHUB_TOKEN }}
@@ -232,7 +234,7 @@ jobs:
           zip -r .vehicleApp/Documentation/release-documentation.zip ${{github.workspace}}/hugo/public
 
       - name: Upload assets
-        uses: softprops/action-gh-release@v1
+        uses: softprops/action-gh-release@v2
         if: startsWith(github.ref, 'refs/tags/')
         with:
           files: |
