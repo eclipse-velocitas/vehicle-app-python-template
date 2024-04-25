@@ -47,7 +47,7 @@ jobs:
       app_name: ${{ needs.get-app-name.outputs.app_name }}
 
   merge-test-results:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     name: Merge Trivy results
     needs: build-image-multiarch
     steps:

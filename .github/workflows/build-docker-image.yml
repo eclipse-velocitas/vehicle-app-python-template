@@ -31,7 +31,7 @@ jobs:
     runs-on: ubuntu-22.04
     container: ghcr.io/eclipse-velocitas/devcontainer-base-images/python:v0.3
     outputs:
-      archs: ${{ steps.inspect_tar.outputs.archs }}
+      archs: ${{ steps.set_args.outputs.archs_matrix }}
     env:
       APP_NAME: ${{ inputs.app_name }}
 
@@ -76,15 +76,19 @@ jobs:
       - name: Set Arguments for next step
         id: set_args
         run: |
+          archs=""
           if [ ${{ inputs.platform }} = "multiarch" ]; then
             echo "Build Multiarch"
             echo "platforms=linux/amd64, linux/arm64" >> $GITHUB_OUTPUT
-            echo "type=oci,dest=./${{ env.APP_NAME }}-${{inputs.platform}}.tar" >> $GITHUB_OUTPUT
+            archs=$(echo "linux/amd64, linux/arm64" | tr -d "linux\/,")
           else
             echo "Build ${{inputs.platform}}"
             echo "platforms=linux/${{ inputs.platform }}" >> $GITHUB_OUTPUT
-            echo "type=docker,dest=./${{ env.APP_NAME }}-${{inputs.platform}}.tar" >> $GITHUB_OUTPUT
+            archs=${{ inputs.platform }}
           fi
+          echo "archs=$archs" >> $GITHUB_OUTPUT
+          json_array=$(echo "$archs" | jq -R 'sub("^ "; "") | split(" ")' )
+          echo "archs_matrix=$(jq -cn --argjson archs "$json_array" '{arch: $archs}')" >> $GITHUB_OUTPUT
         shell: bash
 
       - name: "${{ env.APP_NAME }} -- Build image"
@@ -95,7 +99,7 @@ jobs:
           pull: true
           push: false
           outputs: |
-            type=${{ steps.set_args.outputs.type }}
+            type=oci,dest=./${{ env.APP_NAME }}-oci-${{inputs.platform}}.tar
           file: ./app/Dockerfile
           context: .
           platforms: ${{ steps.set_args.outputs.platforms }}
@@ -110,30 +114,26 @@ jobs:
           sudo apt-get update
           sudo apt-get -y install skopeo
 
-      - name: "${{ env.APP_NAME }} -- Inspect tar image with skopeo"
+      - name: "${{ env.APP_NAME }} -- Inspect image with skopeo and create docker archives"
         id: inspect_tar
         run: |
-          skopeo inspect --raw oci-archive:${{ env.APP_NAME }}-${{inputs.platform}}.tar | jq
-          skopeo inspect oci-archive:${{ env.APP_NAME }}-${{inputs.platform}}.tar
-          archs_array=""
-          for arch in $(echo ${{ steps.set_args.outputs.platforms }} | tr -d "linux\/,"); do
-            skopeo copy --override-arch $arch oci-archive:${{ env.APP_NAME }}-${{inputs.platform}}.tar docker-archive:${{ env.APP_NAME }}_$arch.tar
-            archs_array="$archs_array $arch"
+          skopeo inspect --raw oci-archive:${{ env.APP_NAME }}-oci-${{inputs.platform}}.tar | jq
+          skopeo inspect oci-archive:${{ env.APP_NAME }}-oci-${{inputs.platform}}.tar
+          for arch in ${{ steps.set_args.outputs.archs }}; do
+            skopeo copy --override-arch $arch oci-archive:${{ env.APP_NAME }}-oci-${{inputs.platform}}.tar docker-archive:${{ env.APP_NAME }}-docker-$arch.tar
           done
-          json_array=$(echo "$archs_array" | jq -R 'sub("^ "; "") | split(" ")' )
-          echo "archs=$(jq -cn --argjson archs "$json_array" '{arch: $archs}')" >> $GITHUB_OUTPUT
 
       - name: "${{ env.APP_NAME }} -- Get Native Binaries from image"
         run: |
-          for arch in $(echo ${{ steps.set_args.outputs.platforms }} | tr -d "linux\/,"); do
-            image=$(docker load -i ${{ env.APP_NAME }}_$arch.tar | cut -d ':' -f 3)
+          for arch in ${{ steps.set_args.outputs.archs }}; do
+            image=$(docker load -i ${{ env.APP_NAME }}-docker-$arch.tar | cut -d ':' -f 3)
             id=$(docker create $image --platform linux/$arch)
             mkdir -p ./out
             app_name=$(echo ${{ env.APP_NAME }}_$arch | tr '[:upper:]' '[:lower:]')
             docker cp $id:/app ./out/$app_name
           done
 
-      - name: "${{ env.APP_NAME }} -- Upload app"
+      - name: "${{ env.APP_NAME }} -- Upload native binaries to artifacts"
         uses: actions/upload-artifact@v4
         with:
           name: binaries
@@ -145,7 +145,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: ${{ env.APP_NAME }}-${{ inputs.platform }}-oci-archive
-          path: ./${{ env.APP_NAME }}-*.tar
+          path: ./${{ env.APP_NAME }}-oci*.tar
           if-no-files-found: error
 
       - name: "${{ env.APP_NAME }} -- Upload docker image to artifacts"
@@ -153,7 +153,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: ${{ env.APP_NAME }}-${{ inputs.platform }}-docker-archive
-          path: ./${{ env.APP_NAME }}_*.tar
+          path: ./${{ env.APP_NAME }}-docker*.tar
           if-no-files-found: error
 
       - name: "${{ env.APP_NAME }} -- Upload AppManifest.json to artifacts"
@@ -195,7 +195,7 @@ jobs:
       - name: "${{ env.APP_NAME }} -- Scan docker image for vulnerabilities"
         uses: aquasecurity/trivy-action@0.19.0
         with:
-          input: ${{ env.APP_NAME }}_${{ matrix.arch }}.tar
+          input: ${{ env.APP_NAME }}-docker-${{ matrix.arch }}.tar
           exit-code: "0"
           ignore-unfixed: true
           severity: "CRITICAL,HIGH"

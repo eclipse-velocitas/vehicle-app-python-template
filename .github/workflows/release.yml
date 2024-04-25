@@ -92,7 +92,7 @@ jobs:
       - name: "${{ env.APP_NAME }} -- Publish release image to GHCR"
         working-directory: ${{github.workspace}}
         env:
-          VAPP_IMAGE: ${{ env.APP_NAME }}-multiarch-oci-archive/${{ env.APP_NAME }}-multiarch.tar
+          VAPP_IMAGE: ${{ env.APP_NAME }}-multiarch-oci-archive/${{ env.APP_NAME }}-oci-multiarch.tar
           VAPP_NAME: ${{ env.APP_NAME }}
           VAPP_VERSION: ${{ steps.get_version.outputs.version-without-v }}
           REGISTRY: "ghcr.io/${{steps.github-repository-name-case-adjusted.outputs.lowercase}}"

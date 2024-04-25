@@ -197,7 +197,7 @@ jobs:
       - name: Deploy image
         working-directory: ./.github/scripts
         run: |
-          mv ${{ env.APP_NAME }}-amd64.tar ${{ env.APP_NAME }}.tar
+          mv ${{ env.APP_NAME }}-oci-amd64.tar ${{ env.APP_NAME }}.tar
           ./deploy_image_from_artifact.sh
 
       - name: Run Python integration tests
@@ -242,7 +242,7 @@ jobs:
             results/Documentation/renderer/*
 
   merge-test-results:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     needs: run-integration-tests
     steps:
       - name: Merge Artifacts
