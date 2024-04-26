@@ -24,7 +24,7 @@ APP_REGISTRY="localhost:12345"
 local_tag="$APP_REGISTRY/$APP_NAME_LOWERCASE:local"
 echo "Local URL: $local_tag"
 
-docker load -i "$APP_ARTIFACT_NAME.tar" | sed -n 's/^Loaded image: \([0-9a-f]*\).*/\1/p' | xargs -i docker tag {} $local_tag
+docker load -i "$APP_ARTIFACT_NAME.tar" | cut -d ':' -f 3 | xargs -i docker tag {} $local_tag
 docker push $local_tag
 
 cd $ROOT_DIRECTORY
