@@ -6,7 +6,7 @@
         },
         {
             "repo": "devenv-github-workflows",
-            "version": "native-app"
+            "version": "v6.0.0"
         },
         {
             "repo": "devenv-github-templates",
