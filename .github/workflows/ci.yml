@@ -190,15 +190,15 @@ jobs:
 
       - name: Download stored image from artifacts
         uses: actions/download-artifact@v4
-        env:
-          VAPP_IMAGE: ${{ env.APP_NAME }}-amd64
         with:
-          name: ${{ env.VAPP_IMAGE }}
+          name: ${{ env.APP_NAME }}-amd64-docker-archive
           path: ./.github/scripts/
 
       - name: Deploy image
         working-directory: ./.github/scripts
-        run: ./deploy_image_from_artifact.sh
+        run: |
+          mv ${{ env.APP_NAME }}-docker-amd64.tar ${{ env.APP_NAME }}.tar
+          ./deploy_image_from_artifact.sh
 
       - name: Run Python integration tests
         shell: bash
@@ -242,11 +242,12 @@ jobs:
             results/Documentation/renderer/*
 
   merge-test-results:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     needs: run-integration-tests
     steps:
       - name: Merge Artifacts
         uses: actions/upload-artifact/merge@v4
         with:
+          delete-merged: true
           name: test-results
           pattern: test-results-*
