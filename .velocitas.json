@@ -2,7 +2,7 @@
     "packages": [
         {
             "repo": "devenv-runtimes",
-            "version": "v3.0.0"
+            "version": "v3.1.0"
         },
         {
             "repo": "devenv-github-workflows",
@@ -14,7 +14,7 @@
         },
         {
             "repo": "devenv-devcontainer-setup",
-            "version": "v2.0.0"
+            "version": "v2.1.0"
         }
     ],
     "components": [
@@ -56,5 +56,5 @@
         "githubRepoId": "eclipse-velocitas/vehicle-app-python-template",
         "generatedModelPath": "./gen/vehicle_model"
     },
-    "cliVersion": "v0.7.0"
+    "cliVersion": "v0.8.0"
 }
