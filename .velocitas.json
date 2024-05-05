@@ -1,53 +1,21 @@
 {
-    "packages": [
-        {
-            "repo": "devenv-runtimes",
-            "version": "v3.1.0"
-        },
-        {
-            "repo": "devenv-github-workflows",
-            "version": "v6.0.0"
-        },
-        {
-            "repo": "devenv-github-templates",
-            "version": "v1.0.4"
-        },
-        {
-            "repo": "devenv-devcontainer-setup",
-            "version": "v2.1.0"
-        }
-    ],
+    "packages": {
+        "devenv-runtimes": "v3.1.0",
+        "devenv-github-workflows": "v6.0.0",
+        "devenv-github-templates": "v1.0.4",
+        "devenv-devcontainer-setup": "v2.1.0"
+    },
     "components": [
-        {
-            "id": "runtime-local"
-        },
-        {
-            "id": "runtime-kanto"
-        },
-        {
-            "id": "deployment-kanto"
-        },
-        {
-            "id": "pantaris-integration"
-        },
-        {
-            "id": "github-workflows"
-        },
-        {
-            "id": "github-templates"
-        },
-        {
-            "id": "devcontainer-setup"
-        },
-        {
-            "id": "vehicle-signal-interface"
-        },
-        {
-            "id": "sdk-installer"
-        },
-        {
-            "id": "grpc-interface-support"
-        }
+        "runtime-local",
+        "runtime-kanto",
+        "deployment-kanto",
+        "pantaris-integration",
+        "github-workflows",
+        "github-templates",
+        "devcontainer-setup",
+        "vehicle-signal-interface",
+        "sdk-installer",
+        "grpc-interface-support"
     ],
     "variables": {
         "language": "python",
@@ -56,5 +24,5 @@
         "githubRepoId": "eclipse-velocitas/vehicle-app-python-template",
         "generatedModelPath": "./gen/vehicle_model"
     },
-    "cliVersion": "v0.8.0"
+    "cliVersion": "v0.9.0"
 }
