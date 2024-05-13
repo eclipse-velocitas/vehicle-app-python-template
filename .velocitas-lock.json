@@ -1,0 +1,8 @@
+{
+    "packages": {
+        "devenv-runtimes": "v3.1.1",
+        "devenv-github-workflows": "v6.0.1",
+        "devenv-github-templates": "v1.0.5",
+        "devenv-devcontainer-setup": "v2.2.0"
+    }
+}
