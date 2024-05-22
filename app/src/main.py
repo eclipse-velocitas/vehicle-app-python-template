@@ -49,7 +49,8 @@ class PerformanceTestApp(VehicleApp):
         self.Vehicle = vehicle_client
 
     async def on_start(self):
-        test_signals_json = self.read_json("app/testapp_performance_subscription.json")
+        # The file path may need to be updated based on the location of the file.
+        test_signals_json = self.read_json("subscription_signals.json")
 
         for signal_json in test_signals_json:
             signal_str = signal_json["Signal"]
