@@ -1,9 +1,9 @@
 {
     "packages": {
         "devenv-runtimes": "v4.0.0",
-        "devenv-github-workflows": "v6.0.1",
+        "devenv-github-workflows": "v6.0.2",
         "devenv-github-templates": "v1.0.5",
-        "devenv-devcontainer-setup": "v2.2.1"
+        "devenv-devcontainer-setup": "v2.3.0"
     },
     "components": [
         "runtime-local",
@@ -14,7 +14,6 @@
         "github-templates",
         "devcontainer-setup",
         "vehicle-signal-interface",
-        "sdk-installer",
         "grpc-interface-support"
     ],
     "variables": {

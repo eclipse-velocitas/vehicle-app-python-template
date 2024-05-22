@@ -53,9 +53,7 @@ tomli==2.0.1
 types-protobuf==4.24.0.2
     # via mypy-protobuf
 typing-extensions==4.8.0
-    # via
-    #   -c app/requirements.txt
-    #   mypy
+    # via mypy
 virtualenv==20.24.5
     # via pre-commit
 wheel==0.41.2
