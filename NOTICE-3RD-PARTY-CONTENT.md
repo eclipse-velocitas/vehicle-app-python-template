@@ -12,6 +12,7 @@
 |click|8.1.7|New BSD|
 |cloudevents|1.10.0|Apache 2.0|
 |coverage|7.3.2|Apache 2.0|
+|Deprecated|1.2.14|MIT|
 |deprecation|2.1.0|Apache 2.0|
 |distlib|0.3.7|Python Software Foundation License|
 |exceptiongroup|1.1.3|MIT|
@@ -26,7 +27,14 @@
 |mypy-extensions|1.0.0|MIT|
 |mypy-protobuf|3.5.0|Apache 2.0|
 |nodeenv|1.8.0|BSD|
+|opentelemetry-api|1.15.0|Apache 2.0|
+|opentelemetry-distro|0.36b0|Apache 2.0|
+|opentelemetry-instrumentation|0.36b0|Apache 2.0|
+|opentelemetry-instrumentation-logging|0.36b0|Apache 2.0|
+|opentelemetry-sdk|1.15.0|Apache 2.0|
+|opentelemetry-semantic-conventions|0.36b0|Apache 2.0|
 |packaging|23.2|Apache 2.0<br/>BSD|
+|paho-mqtt|1.6.1|OSI Approved|
 |parameterized|0.9.0|Simplified BSD|
 |pip|24.0|MIT|
 |pip-tools|7.3.0|BSD|
@@ -44,9 +52,11 @@
 |tomli|2.0.1|MIT|
 |types-mock|5.1.0.2|Apache 2.0|
 |types-protobuf|4.24.0.2|Apache 2.0|
-|typing-extensions|4.8.0|Python Software Foundation License|
+|typing-extensions|4.11.0|Python Software Foundation License|
+|velocitas-sdk|0.14.1|Apache 2.0|
 |virtualenv|20.24.5|MIT|
 |wheel|0.41.2|MIT|
+|wrapt|1.16.0|BSD|
 |yarl|1.9.2|Apache 2.0|
 ## Workflows
 | Dependency | Version | License |
