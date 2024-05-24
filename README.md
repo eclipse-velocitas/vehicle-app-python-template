@@ -10,18 +10,20 @@
 The following format is mandatory for the input file:
 
 ```
-[
- {
-  "Signal": "Vehicle.LowVoltageBattery.CurrentVoltage"
- },
- {
-  "Signal": "Vehicle.LowVoltageBattery.CurrentCurrent"
- },
- {
-  "Signal": "Vehicle.Speed"
- },
- ...
-]
+{
+  "signals": [
+    {
+      "path": "Vehicle.LowVoltageBattery.CurrentVoltage"
+    },
+    {
+      "path": "Vehicle.LowVoltageBattery.CurrentCurrent"
+    },
+    {
+      "path": "Vehicle.Speed"
+    },
+    ...
+  ]
+}
 ```
 
 Signals which are not available will be printed in the console as a warning. 
