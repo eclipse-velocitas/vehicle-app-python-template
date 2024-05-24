@@ -1,305 +1,307 @@
-[
- {
-  "Signal": "Vehicle.LowVoltageBattery.CurrentVoltage"
- },
- {
-  "Signal": "Vehicle.LowVoltageBattery.CurrentCurrent"
- },
- {
-  "Signal": "Vehicle.Speed"
- },
- {
-  "Signal": "Vehicle.TraveledDistance"
- },
- {
-  "Signal": "Vehicle.TraveledDistanceSinceStart"
- },
- {
-  "Signal": "Vehicle.TripDuration"
- },
- {
-  "Signal": "Vehicle.IsBrokenDown"
- },
- {
-  "Signal": "Vehicle.IsMoving"
- },
- {
-  "Signal": "Vehicle.AverageSpeed"
- },
- {
-  "Signal": "Vehicle.Acceleration.Longitudinal"
- },
- {
-  "Signal": "Vehicle.Acceleration.Lateral"
- },
- {
-  "Signal": "Vehicle.Acceleration.Vertical"
- },
- {
-  "Signal": "Vehicle.AngularVelocity.Roll"
- },
- {
-  "Signal": "Vehicle.AngularVelocity.Pitch"
- },
- {
-  "Signal": "Vehicle.AngularVelocity.Yaw"
- },
- {
-  "Signal": "Vehicle.CurrentOverallWeight"
- },
- {
-  "Signal": "Vehicle.Trailer.IsConnected"
- },
- {
-  "Signal": "Vehicle.CurrentLocation.Latitude"
- },
- {
-  "Signal": "Vehicle.CurrentLocation.Longitude"
- },
- {
-  "Signal": "Vehicle.CurrentLocation.Heading"
- },
- {
-  "Signal": "Vehicle.CurrentLocation.HorizontalAccuracy"
- },
- {
-  "Signal": "Vehicle.CurrentLocation.Altitude"
- },
- {
-  "Signal": "Vehicle.CurrentLocation.VerticalAccuracy"
- },
- {
-  "Signal": "Vehicle.Powertrain.AccumulatedBrakingEnergy"
- },
- {
-  "Signal": "Vehicle.Powertrain.Range"
- },
- {
-  "Signal": "Vehicle.Powertrain.CombustionEngine.OilLifeRemaining"
- },
- {
-  "Signal": "Vehicle.Powertrain.CombustionEngine.IsRunning"
- },
- {
-  "Signal": "Vehicle.Powertrain.CombustionEngine.Speed"
- },
- {
-  "Signal": "Vehicle.Powertrain.CombustionEngine.EngineHours"
- },
- {
-  "Signal": "Vehicle.Powertrain.CombustionEngine.IdleHours"
- },
- {
-  "Signal": "Vehicle.Powertrain.CombustionEngine.ECT"
- },
- {
-  "Signal": "Vehicle.Powertrain.CombustionEngine.EOT"
- },
- {
-  "Signal": "Vehicle.Powertrain.CombustionEngine.MAP"
- },
- {
-  "Signal": "Vehicle.Powertrain.CombustionEngine.MAF"
- },
- {
-  "Signal": "Vehicle.Powertrain.CombustionEngine.TPS"
- },
- {
-  "Signal": "Vehicle.Powertrain.CombustionEngine.EOP"
- },
- {
-  "Signal": "Vehicle.Powertrain.CombustionEngine.Power"
- },
- {
-  "Signal": "Vehicle.Powertrain.CombustionEngine.Torque"
- },
- {
-  "Signal": "Vehicle.Powertrain.CombustionEngine.DieselExhaustFluid.Level"
- },
- {
-  "Signal": "Vehicle.Powertrain.CombustionEngine.DieselExhaustFluid.Range"
- },
- {
-  "Signal": "Vehicle.Powertrain.CombustionEngine.DieselExhaustFluid.IsLevelLow"
- },
- {
-  "Signal": "Vehicle.Powertrain.CombustionEngine.DieselParticulateFilter.InletTemperature"
- },
- {
-  "Signal": "Vehicle.Powertrain.CombustionEngine.DieselParticulateFilter.OutletTemperature"
- },
- {
-  "Signal": "Vehicle.Powertrain.CombustionEngine.DieselParticulateFilter.DeltaPressure"
- },
- {
-  "Signal": "Vehicle.Powertrain.CombustionEngine.Displacement"
- },
- {
-  "Signal": "Vehicle.Powertrain.FuelSystem.Range"
- },
- {
-  "Signal": "Vehicle.Powertrain.FuelSystem.InstantConsumption"
- },
- {
-  "Signal": "Vehicle.Powertrain.FuelSystem.AverageConsumption"
- },
- {
-  "Signal": "Vehicle.Powertrain.FuelSystem.ConsumptionSinceStart"
- },
- {
-  "Signal": "Vehicle.Powertrain.FuelSystem.IsEngineStopStartEnabled"
- },
- {
-  "Signal": "Vehicle.Powertrain.FuelSystem.IsFuelLevelLow"
- },
- {
-  "Signal": "Vehicle.Body.Raindetection.Intensity"
- },
- {
-  "Signal": "Vehicle.Body.Windshield.Front.Wiping.System.DriveCurrent"
- },
- {
-  "Signal": "Vehicle.Body.Windshield.Front.Wiping.System.IsWiping"
- },
- {
-  "Signal": "Vehicle.Body.Windshield.Front.Wiping.System.IsEndingWipeCycle"
- },
- {
-  "Signal": "Vehicle.Body.Windshield.Front.Wiping.System.IsWiperError"
- },
- {
-  "Signal": "Vehicle.Body.Windshield.Front.Wiping.System.IsPositionReached"
- },
- {
-  "Signal": "Vehicle.Body.Windshield.Front.Wiping.System.IsBlocked"
- },
- {
-  "Signal": "Vehicle.Body.Windshield.Front.Wiping.System.IsOverheated"
- },
- {
-  "Signal": "Vehicle.Body.Windshield.Front.Wiping.WiperWear"
- },
- {
-  "Signal": "Vehicle.Body.Windshield.Front.Wiping.IsWipersWorn"
- },
- {
-  "Signal": "Vehicle.Body.Windshield.Front.WasherFluid.IsLevelLow"
- },
- {
-  "Signal": "Vehicle.Body.Windshield.Front.WasherFluid.Level"
- },
- {
-  "Signal": "Vehicle.Body.Windshield.Rear.Wiping.System.DriveCurrent"
- },
- {
-  "Signal": "Vehicle.Body.Windshield.Rear.Wiping.System.IsWiping"
- },
- {
-  "Signal": "Vehicle.Body.Windshield.Rear.Wiping.System.IsEndingWipeCycle"
- },
- {
-  "Signal": "Vehicle.Body.Windshield.Rear.Wiping.System.IsWiperError"
- },
- {
-  "Signal": "Vehicle.Body.Windshield.Rear.Wiping.System.IsPositionReached"
- },
- {
-  "Signal": "Vehicle.Body.Windshield.Rear.Wiping.System.IsBlocked"
- },
- {
-  "Signal": "Vehicle.Body.Windshield.Rear.Wiping.System.IsOverheated"
- },
- {
-  "Signal": "Vehicle.Body.Windshield.Front.Wiping.Intensity"
- },
- {
-  "Signal": "Vehicle.Body.Windshield.Front.Wiping.System.Frequency"
- },
- {
-  "Signal": "Vehicle.Body.Windshield.Front.Wiping.System.TargetPosition"
- },
- {
-  "Signal": "Vehicle.Body.Windshield.Front.Wiping.System.ActualPosition"
- },
- {
-  "Signal": "Vehicle.Body.Windshield.Front.IsHeatingOn"
- },
- {
-  "Signal": "Vehicle.Body.Windshield.Rear.Wiping.Intensity"
- },
- {
-  "Signal": "Vehicle.Body.Windshield.Rear.Wiping.System.Frequency"
- },
- {
-  "Signal": "Vehicle.Body.Windshield.Rear.Wiping.System.TargetPosition"
- },
- {
-  "Signal": "Vehicle.Body.Windshield.Rear.Wiping.System.ActualPosition"
- },
- {
-  "Signal": "Vehicle.Body.Windshield.Rear.IsHeatingOn"
- },
- {
-  "Signal": "Vehicle.Body.Lights.IsHighBeamSwitchOn"
- },
- {
-  "Signal": "Vehicle.Body.Lights.Beam.Low.IsOn"
- },
- {
-  "Signal": "Vehicle.Body.Lights.Beam.High.IsOn"
- },
- {
-  "Signal": "Vehicle.Body.Lights.Running.IsOn"
- },
- {
-  "Signal": "Vehicle.Body.Lights.Backup.IsOn"
- },
- {
-  "Signal": "Vehicle.Body.Lights.Parking.IsOn"
- },
- {
-  "Signal": "Vehicle.Body.Lights.Fog.Rear.IsOn"
- },
- {
-  "Signal": "Vehicle.Body.Lights.Fog.Front.IsOn"
- },
- {
-  "Signal": "Vehicle.Body.Lights.LicensePlate.IsOn"
- },
- {
-  "Signal": "Vehicle.Body.Lights.Hazard.IsSignaling"
- },
- {
-  "Signal": "Vehicle.Body.Lights.DirectionIndicator.Left.IsSignaling"
- },
- {
-  "Signal": "Vehicle.Body.Lights.DirectionIndicator.Right.IsSignaling"
- },
- {
-  "Signal": "Vehicle.Chassis.ParkingBrake.IsEngaged"
- },
- {
-  "Signal": "Vehicle.Chassis.SteeringWheel.Tilt"
- },
- {
-  "Signal": "Vehicle.Chassis.SteeringWheel.Extension"
- },
- {
-  "Signal": "Vehicle.Body.Trunk.Rear.IsLightOn"
- },
- {
-  "Signal": "Vehicle.Body.Trunk.Front.IsLightOn"
- },
- {
-  "Signal": "Vehicle.Cabin.Light.IsDomeOn"
- },
- {
-  "Signal": "Vehicle.Cabin.Seat.Row1.PassengerSide.Heating"
- },
- {
-  "Signal": "Vehicle.Cabin.Seat.Row1.PassengerSide.Massage"
- },
- {
-  "Signal": "Vehicle.Cabin.Seat.Row1.PassengerSide.Position"
- }
-]
+{
+  "signals": [
+    {
+      "path": "Vehicle.LowVoltageBattery.CurrentVoltage"
+    },
+    {
+      "path": "Vehicle.LowVoltageBattery.CurrentCurrent"
+    },
+    {
+      "path": "Vehicle.Speed"
+    },
+    {
+      "path": "Vehicle.TraveledDistance"
+    },
+    {
+      "path": "Vehicle.TraveledDistanceSinceStart"
+    },
+    {
+      "path": "Vehicle.TripDuration"
+    },
+    {
+      "path": "Vehicle.IsBrokenDown"
+    },
+    {
+      "path": "Vehicle.IsMoving"
+    },
+    {
+      "path": "Vehicle.AverageSpeed"
+    },
+    {
+      "path": "Vehicle.Acceleration.Longitudinal"
+    },
+    {
+      "path": "Vehicle.Acceleration.Lateral"
+    },
+    {
+      "path": "Vehicle.Acceleration.Vertical"
+    },
+    {
+      "path": "Vehicle.AngularVelocity.Roll"
+    },
+    {
+      "path": "Vehicle.AngularVelocity.Pitch"
+    },
+    {
+      "path": "Vehicle.AngularVelocity.Yaw"
+    },
+    {
+      "path": "Vehicle.CurrentOverallWeight"
+    },
+    {
+      "path": "Vehicle.Trailer.IsConnected"
+    },
+    {
+      "path": "Vehicle.CurrentLocation.Latitude"
+    },
+    {
+      "path": "Vehicle.CurrentLocation.Longitude"
+    },
+    {
+      "path": "Vehicle.CurrentLocation.Heading"
+    },
+    {
+      "path": "Vehicle.CurrentLocation.HorizontalAccuracy"
+    },
+    {
+      "path": "Vehicle.CurrentLocation.Altitude"
+    },
+    {
+      "path": "Vehicle.CurrentLocation.VerticalAccuracy"
+    },
+    {
+      "path": "Vehicle.Powertrain.AccumulatedBrakingEnergy"
+    },
+    {
+      "path": "Vehicle.Powertrain.Range"
+    },
+    {
+      "path": "Vehicle.Powertrain.CombustionEngine.OilLifeRemaining"
+    },
+    {
+      "path": "Vehicle.Powertrain.CombustionEngine.IsRunning"
+    },
+    {
+      "path": "Vehicle.Powertrain.CombustionEngine.Speed"
+    },
+    {
+      "path": "Vehicle.Powertrain.CombustionEngine.EngineHours"
+    },
+    {
+      "path": "Vehicle.Powertrain.CombustionEngine.IdleHours"
+    },
+    {
+      "path": "Vehicle.Powertrain.CombustionEngine.ECT"
+    },
+    {
+      "path": "Vehicle.Powertrain.CombustionEngine.EOT"
+    },
+    {
+      "path": "Vehicle.Powertrain.CombustionEngine.MAP"
+    },
+    {
+      "path": "Vehicle.Powertrain.CombustionEngine.MAF"
+    },
+    {
+      "path": "Vehicle.Powertrain.CombustionEngine.TPS"
+    },
+    {
+      "path": "Vehicle.Powertrain.CombustionEngine.EOP"
+    },
+    {
+      "path": "Vehicle.Powertrain.CombustionEngine.Power"
+    },
+    {
+      "path": "Vehicle.Powertrain.CombustionEngine.Torque"
+    },
+    {
+      "path": "Vehicle.Powertrain.CombustionEngine.DieselExhaustFluid.Level"
+    },
+    {
+      "path": "Vehicle.Powertrain.CombustionEngine.DieselExhaustFluid.Range"
+    },
+    {
+      "path": "Vehicle.Powertrain.CombustionEngine.DieselExhaustFluid.IsLevelLow"
+    },
+    {
+      "path": "Vehicle.Powertrain.CombustionEngine.DieselParticulateFilter.InletTemperature"
+    },
+    {
+      "path": "Vehicle.Powertrain.CombustionEngine.DieselParticulateFilter.OutletTemperature"
+    },
+    {
+      "path": "Vehicle.Powertrain.CombustionEngine.DieselParticulateFilter.DeltaPressure"
+    },
+    {
+      "path": "Vehicle.Powertrain.CombustionEngine.Displacement"
+    },
+    {
+      "path": "Vehicle.Powertrain.FuelSystem.Range"
+    },
+    {
+      "path": "Vehicle.Powertrain.FuelSystem.InstantConsumption"
+    },
+    {
+      "path": "Vehicle.Powertrain.FuelSystem.AverageConsumption"
+    },
+    {
+      "path": "Vehicle.Powertrain.FuelSystem.ConsumptionSinceStart"
+    },
+    {
+      "path": "Vehicle.Powertrain.FuelSystem.IsEngineStopStartEnabled"
+    },
+    {
+      "path": "Vehicle.Powertrain.FuelSystem.IsFuelLevelLow"
+    },
+    {
+      "path": "Vehicle.Body.Raindetection.Intensity"
+    },
+    {
+      "path": "Vehicle.Body.Windshield.Front.Wiping.System.DriveCurrent"
+    },
+    {
+      "path": "Vehicle.Body.Windshield.Front.Wiping.System.IsWiping"
+    },
+    {
+      "path": "Vehicle.Body.Windshield.Front.Wiping.System.IsEndingWipeCycle"
+    },
+    {
+      "path": "Vehicle.Body.Windshield.Front.Wiping.System.IsWiperError"
+    },
+    {
+      "path": "Vehicle.Body.Windshield.Front.Wiping.System.IsPositionReached"
+    },
+    {
+      "path": "Vehicle.Body.Windshield.Front.Wiping.System.IsBlocked"
+    },
+    {
+      "path": "Vehicle.Body.Windshield.Front.Wiping.System.IsOverheated"
+    },
+    {
+      "path": "Vehicle.Body.Windshield.Front.Wiping.WiperWear"
+    },
+    {
+      "path": "Vehicle.Body.Windshield.Front.Wiping.IsWipersWorn"
+    },
+    {
+      "path": "Vehicle.Body.Windshield.Front.WasherFluid.IsLevelLow"
+    },
+    {
+      "path": "Vehicle.Body.Windshield.Front.WasherFluid.Level"
+    },
+    {
+      "path": "Vehicle.Body.Windshield.Rear.Wiping.System.DriveCurrent"
+    },
+    {
+      "path": "Vehicle.Body.Windshield.Rear.Wiping.System.IsWiping"
+    },
+    {
+      "path": "Vehicle.Body.Windshield.Rear.Wiping.System.IsEndingWipeCycle"
+    },
+    {
+      "path": "Vehicle.Body.Windshield.Rear.Wiping.System.IsWiperError"
+    },
+    {
+      "path": "Vehicle.Body.Windshield.Rear.Wiping.System.IsPositionReached"
+    },
+    {
+      "path": "Vehicle.Body.Windshield.Rear.Wiping.System.IsBlocked"
+    },
+    {
+      "path": "Vehicle.Body.Windshield.Rear.Wiping.System.IsOverheated"
+    },
+    {
+      "path": "Vehicle.Body.Windshield.Front.Wiping.Intensity"
+    },
+    {
+      "path": "Vehicle.Body.Windshield.Front.Wiping.System.Frequency"
+    },
+    {
+      "path": "Vehicle.Body.Windshield.Front.Wiping.System.TargetPosition"
+    },
+    {
+      "path": "Vehicle.Body.Windshield.Front.Wiping.System.ActualPosition"
+    },
+    {
+      "path": "Vehicle.Body.Windshield.Front.IsHeatingOn"
+    },
+    {
+      "path": "Vehicle.Body.Windshield.Rear.Wiping.Intensity"
+    },
+    {
+      "path": "Vehicle.Body.Windshield.Rear.Wiping.System.Frequency"
+    },
+    {
+      "path": "Vehicle.Body.Windshield.Rear.Wiping.System.TargetPosition"
+    },
+    {
+      "path": "Vehicle.Body.Windshield.Rear.Wiping.System.ActualPosition"
+    },
+    {
+      "path": "Vehicle.Body.Windshield.Rear.IsHeatingOn"
+    },
+    {
+      "path": "Vehicle.Body.Lights.IsHighBeamSwitchOn"
+    },
+    {
+      "path": "Vehicle.Body.Lights.Beam.Low.IsOn"
+    },
+    {
+      "path": "Vehicle.Body.Lights.Beam.High.IsOn"
+    },
+    {
+      "path": "Vehicle.Body.Lights.Running.IsOn"
+    },
+    {
+      "path": "Vehicle.Body.Lights.Backup.IsOn"
+    },
+    {
+      "path": "Vehicle.Body.Lights.Parking.IsOn"
+    },
+    {
+      "path": "Vehicle.Body.Lights.Fog.Rear.IsOn"
+    },
+    {
+      "path": "Vehicle.Body.Lights.Fog.Front.IsOn"
+    },
+    {
+      "path": "Vehicle.Body.Lights.LicensePlate.IsOn"
+    },
+    {
+      "path": "Vehicle.Body.Lights.Hazard.IsSignaling"
+    },
+    {
+      "path": "Vehicle.Body.Lights.DirectionIndicator.Left.IsSignaling"
+    },
+    {
+      "path": "Vehicle.Body.Lights.DirectionIndicator.Right.IsSignaling"
+    },
+    {
+      "path": "Vehicle.Chassis.ParkingBrake.IsEngaged"
+    },
+    {
+      "path": "Vehicle.Chassis.SteeringWheel.Tilt"
+    },
+    {
+      "path": "Vehicle.Chassis.SteeringWheel.Extension"
+    },
+    {
+      "path": "Vehicle.Body.Trunk.Rear.IsLightOn"
+    },
+    {
+      "path": "Vehicle.Body.Trunk.Front.IsLightOn"
+    },
+    {
+      "path": "Vehicle.Cabin.Light.IsDomeOn"
+    },
+    {
+      "path": "Vehicle.Cabin.Seat.Row1.PassengerSide.Heating"
+    },
+    {
+      "path": "Vehicle.Cabin.Seat.Row1.PassengerSide.Massage"
+    },
+    {
+      "path": "Vehicle.Cabin.Seat.Row1.PassengerSide.Position"
+    }
+  ]
+}

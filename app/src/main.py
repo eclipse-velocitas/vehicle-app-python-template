@@ -51,9 +51,10 @@ class PerformanceTestApp(VehicleApp):
     async def on_start(self):
         # The file path may need to be updated based on the location of the file.
         test_signals_json = self.read_json("subscription_signals.json")
+        signals_json = test_signals_json["signals"]
 
-        for signal_json in test_signals_json:
-            signal_str = signal_json["Signal"]
+        for signal_json in signals_json:
+            signal_str = signal_json["path"]
             await self.subscribe(signal_str)
 
     def read_json(self, file_path: str):
