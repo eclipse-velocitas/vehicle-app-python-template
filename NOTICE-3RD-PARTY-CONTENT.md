@@ -81,7 +81,7 @@
 |haya14busa/action-cond|v1|MIT License|
 |irongut/CodeCoverageSummary|v1.3.0|MIT License|
 |mikepenz/action-junit-report|v4|Apache License 2.0|
-|peaceiris/actions-gh-pages|v3|MIT License|
-|peaceiris/actions-hugo|v2|MIT License|
+|peaceiris/actions-gh-pages|v4|MIT License|
+|peaceiris/actions-hugo|v3|MIT License|
 |pre-commit/action|v3.0.0|MIT License|
 |softprops/action-gh-release|v2|MIT License|

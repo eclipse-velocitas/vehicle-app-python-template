@@ -19,6 +19,11 @@ on:
   release:
     types: [published, edited]
 
+# Needed if GITHUB_TOKEN by default do not have right to create release
+permissions:
+  contents: write
+  packages: write
+
 jobs:
 
   get-app-name:
@@ -163,7 +168,7 @@ jobs:
           templatePath: ./.github/actions/templates
 
       - name: Setup Hugo
-        uses: peaceiris/actions-hugo@v2
+        uses: peaceiris/actions-hugo@v3
         with:
           hugo-version: "0.89.4"
           extended: true
@@ -243,7 +248,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Publish to GH Pages
-        uses: peaceiris/actions-gh-pages@v3
+        uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ${{github.workspace}}/hugo/public
