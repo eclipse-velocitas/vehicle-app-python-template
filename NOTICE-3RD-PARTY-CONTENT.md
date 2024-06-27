@@ -36,7 +36,7 @@
 |packaging|23.2|Apache 2.0<br/>BSD|
 |paho-mqtt|1.6.1|OSI Approved|
 |parameterized|0.9.0|Simplified BSD|
-|pip|24.0|MIT|
+|pip|23.0.1|MIT|
 |pip-tools|7.3.0|BSD|
 |platformdirs|3.11.0|MIT|
 |pluggy|1.3.0|MIT|
@@ -48,7 +48,7 @@
 |pytest-cov|4.1.0|MIT|
 |pytest-ordering|0.6|MIT|
 |PyYAML|6.0.1|MIT|
-|setuptools|58.1.0|MIT|
+|setuptools|65.5.1|MIT|
 |tomli|2.0.1|MIT|
 |types-mock|5.1.0.2|Apache 2.0|
 |types-protobuf|4.24.0.2|Apache 2.0|
@@ -69,7 +69,6 @@
 |actions/upload-artifact|v4|MIT License|
 |aquasecurity/trivy-action|0.19.0|Apache License 2.0|
 |ASzc/change-string-case-action|v6|ISC License|
-|battila7/get-version-action|v2|MIT License|
 |dawidd6/action-download-artifact|v3|MIT License|
 |de-vri-es/setup-git-credentials|v2|BSD 2-Clause "Simplified" License|
 |devcontainers/ci|v0.3|MIT License|
@@ -83,5 +82,5 @@
 |mikepenz/action-junit-report|v4|Apache License 2.0|
 |peaceiris/actions-gh-pages|v4|MIT License|
 |peaceiris/actions-hugo|v3|MIT License|
-|pre-commit/action|v3.0.0|MIT License|
+|pre-commit/action|v3.0.1|MIT License|
 |softprops/action-gh-release|v2|MIT License|

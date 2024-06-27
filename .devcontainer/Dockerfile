@@ -1,3 +1,4 @@
+# This file is maintained by velocitas CLI, do not modify manually. Change settings in .velocitas.json
 # Copyright (c) 2022-2024 Contributors to the Eclipse Foundation
 #
 # This program and the accompanying materials are made available under the

@@ -59,7 +59,7 @@ jobs:
           git config --global --add safe.directory $( pwd )
 
       - name: Run Linters
-        uses: pre-commit/action@v3.0.0
+        uses: pre-commit/action@v3.0.1
 
       - name: Clone Release Documentation Action repository
         uses: actions/checkout@v4
