@@ -42,8 +42,12 @@ jobs:
           sudo chmod +x /usr/bin/velocitas
           velocitas init -v
 
-      - id: get_version
-        uses: battila7/get-version-action@v2
+      - name: Extract version from tag
+        id: get_version
+        run: |
+          VERSION=${GITHUB_REF_NAME#v}
+          echo Version: $VERSION
+          echo "version-without-v=$VERSION" >> $GITHUB_OUTPUT
 
       - id: github-repository-name-case-adjusted
         name: Prepare repository name in lower case for docker upload.

@@ -40,7 +40,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           repository: eclipse-velocitas/license-check
-          ref: v1.2.3
+          ref: v1.2
           path: .github/actions/license-check
 
       - name: Run License Checker
@@ -54,15 +54,17 @@ jobs:
       - name: Setup Java JDK
         uses: actions/setup-java@v4
         with:
-          distribution: 'temurin'
+          distribution: "temurin"
           java-version: 11.0.19
 
       - name: Run dash
         shell: bash
-        continue-on-error: true
         run: |
           wget -O dash.jar "https://repo.eclipse.org/content/repositories/dash-licenses/org/eclipse/dash/org.eclipse.dash.licenses/1.0.2/org.eclipse.dash.licenses-1.0.2.jar"
-          java -jar dash.jar clearlydefined.input -summary DEPENDENCIES
+          java -jar dash.jar clearlydefined.input -summary DEPENDENCIES > dash.out 2>&1 || true
+          echo -e "Dash output: \n\`\`\` " >> $GITHUB_STEP_SUMMARY
+          cat dash.out >> $GITHUB_STEP_SUMMARY
+          echo -e "\n\`\`\`"
 
       - name: Upload dash input/output as artifacts
         uses: actions/upload-artifact@v4
@@ -72,3 +74,4 @@ jobs:
           path: |
             clearlydefined.input
             DEPENDENCIES
+            dash.out
