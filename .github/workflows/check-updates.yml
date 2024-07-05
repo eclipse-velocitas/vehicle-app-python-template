@@ -1,0 +1,39 @@
+name: Tag Triggered Workflow
+
+on:
+  push:
+    branches:
+      - tryout-pr-creation
+
+jobs:
+  tag_triggered_job:
+    runs-on: ubuntu-22.04
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.VELOCITAS_PROJECT_TOKEN }}
+
+      - name: Build devcontainer and run automated tests
+        uses: devcontainers/ci@v0.3
+        with:
+          runCmd: |
+            sudo apt-get update && sudo apt-get install -y gh
+
+            echo "${{ secrets.VELOCITAS_PROJECT_TOKEN }}" | gh auth login --with-token
+
+            velocitas upgrade --ignore-bounds && velocitas sync
+
+            git config --global user.name "${{ github.actor }}"
+            git config --global user.email "${{ github.actor }}@users.noreply.github.com"
+
+            touch test.txt
+
+            git add .
+            git commit -m "Automated update test"
+
+            BRANCH_NAME="automated-update-${{ github.sha }}"
+            git push origin HEAD:$BRANCH_NAME
+
+            gh pr create --title "Automated Pull Reques Test" --body "This pull request was created automatically by GitHub Actions." --head $BRANCH_NAME --base main
