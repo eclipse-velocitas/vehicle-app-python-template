@@ -48,9 +48,6 @@ jobs:
       - name: Has Changes
         id: changes
         run: |
-          git status --porcelain .
-          git status --porcelain .
-          git status --porcelain .
           if [[ -z "$(git status --porcelain .)" ]];
           then
             echo "changed=0" >> $GITHUB_OUTPUT
