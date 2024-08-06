@@ -23,6 +23,8 @@ on:
   pull_request:
     branches:
       - main
+  schedule:
+    - cron: "0 4 * * *"
 
 jobs:
   check-sync:
@@ -51,6 +53,15 @@ jobs:
             echo "changed=0" >> $GITHUB_OUTPUT
           else
             echo "changed=1" >> $GITHUB_OUTPUT
+
+            echo -e "## Summary of detected changes\n" >> $GITHUB_STEP_SUMMARY
+            echo -e "\`\`\`bash" >> $GITHUB_STEP_SUMMARY
+            git status --porcelain >> $GITHUB_STEP_SUMMARY
+            echo -e "\`\`\`" >>  $GITHUB_STEP_SUMMARY
+            echo -e "## Diff Details\n" >> $GITHUB_STEP_SUMMARY
+            echo -e "\`\`\`bash" >> $GITHUB_STEP_SUMMARY
+            git diff >> $GITHUB_STEP_SUMMARY
+            echo -e "\`\`\`" >>  $GITHUB_STEP_SUMMARY
           fi
         shell: bash
 
