@@ -4,17 +4,17 @@
 #
 #    pip-compile
 #
-build==1.0.3
+build==1.2.1
     # via pip-tools
 cfgv==3.4.0
     # via pre-commit
 click==8.1.7
     # via pip-tools
-distlib==0.3.7
+distlib==0.3.8
     # via virtualenv
-filelock==3.12.4
+filelock==3.15.4
     # via virtualenv
-identify==2.5.30
+identify==2.6.0
     # via pre-commit
 mypy==1.5.1
     # via -r requirements.in
@@ -22,26 +22,28 @@ mypy-extensions==1.0.0
     # via mypy
 mypy-protobuf==3.5.0
     # via -r requirements.in
-nodeenv==1.8.0
+nodeenv==1.9.1
     # via pre-commit
-packaging==23.2
+packaging==24.1
     # via
     #   -c app/requirements.txt
     #   -c app/tests/requirements.txt
     #   build
-pip-tools==7.3.0
+pip-tools==7.4.1
     # via -r requirements.in
-platformdirs==3.11.0
+platformdirs==4.2.2
     # via virtualenv
 pre-commit==3.3.3
     # via -r requirements.in
-protobuf==4.24.4
+protobuf==5.27.2
     # via
     #   -c app/requirements.txt
     #   mypy-protobuf
-pyproject-hooks==1.0.0
-    # via build
-pyyaml==6.0.1
+pyproject-hooks==1.1.0
+    # via
+    #   build
+    #   pip-tools
+pyyaml==6.0.2
     # via pre-commit
 tomli==2.0.1
     # via
@@ -49,14 +51,15 @@ tomli==2.0.1
     #   build
     #   mypy
     #   pip-tools
-    #   pyproject-hooks
-types-protobuf==4.24.0.2
+types-protobuf==5.27.0.20240626
     # via mypy-protobuf
-typing-extensions==4.11.0
-    # via mypy
-virtualenv==20.24.5
+typing-extensions==4.12.2
+    # via
+    #   -c app/requirements.txt
+    #   mypy
+virtualenv==20.26.3
     # via pre-commit
-wheel==0.41.2
+wheel==0.44.0
     # via pip-tools
 
 # The following packages are considered to be unsafe in a requirements file:
