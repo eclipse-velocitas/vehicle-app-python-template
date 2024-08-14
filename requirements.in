@@ -20,7 +20,7 @@
 ##########################################
 # Development Tools Packages
 ##########################################
-mypy-protobuf==3.5.0
-pre-commit==3.3.3
-mypy==1.5.1
-pip-tools>7.0.0
+mypy-protobuf
+pre-commit
+mypy
+pip-tools
