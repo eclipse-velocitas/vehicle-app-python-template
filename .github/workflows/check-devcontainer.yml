@@ -40,6 +40,7 @@ jobs:
         with:
           runCmd: |
             pip3 install -r .devcontainer/tests/automated_tests/requirements.txt
+            export PATH=$HOME/.local/bin:$PATH
             pytest -sx .devcontainer/tests
 
       - name: Upload logs

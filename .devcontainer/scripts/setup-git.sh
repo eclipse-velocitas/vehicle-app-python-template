@@ -14,31 +14,13 @@
 #
 # SPDX-License-Identifier: Apache-2.0
 
-sudo chmod +x .devcontainer/scripts/*.sh
-sudo chown -R $(whoami) $HOME
-
-.devcontainer/scripts/setup-git.sh
-
-if [[ -z "${VELOCITAS_OFFLINE}" ]]; then
-    .devcontainer/scripts/configure-codespaces.sh
-    .devcontainer/scripts/upgrade-cli.sh
-elif [[ -x .devcontainer/scripts/local-setup.sh ]]; then
-    .devcontainer/scripts/local-setup.sh
+echo "#######################################################"
+echo "### Setup Git                                       ###"
+echo "#######################################################"
+# Add git name and email from env variables
+if [[ -n "${GIT_CONFIG_NAME}" && -n "${GIT_CONFIG_EMAIL}" ]]; then
+    git config --global user.name $GIT_CONFIG_NAME
+    git config --global user.email $GIT_CONFIG_EMAIL
 fi
 
-echo "#######################################################"
-echo "### Run VADF Lifecycle Management                   ###"
-echo "#######################################################"
-velocitas init
-velocitas sync
-
-# Some setup might be required even in offline mode
-.devcontainer/scripts/setup-dependencies.sh
-
-echo "#######################################################"
-echo "### VADF package status                             ###"
-echo "#######################################################"
-velocitas upgrade --dry-run --ignore-bounds
-
-# Don't let container creation fail if lifecycle management fails
-echo "Done!"
+git config --global --add safe.directory "*"
