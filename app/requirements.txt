@@ -24,7 +24,7 @@ frozenlist==1.4.1
     #   aiosignal
 grpcio==1.64.1
     # via velocitas-sdk
-idna==3.7
+idna==3.8
     # via yarl
 importlib-metadata==7.1.0
     # via opentelemetry-api
@@ -68,9 +68,9 @@ wrapt==1.16.0
     # via
     #   deprecated
     #   opentelemetry-instrumentation
-yarl==1.9.4
+yarl==1.11.0
     # via aiohttp
-zipp==3.20.0
+zipp==3.20.1
     # via importlib-metadata
 
 # The following packages are considered to be unsafe in a requirements file:
