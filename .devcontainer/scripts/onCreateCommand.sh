@@ -15,15 +15,18 @@
 # SPDX-License-Identifier: Apache-2.0
 
 sudo chmod +x .devcontainer/scripts/*.sh
-sudo chown -R $(whoami) $HOME
 
 .devcontainer/scripts/setup-git.sh
 
 if [[ -z "${VELOCITAS_OFFLINE}" ]]; then
     .devcontainer/scripts/configure-codespaces.sh
     .devcontainer/scripts/upgrade-cli.sh
-elif [[ -x .devcontainer/scripts/local-setup.sh ]]; then
-    .devcontainer/scripts/local-setup.sh
+fi
+
+# Call user initialization hook if present
+ON_CREATE_USER_HOOK_PATH=.devcontainer/scripts/onCreateUserHook.sh
+if [[ -x $ON_CREATE_USER_HOOK_PATH ]]; then
+    $ON_CREATE_USER_HOOK_PATH
 fi
 
 echo "#######################################################"

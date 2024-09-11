@@ -3,6 +3,6 @@
         "devenv-runtimes": "v4.0.6",
         "devenv-github-workflows": "v6.1.3",
         "devenv-github-templates": "v1.0.5",
-        "devenv-devcontainer-setup": "v2.5.1"
+        "devenv-devcontainer-setup": "v2.5.2"
     }
 }
