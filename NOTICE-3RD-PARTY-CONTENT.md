@@ -3,7 +3,8 @@
 ## Python
 | Dependency | Version | License |
 |:-----------|:-------:|--------:|
-|aiohttp|3.9.5|Apache 2.0|
+|aiohappyeyeballs|2.4.0|Other/Proprietary License<br/>Python Software Foundation License|
+|aiohttp|3.10.5|Apache 2.0|
 |aiosignal|1.3.1|Apache 2.0|
 |async-timeout|4.0.3|Apache 2.0|
 |attrs|24.2.0|MIT|
@@ -19,11 +20,11 @@
 |filelock|3.16.0|The Unlicense (Unlicense)|
 |frozenlist|1.4.1|Apache 2.0|
 |grpcio|1.64.1|Apache 2.0|
-|identify|2.6.0|MIT|
-|idna|3.8|BSD|
+|identify|2.6.1|MIT|
+|idna|3.10|BSD|
 |importlib-metadata|7.1.0|Apache 2.0|
 |iniconfig|2.0.0|MIT|
-|multidict|6.0.5|Apache 2.0|
+|multidict|6.1.0|Apache 2.0|
 |mypy|1.11.2|MIT|
 |mypy-extensions|1.0.0|MIT|
 |mypy-protobuf|3.6.0|Apache 2.0|
@@ -39,12 +40,12 @@
 |parameterized|0.9.0|Simplified BSD|
 |pip|23.0.1|MIT|
 |pip-tools|7.4.1|BSD|
-|platformdirs|4.3.2|MIT|
+|platformdirs|4.3.3|MIT|
 |pluggy|1.5.0|MIT|
 |pre-commit|3.8.0|MIT|
 |protobuf|5.27.2|Google License|
 |pyproject-hooks|1.1.0|MIT|
-|pytest|8.3.2|MIT|
+|pytest|8.3.3|MIT|
 |pytest-asyncio|0.24.0|Apache 2.0|
 |pytest-cov|5.0.0|MIT|
 |pytest-ordering|0.6|MIT|
@@ -54,12 +55,12 @@
 |types-mock|5.1.0.20240425|Apache 2.0|
 |types-protobuf|5.27.0.20240907|Apache 2.0|
 |typing-extensions|4.12.2|Python Software Foundation License|
-|velocitas-sdk|0.15.3|Apache 2.0|
+|velocitas-sdk|0.15.4|Apache 2.0|
 |virtualenv|20.26.4|MIT|
 |wheel|0.44.0|MIT|
 |wrapt|1.16.0|BSD|
-|yarl|1.11.0|Apache 2.0|
-|zipp|3.20.1|MIT|
+|yarl|1.11.1|Apache 2.0|
+|zipp|3.20.2|MIT|
 ## Workflows
 | Dependency | Version | License |
 |:-----------|:-------:|--------:|
