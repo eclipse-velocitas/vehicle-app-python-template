@@ -1,6 +1,6 @@
 #!/bin/bash
 # This file is maintained by velocitas CLI, do not modify manually. Change settings in .velocitas.json
-# Copyright (c) 2024 Contributors to the Eclipse Foundation
+# Copyright (c) 2024-2025 Contributors to the Eclipse Foundation
 #
 # This program and the accompanying materials are made available under the
 # terms of the Apache License, Version 2.0 which is available at
@@ -14,7 +14,9 @@
 #
 # SPDX-License-Identifier: Apache-2.0
 
-.devcontainer/scripts/upgrade-cli.sh
+if [[ -z "${VELOCITAS_OFFLINE}" ]]; then
+    .devcontainer/scripts/upgrade-cli.sh
+fi
 
 # Call user initialization hook if present
 POST_START_USER_HOOK_PATH=.devcontainer/scripts/onPostStartUserHook.sh
