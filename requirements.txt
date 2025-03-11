@@ -14,7 +14,7 @@ distlib==0.3.9
     # via virtualenv
 filelock==3.17.0
     # via virtualenv
-identify==2.6.8
+identify==2.6.9
     # via pre-commit
 mypy==1.15.0
     # via -r requirements.in
@@ -57,7 +57,7 @@ typing-extensions==4.12.2
     # via
     #   -c /workspaces/vehicle-app-python-template/app/requirements.txt
     #   mypy
-virtualenv==20.29.2
+virtualenv==20.29.3
     # via pre-commit
 wheel==0.45.1
     # via pip-tools
