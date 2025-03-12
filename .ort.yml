@@ -26,7 +26,7 @@ curations:
     curations:
       comment: "Proper license is defined in package repository https://pypi.org/project/gitdb/"
       concluded_license: "BSD-3-Clause"
-  - id: "PyPI::grpcio:1.48.2"
+  - id: "PyPI::grpcio:1.59.0"
     curations:
       comment: "Proper license is defined in package repository https://pypi.org/project/grpcio/"
       concluded_license: "Apache-2.0"
@@ -34,7 +34,7 @@ curations:
     curations:
       comment: "Proper license is defined in package repository https://pypi.org/project/identify/"
       concluded_license: "MIT"
-  - id: "PyPI::setuptools:67.2.0"
+  - id: "PyPI::setuptools:69.2.0"
     curations:
       comment: "Proper license is defined in package repository https://pypi.org/project/setuptools/"
       concluded_license: "MIT"
@@ -42,6 +42,10 @@ curations:
     curations:
       comment: "Proper license is defined in package repository https://pypi.org/project/packaging/"
       concluded_license: "Apache-2.0"
+  - id: "PyPI::pip:24.0"
+    curations:
+      comment: "Proper license is defined in package repository https://pypi.org/project/pip/"
+      concluded_license: "MIT"
 
 resolutions:
   vulnerabilities:
