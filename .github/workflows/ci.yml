@@ -32,7 +32,7 @@ on:
 jobs:
   unit-tests:
     runs-on: ubuntu-22.04
-    container: ghcr.io/eclipse-velocitas/devcontainer-base-images/python:v0.3
+    container: ghcr.io/eclipse-velocitas/devcontainer-base-images/python:v0.4
     name: Run unit tests and linters
 
     steps:
@@ -150,7 +150,7 @@ jobs:
   run-integration-tests:
     name: Run Integration Tests (${{ needs.get-app-name.outputs.app_name }})
     runs-on: ubuntu-22.04
-    container: ghcr.io/eclipse-velocitas/devcontainer-base-images/python:v0.3
+    container: ghcr.io/eclipse-velocitas/devcontainer-base-images/python:v0.4
     needs: [get-app-name, build-image-amd64]
     env:
       APP_NAME: ${{ needs.get-app-name.outputs.app_name }}
