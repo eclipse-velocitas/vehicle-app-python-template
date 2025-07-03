@@ -44,7 +44,7 @@
 |pluggy|1.5.0|MIT|
 |pre-commit|4.1.0|MIT|
 |propcache|0.3.0|Apache 2.0|
-|protobuf|5.27.2|Google License|
+|protobuf|5.29.5|Google License|
 |pyproject-hooks|1.2.0|MIT|
 |pytest|8.3.5|MIT|
 |pytest-asyncio|0.25.3|Apache 2.0|
@@ -56,7 +56,7 @@
 |types-mock|5.1.0.20240425|Apache 2.0|
 |types-protobuf|5.29.1.20250208|Apache 2.0|
 |typing-extensions|4.12.2|Python Software Foundation License|
-|velocitas-sdk|0.15.5|Apache 2.0|
+|velocitas-sdk|0.15.7|Apache 2.0|
 |virtualenv|20.29.3|MIT|
 |wheel|0.45.1|MIT|
 |wrapt|1.17.2|BSD|

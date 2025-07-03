@@ -62,13 +62,13 @@ paho-mqtt==2.1.0
     # via velocitas-sdk
 propcache==0.3.0
     # via yarl
-protobuf==5.27.2
+protobuf==5.29.5
     # via velocitas-sdk
 typing-extensions==4.12.2
     # via
     #   multidict
     #   opentelemetry-sdk
-velocitas-sdk==0.15.5
+velocitas-sdk==0.15.7
     # via -r app/requirements.in
 wrapt==1.17.2
     # via
