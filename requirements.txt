@@ -35,7 +35,7 @@ platformdirs==4.3.6
     # via virtualenv
 pre-commit==4.1.0
     # via -r requirements.in
-protobuf==5.27.2
+protobuf==5.29.5
     # via
     #   -c /workspaces/vehicle-app-python-template/app/requirements.txt
     #   mypy-protobuf
